@@ -1,0 +1,16 @@
+android {
+//应用编译完成，自定义apk输出位置及文件名
+    applicationVariants.all { variant ->
+        variant.outputs.all { outputs ->
+            //开始输出,自定义输出
+            outputFileName = new File(variant.productFlavors[0].name + "_" + getDate() + "_v" + "${rootProject.ext.versionName}" + "_" + variant.buildType.name + ".apk")
+//            outputFileName = new File(variant.buildType.name + "_" + getDate() + "_v" + "${rootProject.ext.versionName}" + "_.apk")
+        }
+    }
+}
+
+static def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyy_MM_dd_HH_mm')
+    return formattedDate
+}

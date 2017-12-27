@@ -1,0 +1,71 @@
+//初始化一些属性
+rootProject.ext.set("pkgName", "com.modularity.project")
+
+Properties localProperties = new Properties()
+def localFile = new File("${rootDir}/local.properties")
+if (localFile.canRead()) {
+    localProperties.load(localFile.newDataInputStream())
+    println "localProperties: " + localProperties
+} else {
+    println("not find local.properties !!!")
+}
+
+def developStr = localProperties.getProperty('develop')
+def develop = (developStr == null ? false : Boolean.parseBoolean(developStr))
+rootProject.ext.set("develop", develop)
+
+//设置maven地址
+def localRepoUrl = localProperties.getProperty('LOCAL_REPO_URL')
+if (localRepoUrl != null && localRepoUrl != "") {
+    rootProject.ext.set("repoUrl", localRepoUrl)
+} else {
+    rootProject.ext.set("repoUrl", "file://" + rootDir.absolutePath + "/maven")
+}
+
+//设置apk输出路径
+def localApkPath = localProperties.getProperty('LOCAL_APK_PATH')
+if (localApkPath != null && localApkPath != "") {
+    rootProject.ext.set("apkPath", localApkPath)
+}
+
+
+Properties PARAMS = new Properties()
+def propFile = new File("${rootDir}/file/params.properties")
+if (propFile.canRead()) {
+    PARAMS.load(new InputStreamReader(new FileInputStream(propFile), "UTF-8"))
+    println "PARAMS: " + PARAMS
+} else {
+    println("not find params.properties !!!")
+}
+
+rootProject.ext.set("versionCode", PARAMS.versionCode)
+rootProject.ext.set("versionName", PARAMS.versionName)
+
+String fixName = ""
+if (develop) {
+    fixName = "Dv"
+}
+rootProject.ext.set("APP_NAME_DEBUG", fixName + PARAMS.APP_NAME_DEBUG)
+rootProject.ext.set("APP_NAME_BETA", fixName + PARAMS.APP_NAME_BETA)
+rootProject.ext.set("APP_NAME_RELEASE", fixName + PARAMS.APP_NAME_RELEASE)
+
+String fixPkgName = ""
+if (develop) {
+    fixPkgName += ".develop"
+}
+rootProject.ext.set("PKG_FIX_NAME_DEBUG", fixPkgName + ".debug")
+rootProject.ext.set("PKG_FIX_NAME_BETA", fixPkgName + ".beta")
+rootProject.ext.set("PKG_FIX_NAME_RELEASE", fixPkgName)
+
+rootProject.ext.set("PROJ_LIB_GROUP", rootProject.ext.pkgName + fixPkgName + ".lib")
+rootProject.ext.set("PROJ_MOD_GROUP", rootProject.ext.pkgName + fixPkgName + ".mod")
+
+//每添加一个lib或者一个mod的时候要在此处注册
+rootProject.ext.set("libPerfectionRetrofit", "${rootProject.ext.PROJ_LIB_GROUP}:${LIB_RETROFIT_ARTIFACTID}:${LIB_RETROFIT_VERSION}")
+rootProject.ext.set("libFaceRecognition", "${rootProject.ext.PROJ_LIB_GROUP}:${LIB_FACE_ARTIFACTID}:${LIB_FACE_VERSION}")
+
+rootProject.ext.set("modModuleA", "${rootProject.ext.PROJ_MOD_GROUP}:${MOD_A_ARTIFACTID}:${MOD_A_VERSION}")
+rootProject.ext.set("modModuleB", "${rootProject.ext.PROJ_MOD_GROUP}:${MOD_B_ARTIFACTID}:${MOD_B_VERSION}")
+
+//SHADOW
+//SHADOW END

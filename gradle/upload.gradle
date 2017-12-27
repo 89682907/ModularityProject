@@ -1,0 +1,273 @@
+
+import java.lang.reflect.Field
+
+Properties gradleParam = new Properties()
+def localFile = new File("${rootDir}/../gradle.properties")
+if (localFile.canRead()) {
+    gradleParam.load(localFile.newDataInputStream())
+} else {
+    println("not find gradle.properties !!!")
+}
+
+Properties localProperties = new Properties()
+localFile = new File("${rootDir}/../local.properties")
+if (localFile.canRead()) {
+    localProperties.load(localFile.newDataInputStream())
+} else {
+    println("not find local.properties !!!")
+}
+def develop = Boolean.parseBoolean(localProperties.getProperty('develop'))
+develop = (develop == null ? false : develop)
+def localRepoPath = localProperties.getProperty('LOCAL_REPO_PATH')
+
+task uploadModularityTask {
+
+    doLast{
+        List<LibInfo> libList = new ArrayList<>()
+        //每添加mod或者lib的时候要在此添加
+        libList.add(new LibInfo("libPerfectionRetrofit", ":libPerfectionRetrofit", gradleParam.LIB_RETROFIT_VERSION))
+        libList.add(new LibInfo("libFaceRecognition", ":libFaceRecognition", gradleParam.LIB_FACE_VERSION))
+
+        libList.add(new LibInfo("modModuleA", ":modModuleA", gradleParam.MOD_A_VERSION))
+        libList.add(new LibInfo("modModuleB", ":modModuleB", gradleParam.MOD_B_VERSION))
+
+
+        File versionDir
+        boolean hasLocalPath = localRepoPath != null && localRepoPath != ""
+        if (develop && hasLocalPath) {
+            versionDir = new File("${localRepoPath}/cache/develop/" + projectType)
+        } else if (hasLocalPath) {
+            versionDir = new File("${localRepoPath}/cache/fake_server/" + projectType)
+        } else {
+            versionDir = new File("${rootDir}/../maven/cache/" + projectType)
+
+        }
+        if (!versionDir.exists()) {
+            if (!versionDir.mkdirs()) {
+                log("mkdirs " + versionDir.getAbsolutePath() + " fail")
+                return
+            }
+        }
+        libList.each { libInfo ->
+            String versionPath = versionDir.getAbsolutePath() + "/" + libInfo.name + ".txt"
+            String oldVersion = readFile(versionPath)
+            libInfo.versionPath = versionPath
+            libInfo.needBuild = checkVersion(oldVersion, libInfo.version)
+            log(libInfo.toString())
+        }
+        log("++++++++++++++++++++++++")
+        log("rootDir: " + rootDir)
+        log("versionDir: " + versionDir.getAbsolutePath())
+
+        libList.each { libInfo ->
+            try {
+                if (!libInfo.needBuild) {
+                    return
+                }
+                def gradleCmd = develop ? "\"${rootDir}/../gradlew\"" : "gradle"
+                def os = System.getProperty("os.name")
+                String script = "upload-template.sh"
+                if (os.startsWith("Window")) {
+                    script = "upload-template.bat"
+                }
+                def cmd = "${rootDir}/../file/script/${script} ${gradleCmd} ${libInfo.name} ${libInfo.path} \"${rootDir}/../\""
+                Process exec = Runtime.runtime.exec(cmd)
+                InputStream is = exec.getInputStream()
+                InputStream es = exec.getErrorStream()
+                def pt = new PrintThread(is)
+                pt.start()
+                pt = new PrintThread(es)
+                pt.start()
+                exec.waitFor()
+
+                int value = exec.exitValue()
+                log("upload " + libInfo.name + " exitValue: " + value)
+                if (value == 0) {
+                    writeFile(libInfo.versionPath, libInfo.version)
+                    libInfo.success = true
+                }
+            } catch (Exception e) {
+                e.printStackTrace()
+                log("Error: " + libInfo)
+            }
+        }
+
+        log("All end")
+        libList.each { libInfo ->
+            if (!libInfo.needBuild) {
+                return
+            }
+            log("result: " + (libInfo.success ? "sccuess" : "fail") + ", " + libInfo.name)
+        }
+    }
+}
+
+
+static boolean checkVersion(String oldVersion, String version) {
+    if (oldVersion == null || oldVersion.equals("")) {
+        return true
+    }
+    if (version == null || version == "") {
+        return false
+    }
+    oldVersion = oldVersion.split("-")[0]
+    version = version.split("-")[0]
+    String[] oldVersionArray = oldVersion.split("\\.")
+    String[] versionArray = version.split("\\.")
+    for (int i = 0; i < oldVersionArray.length; i++) {
+        int old = Integer.parseInt(oldVersionArray[i])
+        int now = Integer.parseInt(versionArray[i])
+        if (now > old) {
+            return true
+        } else if (now < old) {
+            return false
+        }
+    }
+    return false
+}
+
+class LibInfo {
+
+    boolean needBuild
+    private String name
+    String version
+    private String path
+    String versionPath
+    private boolean success
+
+    LibInfo(String name, String path, String version) {
+        this.name = name
+        this.path = path
+        this.version = version
+    }
+
+    @Override
+    String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName() + " [ ")
+        getValue(getClass(), sb)
+        sb.delete(sb.length() - 2, sb.length())
+        sb.append(" ]")
+        return sb.toString()
+    }
+
+    private void getValue(Class clazz, StringBuilder sb) {
+        Field[] fields = clazz.getDeclaredFields()
+        for (Field field : fields) {
+            try {
+                if (field.getName() == "name" || field.getName() == "path" || field.getName() == "version" || field.getName() == "needBuild") {
+                    field.setAccessible(true)
+                    Object object = field.get(this)
+                    String value = field.getName() + " = " + object + ", "
+                    sb.append(value)
+                }
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace()
+            } catch (IllegalAccessException e) {
+                e.printStackTrace()
+            }
+        }
+    }
+}
+
+
+class PrintThread extends Thread {
+
+    InputStream is
+    boolean stop
+
+    PrintThread(InputStream is) {
+        this.is = is
+    }
+
+    @Override
+    void run() {
+        super.run()
+
+        InputStreamReader isr = null
+        BufferedReader ibr = null
+        try {
+            isr = new InputStreamReader(is, "utf-8")
+            ibr = new BufferedReader(isr)
+            String line
+            while (!stop && (line = ibr.readLine()) != null) {
+                log(line)
+            }
+        } catch (IOException e) {
+            e.printStackTrace()
+        } finally {
+            try {
+                ibr.close()
+            } catch (IOException e) {
+                e.printStackTrace()
+            }
+            try {
+                isr.close()
+            } catch (IOException e) {
+                e.printStackTrace()
+            }
+            try {
+                is.close()
+            } catch (IOException e) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    void log(String msg) {
+        println msg
+    }
+}
+
+static String readFile(InputStream is) throws Exception {
+    StringBuilder sb = new StringBuilder()
+    InputStreamReader isr = new InputStreamReader(is)
+    BufferedReader br = new BufferedReader(isr)
+    String line = ""
+    while ((line = br.readLine()) != null) {
+        sb.append(line + "\n")
+    }
+    sb.delete(sb.length() - 1, sb.length())
+    br.close()
+    isr.close()
+    return sb.toString()
+}
+
+static String readFile(String filePath) throws Exception {
+    File file = new File(filePath)
+    if (!file.exists()) {
+        return ""
+    }
+    FileInputStream fis = new FileInputStream(file)
+    String s = readFile(fis)
+    fis.close()
+    return s
+}
+
+static boolean writeFile(String filePath, String contents)
+        throws Exception {
+    File file = new File(filePath)
+
+    FileOutputStream fos = new FileOutputStream(file)
+    OutputStreamWriter osw = new OutputStreamWriter(fos)
+    BufferedWriter bw = new BufferedWriter(osw)
+
+    String[] split = contents.split("\n")
+    int index = 0
+    for (String string : split) {
+        if (index == 0) {
+            index = 1
+            bw.write(string)
+        } else {
+            bw.write("\n" + string)
+        }
+    }
+    bw.close()
+    osw.close()
+    fos.close()
+    return true
+}
+
+static void log(String msg) {
+    println "[ UPLOAD ] " + msg
+}

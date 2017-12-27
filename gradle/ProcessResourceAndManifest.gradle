@@ -1,0 +1,76 @@
+//android.applicationVariants.all { variant ->
+//    variant.mergeResources.doLast {
+//        def providerFix = "${rootProject.ext.PKG_FIX_NAME_RELEASE}"
+//        def appName = "${rootProject.ext.APP_NAME_RELEASE}"
+//        def pkgName = "${rootProject.ext.pkgName}"
+//        if (variant.name == "debug") {
+//            providerFix = "${rootProject.ext.PKG_FIX_NAME_DEBUG}"
+//            appName = "${rootProject.ext.APP_NAME_DEBUG}"
+//        } else if (variant.name == "beta") {
+//            providerFix = "${rootProject.ext.PKG_FIX_NAME_BETA}"
+//            appName = "${rootProject.ext.APP_NAME_BETA}"
+//        }
+//        println "replace !_REPLACE_HOLDER_PROVIDER_FIX to " + providerFix
+//        println "replace !_APP_NAME to " + appName
+//        println "replace !_PKGNAME_ORIGIN to " + pkgName
+//
+//        File valuesFile = file("${buildDir}/intermediates/res/merged/${variant.dirName}/values/values.xml")
+//        String content = valuesFile.getText('UTF-8')
+//        content = content.replaceAll("!_REPLACE_HOLDER_PROVIDER_FIX", providerFix)
+//        content = content.replaceAll("!_APP_NAME", appName)
+//        content = content.replaceAll("!_PKGNAME_ORIGIN", pkgName)
+//        valuesFile.write(content, 'UTF-8')
+//    }
+//}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        output.processManifest.doLast {
+            [file(output.processManifest.manifestOutputDirectory.absolutePath + "/AndroidManifest.xml"),
+             file(output.processManifest.instantRunManifestOutputDirectory.absolutePath + "/AndroidManifest.xml")
+            ].forEach({ File manifestOutFile ->
+                if (manifestOutFile.exists()) {
+                    def providerFix = "${rootProject.ext.PKG_FIX_NAME_RELEASE}"
+                    def appName = "${rootProject.ext.APP_NAME_RELEASE}"
+//                    def baiduLocKey = "${rootProject.ext.BaiduLocKey_RELEASE}"
+//                    def pkgName = "${rootProject.ext.pkgName}"
+//                    def umengKey = "${rootProject.ext.UMeng_RELEASE}"
+//                    def x5Key = "${rootProject.ext.QBSDKAppKey_RELEASE}"
+//                    def aMapKey = "${rootProject.ext.AMAP_RELEASE}"
+                    if (variant.name == "debug") {
+                        providerFix = "${rootProject.ext.PKG_FIX_NAME_DEBUG}"
+                        appName = "${rootProject.ext.APP_NAME_DEBUG}"
+//                        baiduLocKey = "${rootProject.ext.BaiduLocKey_DEBUG}"
+//                        umengKey = "${rootProject.ext.UMeng_DEBUG}"
+//                        x5Key = "${rootProject.ext.QBSDKAppKey_DEBUG}"
+//                        aMapKey = "${rootProject.ext.AMAP_DEBUG}"
+                    } else if (variant.name == "beta") {
+                        providerFix = "${rootProject.ext.PKG_FIX_NAME_BETA}"
+                        appName = "${rootProject.ext.APP_NAME_BETA}"
+//                        baiduLocKey = "${rootProject.ext.BaiduLocKey_BETA}"
+//                        umengKey = "${rootProject.ext.UMeng_BETA}"
+//                        x5Key = "${rootProject.ext.QBSDKAppKey_BETA}"
+//                        aMapKey = "${rootProject.ext.BETA}"
+                    }
+                    println "replace _REPLACE_PKGNAME_FIX_ to " + providerFix
+                    println "replace _APP_NAME to " + appName
+//                    println "replace _BAIDU_LOC_KEY to " + baiduLocKey
+//                    println "replace _UMENG_KEY to " + umengKey
+//                    println "replace _PKGNAME_ORIGIN_ to " + pkgName
+//                    println "replace _X5_KEY to " + x5Key
+//                    println "replace _AMAP_KEY to " + aMapKey
+
+                    String content = manifestOutFile.getText('UTF-8')
+                    content = content.replaceAll("_REPLACE_PKGNAME_FIX_", providerFix)
+                    content = content.replaceAll("_APP_NAME", appName)
+//                    content = content.replaceAll("_BAIDU_LOC_KEY", baiduLocKey)
+//                    content = content.replaceAll("_PKGNAME_ORIGIN_", pkgName)
+//                    content = content.replaceAll("_UMENG_KEY", umengKey)
+//                    content = content.replaceAll("_X5_KEY", x5Key)
+//                    content = content.replaceAll("_AMAP_KEY", aMapKey)
+                    manifestOutFile.write(content, 'UTF-8')
+                }
+            })
+        }
+    }
+}

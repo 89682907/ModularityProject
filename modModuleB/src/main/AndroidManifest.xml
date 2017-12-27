@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.modularity.mod_b">
+
+    <application>
+        <activity android:name="com.modularity.mod_b.ModuleBActivity">
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,32 @@
+
+Properties gradleParam = new Properties()
+def initModuleInfo = {
+    //每添加一个lib或者一个mod的时候要在此处注册
+    List<ModuleInfo> moduleList = new ArrayList<>()
+    moduleList.add(new ModuleInfo("modDemoA",gradleParam.MOD_A_VERSION,gradleParam.MOD_A_ARTIFACTID, ":modDemoA"))
+
+    rootProject.ext.set("MODULE_INFO_LIST", moduleList)
+}
+
+
+def localFile = new File("${rootDir}/../gradle.properties")
+if (localFile.canRead()) {
+    gradleParam.load(localFile.newDataInputStream())
+    initModuleInfo()
+} else {
+    println("not find gradle.properties !!!")
+}
+
+class ModuleInfo {
+    String name
+    String version
+    String artifactId
+    String path
+
+    ModuleInfo(String name, String version,String artifactId,String path) {
+        this.name = name
+        this.path = path
+        this.version = version
+        this.artifactId = artifactId
+    }
+}

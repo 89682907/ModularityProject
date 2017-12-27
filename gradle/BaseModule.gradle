@@ -1,0 +1,92 @@
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+//    buildToolsVersion "${BUILD_TOOLS_VERSION}"
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+//        ndk {
+//            abiFilters "armeabi"
+//        }
+//        if (rootProject.ext.abiX86) {
+//            getNdkConfig().abiFilters.add("x86")
+//        }
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("${rootDir}/file/key/debug.keystore")
+        }
+        release {
+            if (rootProject.ext.develop) {
+                storeFile file("${rootDir}/file/key/debug.keystore")
+                storePassword "android"
+                keyAlias "androiddebugkey"
+                keyPassword "android"
+            } else {
+//                storeFile file(String.valueOf(System.getenv("ANDROID_KEYSTORE")))
+//                storePassword System.getenv("ANDROID_KEYSTORE_PWD")
+//                keyAlias System.getenv("ANDROID_KEYSTORE_ALIAS")
+//                keyPassword System.getenv("ANDROID_KEYSTORE_KEY_PWD")
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            jniDebuggable true
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), "${rootDir}/proguard-rules.pro"
+        }
+
+        beta.initWith(buildTypes.debug)
+        beta {
+
+        }
+
+        release.initWith(buildTypes.debug)
+        release {
+
+        }
+
+    }
+
+//    configurations.all {
+//        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+//            def requested = details.requested
+//            if (requested.group == 'com.android.support') {
+//                if (!requested.name.startsWith("multidex")) {
+//                    details.useVersion '27.0.0'
+//                }
+//            }
+//        }
+//    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/gfprobe-provider.xml'
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaVersion
+        targetCompatibility rootProject.ext.javaVersion
+    }
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+}
+apply from: "${rootDir}/gradle/excludeTask.gradle"

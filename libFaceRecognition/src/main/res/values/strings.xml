@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="face_request_permissions">请允许应用访问本地存储和相机权限</string>
+    <string name="face_recognition_mutil">检测到多张人脸</string>
+    <string name="face_not_in_rect">请将人脸放入方框区域内</string>
+    <string name="face_well_lighted_tip">请在光线明亮处扫脸识别</string>
+</resources>

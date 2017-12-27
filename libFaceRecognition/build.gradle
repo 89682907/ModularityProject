@@ -1,0 +1,35 @@
+apply plugin: 'com.android.library'
+apply from: "${rootDir}/gradle/BaseModule.gradle"
+
+android {
+
+    defaultConfig {
+
+        versionCode Integer.parseInt("${rootProject.ext.versionCode}")
+        versionName "${rootProject.ext.versionName}"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+
+    }
+
+}
+
+apply plugin: 'maven'
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: rootProject.ext.repoUrl)
+        pom.groupId = rootProject.ext.PROJ_LIB_GROUP
+        pom.artifactId = LIB_FACE_ARTIFACTID
+        pom.version = LIB_FACE_VERSION
+    }
+}
+
+dependencies {
+    compileOnly project(':libCommon')
+    implementation 'pub.devrel:easypermissions:0.4.0'
+    annotationProcessor 'com.alibaba:arouter-compiler:' + "$rootProject.ext.arouter_compiler"
+}

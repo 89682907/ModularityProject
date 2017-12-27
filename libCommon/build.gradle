@@ -1,0 +1,20 @@
+apply plugin: 'com.android.library'
+apply from: "${rootDir}/gradle/BaseModule.gradle"
+
+android {
+
+    defaultConfig {
+        versionCode Integer.parseInt("${rootProject.ext.versionCode}")
+        versionName "${rootProject.ext.versionName}"
+    }
+
+}
+
+dependencies {
+    api "${rootProject.ext.libPerfectionRetrofit}"
+    api ('com.alibaba:arouter-api:' + "$rootProject.ext.arouter_api"){
+        exclude(group: 'com.android.support')
+    }
+    api 'com.android.support:appcompat-v7:' + "$rootProject.ext.appcompat_v7"
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+}

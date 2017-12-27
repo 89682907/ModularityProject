@@ -1,0 +1,65 @@
+apply plugin: 'com.android.application'
+apply from: "${rootDir}/gradle/BaseModule.gradle"
+
+android {
+    defaultConfig {
+        applicationId rootProject.ext.pkgName
+        versionCode Integer.parseInt("${rootProject.ext.versionCode}")
+        versionName "${rootProject.ext.versionName}"
+        buildConfigField "boolean", "DEVELOP", "${rootProject.ext.develop}"
+        multiDexEnabled true
+
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix rootProject.ext.PKG_FIX_NAME_DEBUG
+            minifyEnabled !rootProject.ext.develop
+            shrinkResources !rootProject.ext.develop
+            signingConfig signingConfigs.debug
+            buildConfigField "String", "APP_NAME", "\"${rootProject.ext.APP_NAME_DEBUG}\""
+            buildConfigField "String", "PACKAGE_FIX_NAME", "\"${rootProject.ext.PKG_FIX_NAME_DEBUG}\""
+        }
+
+        beta.initWith(buildTypes.debug)
+        beta {
+            applicationIdSuffix rootProject.ext.PKG_FIX_NAME_BETA
+            signingConfig signingConfigs.release
+            buildConfigField "String", "APP_NAME", "\"${rootProject.ext.APP_NAME_BETA}\""
+            buildConfigField "String", "PACKAGE_FIX_NAME", "\"${rootProject.ext.PKG_FIX_NAME_BETA}\""
+        }
+
+        release.initWith(buildTypes.debug)
+        release {
+            applicationIdSuffix rootProject.ext.PKG_FIX_NAME_RELEASE
+            signingConfig signingConfigs.release
+            buildConfigField "String", "APP_NAME", "\"${rootProject.ext.APP_NAME_RELEASE}\""
+            buildConfigField "String", "PACKAGE_FIX_NAME", "\"${rootProject.ext.PKG_FIX_NAME_RELEASE}\""
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), "${rootDir}/proguard-rules.pro"
+
+        }
+
+    }
+
+    //多渠道控制
+    flavorDimensions "channel"
+    productFlavors {
+        baidu { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_baidu"] }
+        yingyongbao { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_yingyongbao"] }
+    }
+
+}
+
+
+dependencies {
+    api project(':libCommon')
+//    implementation project(':modModuleA')
+//    implementation project(':modModuleB')
+    implementation "${rootProject.ext.modModuleA}"
+    implementation "${rootProject.ext.modModuleB}"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support:multidex:1.0.2'
+}
+apply from: "${rootDir}/gradle/ProcessResourceAndManifest.gradle"
+apply from: "${rootDir}/gradle/GenerateApk.gradle"
+
