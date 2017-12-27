@@ -8,7 +8,7 @@
 **/.gradle
 **/captures
 **/.bugtags.log
-**/settings.gradle
+#**/settings.gradle
 **/.externalNativeBuild
 **/lib-gith
 **/mod-gith
