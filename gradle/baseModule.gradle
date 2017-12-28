@@ -24,11 +24,15 @@ android {
                 storePassword "android"
                 keyAlias "androiddebugkey"
                 keyPassword "android"
-            } else {
+            } else {//此处设置自己的签名
 //                storeFile file(String.valueOf(System.getenv("ANDROID_KEYSTORE")))
 //                storePassword System.getenv("ANDROID_KEYSTORE_PWD")
 //                keyAlias System.getenv("ANDROID_KEYSTORE_ALIAS")
 //                keyPassword System.getenv("ANDROID_KEYSTORE_KEY_PWD")
+                storeFile file("${rootDir}/file/key/debug.keystore")
+                storePassword "android"
+                keyAlias "androiddebugkey"
+                keyPassword "android"
             }
         }
     }
@@ -40,7 +44,8 @@ android {
             minifyEnabled false
             shrinkResources false
             signingConfig signingConfigs.debug
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), "${rootDir}/proguard-rules.pro"
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), "${rootDir}/proguard-rules.pro"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         beta.initWith(buildTypes.debug)
@@ -55,16 +60,6 @@ android {
 
     }
 
-//    configurations.all {
-//        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-//            def requested = details.requested
-//            if (requested.group == 'com.android.support') {
-//                if (!requested.name.startsWith("multidex")) {
-//                    details.useVersion '27.0.0'
-//                }
-//            }
-//        }
-//    }
 
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'

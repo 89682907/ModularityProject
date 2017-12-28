@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply from: "${rootDir}/gradle/BaseModule.gradle"
+apply from: "${rootDir}/gradle/baseModule.gradle"
 
 android {
     defaultConfig {
@@ -19,6 +19,7 @@ android {
             signingConfig signingConfigs.debug
             buildConfigField "String", "APP_NAME", "\"${rootProject.ext.APP_NAME_DEBUG}\""
             buildConfigField "String", "PACKAGE_FIX_NAME", "\"${rootProject.ext.PKG_FIX_NAME_DEBUG}\""
+
         }
 
         beta.initWith(buildTypes.debug)
@@ -35,31 +36,28 @@ android {
             signingConfig signingConfigs.release
             buildConfigField "String", "APP_NAME", "\"${rootProject.ext.APP_NAME_RELEASE}\""
             buildConfigField "String", "PACKAGE_FIX_NAME", "\"${rootProject.ext.PKG_FIX_NAME_RELEASE}\""
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), "${rootDir}/proguard-rules.pro"
-
         }
 
     }
 
     //多渠道控制
-    flavorDimensions "channel"
-    productFlavors {
-        baidu { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_baidu"] }
-        yingyongbao { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_yingyongbao"] }
-    }
-
+//    flavorDimensions "channel"
+//    productFlavors {
+//        baidu { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_baidu"] }
+//        yingyongbao { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_yingyongbao"] }
+//    }
 }
 
 
 dependencies {
     api project(':libCommon')
 //    implementation project(':modModuleA')
-//    implementation project(':modModuleB')
     implementation "${rootProject.ext.modModuleA}"
     implementation "${rootProject.ext.modModuleB}"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:multidex:1.0.2'
+    implementation 'com.google.code.findbugs:jsr305:3.0.1'
 }
-apply from: "${rootDir}/gradle/ProcessResourceAndManifest.gradle"
-apply from: "${rootDir}/gradle/GenerateApk.gradle"
+apply from: "${rootDir}/gradle/processResourceAndManifest.gradle"
+apply from: "${rootDir}/gradle/generateApk.gradle"
 

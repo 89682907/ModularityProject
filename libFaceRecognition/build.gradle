@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply from: "${rootDir}/gradle/BaseModule.gradle"
+apply from: "${rootDir}/gradle/baseModule.gradle"
 
 android {
 
@@ -30,6 +30,8 @@ uploadArchives {
 
 dependencies {
     compileOnly project(':libCommon')
-    implementation 'pub.devrel:easypermissions:0.4.0'
+    implementation ('pub.devrel:easypermissions:0.4.0'){
+        exclude(group: 'com.android.support')
+    }
     annotationProcessor 'com.alibaba:arouter-compiler:' + "$rootProject.ext.arouter_compiler"
 }

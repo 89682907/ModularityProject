@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply from: "${rootDir}/gradle/BaseModule.gradle"
+apply from: "${rootDir}/gradle/baseModule.gradle"
 
 android {
 
@@ -31,7 +31,6 @@ uploadArchives {
 
 dependencies {
     compileOnly project(':libCommon')
-//    implementation project(':libFaceRecognition')
     implementation "${rootProject.ext.libFaceRecognition}"
     annotationProcessor 'com.alibaba:arouter-compiler:' + "$rootProject.ext.arouter_compiler"
 }

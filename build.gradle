@@ -41,7 +41,7 @@ ext {
     javaVersion = JavaVersion.VERSION_1_8
 
     // App dependencies version
-    appcompat_v7 = "27.0.2"
+    android_support_version = "27.0.2"
     arouter_api = "1.3.0"
     arouter_compiler = "1.1.4"
 }
