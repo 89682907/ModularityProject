@@ -3,17 +3,15 @@ apply from: "${rootDir}/gradle/baseModule.gradle"
 
 android {
 
+    resourcePrefix "face"
     defaultConfig {
-
         versionCode Integer.parseInt("${rootProject.ext.versionCode}")
         versionName "${rootProject.ext.versionName}"
-
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]
             }
         }
-
     }
 
 }

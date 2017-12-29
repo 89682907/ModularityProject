@@ -2,12 +2,10 @@ apply plugin: 'com.android.library'
 apply from: "${rootDir}/gradle/baseModule.gradle"
 
 android {
-
+    resourcePrefix "mb"
     defaultConfig {
-
         versionCode Integer.parseInt("${rootProject.ext.versionCode}")
         versionName "${rootProject.ext.versionName}"
-
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]

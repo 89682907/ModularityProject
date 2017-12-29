@@ -1,3 +1,5 @@
+apply from: "${rootDir}/file/moduleInfo.gradle"
+
 //初始化一些属性
 rootProject.ext.set("pkgName", "com.modularity.project")
 
@@ -60,12 +62,13 @@ rootProject.ext.set("PKG_FIX_NAME_RELEASE", fixPkgName)
 rootProject.ext.set("PROJ_LIB_GROUP", rootProject.ext.pkgName + fixPkgName + ".lib")
 rootProject.ext.set("PROJ_MOD_GROUP", rootProject.ext.pkgName + fixPkgName + ".mod")
 
-//每添加一个lib或者一个mod的时候要在此处注册
-rootProject.ext.set("libPerfectionRetrofit", "${rootProject.ext.PROJ_LIB_GROUP}:${LIB_RETROFIT_ARTIFACTID}:${LIB_RETROFIT_VERSION}")
-rootProject.ext.set("libFaceRecognition", "${rootProject.ext.PROJ_LIB_GROUP}:${LIB_FACE_ARTIFACTID}:${LIB_FACE_VERSION}")
-
-rootProject.ext.set("modModuleA", "${rootProject.ext.PROJ_MOD_GROUP}:${MOD_A_ARTIFACTID}:${MOD_A_VERSION}")
-rootProject.ext.set("modModuleB", "${rootProject.ext.PROJ_MOD_GROUP}:${MOD_B_ARTIFACTID}:${MOD_B_VERSION}")
+def moduleList = rootProject.ext.MODULE_INFO_LIST
+if (moduleList != null) {
+    moduleList.each { moduleInfo ->
+        def GROUP_ID = moduleInfo.isLib ? rootProject.ext.PROJ_LIB_GROUP : rootProject.ext.PROJ_MOD_GROUP
+        rootProject.ext.set(moduleInfo.name, "${GROUP_ID}:${moduleInfo.artifactId}:${moduleInfo.version}")
+    }
+}
 
 //SHADOW
 //SHADOW END

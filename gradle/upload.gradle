@@ -1,16 +1,17 @@
+apply from: "../file/moduleInfo.gradle"
 
 import java.lang.reflect.Field
 
-Properties gradleParam = new Properties()
-def localFile = new File("${rootDir}/../gradle.properties")
-if (localFile.canRead()) {
-    gradleParam.load(localFile.newDataInputStream())
-} else {
-    println("not find gradle.properties !!!")
-}
+//Properties gradleParam = new Properties()
+//def localFile = new File("${rootDir}/../gradle.properties")
+//if (localFile.canRead()) {
+//    gradleParam.load(localFile.newDataInputStream())
+//} else {
+//    println("not find gradle.properties !!!")
+//}
 
 Properties localProperties = new Properties()
-localFile = new File("${rootDir}/../local.properties")
+def localFile = new File("${rootDir}/../local.properties")
 if (localFile.canRead()) {
     localProperties.load(localFile.newDataInputStream())
 } else {
@@ -24,13 +25,12 @@ task uploadModularityTask {
 
     doLast{
         List<LibInfo> libList = new ArrayList<>()
-        //每添加mod或者lib的时候要在此添加
-        libList.add(new LibInfo("libPerfectionRetrofit", ":libPerfectionRetrofit", gradleParam.LIB_RETROFIT_VERSION))
-        libList.add(new LibInfo("libFaceRecognition", ":libFaceRecognition", gradleParam.LIB_FACE_VERSION))
-
-        libList.add(new LibInfo("modModuleA", ":modModuleA", gradleParam.MOD_A_VERSION))
-        libList.add(new LibInfo("modModuleB", ":modModuleB", gradleParam.MOD_B_VERSION))
-
+        def moduleList = rootProject.ext.MODULE_INFO_LIST
+        if (moduleList!=null){
+            moduleList.each { moduleInfo ->
+                libList.add(new LibInfo(moduleInfo.name, moduleInfo.path, moduleInfo.version))
+            }
+        }
 
         File versionDir
         boolean hasLocalPath = localRepoPath != null && localRepoPath != ""

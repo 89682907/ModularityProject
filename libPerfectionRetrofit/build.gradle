@@ -2,12 +2,9 @@ apply plugin: 'com.android.library'
 apply from: "${rootDir}/gradle/baseModule.gradle"
 
 android {
-
     defaultConfig {
-
         versionCode Integer.parseInt("${rootProject.ext.versionCode}")
         versionName "${rootProject.ext.versionName}"
-
     }
 
 }
@@ -25,7 +22,7 @@ uploadArchives {
 dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.9.1'
     api 'io.reactivex.rxjava2:rxjava:2.1.7'
-    api 'com.alibaba:fastjson:1.1.67.android'
+    api 'com.alibaba:fastjson:'+ "$rootProject.ext.fastjson"
     implementation('com.squareup.retrofit2:retrofit:2.3.0') {
         exclude(group: 'com.squareup.okhttp3', module: 'okhttp')
     }

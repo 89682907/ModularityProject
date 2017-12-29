@@ -75,7 +75,7 @@ public class SoftApplication extends Application {
     }
 
     private void initRouter() {
-        if (BuildConfig.DEVELOP) {
+        if (BuildConfig.DEVELOP || IStatics.BUILD_TYPE_DEBUG.endsWith(BuildConfig.BUILD_TYPE)) {
             ARouter.openLog();     // 打印日志
             ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         }

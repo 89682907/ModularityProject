@@ -1,0 +1,49 @@
+Properties gradleParam = new Properties()
+def initModuleInfo = {
+    //每添加一个lib或者一个mod的时候要在此处注册
+    List<ModuleInfo> moduleList = new ArrayList<>()
+
+    moduleList.add(new ModuleInfo(gradleParam.LIB_RETROFIT_NAME, gradleParam.LIB_RETROFIT_ARTIFACTID, gradleParam.LIB_RETROFIT_VERSION, ":${gradleParam.LIB_RETROFIT_NAME}", true))
+
+    moduleList.add(new ModuleInfo(gradleParam.LIB_FACE_NAME, gradleParam.LIB_FACE_ARTIFACTID, gradleParam.LIB_FACE_VERSION, ":${gradleParam.LIB_FACE_NAME}", true))
+
+    moduleList.add(new ModuleInfo(gradleParam.MOD_A_NAME, gradleParam.MOD_A_ARTIFACTID, gradleParam.MOD_A_VERSION, ":${gradleParam.MOD_A_NAME}", false))
+
+    moduleList.add(new ModuleInfo(gradleParam.MOD_B_NAME, gradleParam.MOD_B_ARTIFACTID, gradleParam.MOD_B_VERSION, ":${gradleParam.MOD_B_NAME}", false))
+
+    rootProject.ext.set("MODULE_INFO_LIST", moduleList)
+}
+
+
+def filePath = "${rootDir}"
+if (filePath.endsWith("gradle")) {
+    //upload引用
+    filePath = "${rootDir}/../gradle.properties"
+} else {
+    //init引用
+    filePath = "${rootDir}/gradle.properties"
+}
+def localFile = new File(filePath)
+println("${rootDir}")
+if (localFile.canRead()) {
+    gradleParam.load(localFile.newDataInputStream())
+    initModuleInfo()
+} else {
+    println("not find gradle.properties !!!")
+}
+
+class ModuleInfo {
+    String name
+    String version
+    String artifactId
+    String path
+    boolean isLib
+
+    ModuleInfo(String name, String artifactId, String version, String path, boolean isLib) {
+        this.name = name
+        this.path = path
+        this.version = version
+        this.artifactId = artifactId
+        this.isLib = isLib
+    }
+}

@@ -52,6 +52,7 @@ android {
 dependencies {
     api project(':libCommon')
 //    implementation project(':modModuleA')
+//    implementation project(':modModuleB')
     implementation "${rootProject.ext.modModuleA}"
     implementation "${rootProject.ext.modModuleB}"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
