@@ -1,0 +1,23 @@
+#SwipeToLoadLayout用法 id固定
+<incloud.enn.cn.laikang.views.swipeToLoadLayout.SwipeToLoadLayout
+        android:id="@+id/swipeToLoadLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/line">
+
+        <include
+            android:id="@+id/swipe_refresh_header"
+            layout="@layout/refresh_header_view"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <include
+            android:id="@+id/swipe_load_more_footer"
+            layout="@layout/refresh_header_view"/>
+
+</incloud.enn.cn.laikang.views.swipeToLoadLayout.SwipeToLoadLayout>

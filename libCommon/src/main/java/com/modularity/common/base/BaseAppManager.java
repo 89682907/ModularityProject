@@ -8,20 +8,13 @@ import java.util.List;
 
 public class BaseAppManager {
 
-    private static BaseAppManager instance = null;
     private static List<Activity> mActivities = new LinkedList<>();
 
-    private BaseAppManager() {}
+    private BaseAppManager() {
+    }
 
     public static BaseAppManager getInstance() {
-        if (null == instance) {
-            synchronized (BaseAppManager.class) {
-                if (null == instance) {
-                    instance = new BaseAppManager();
-                }
-            }
-        }
-        return instance;
+        return InstanceHolder.instance;
     }
 
     public int size() {
@@ -79,7 +72,7 @@ public class BaseAppManager {
         }
     }
 
-    public synchronized boolean hasActivity(Class<?> cls){
+    public synchronized boolean hasActivity(Class<?> cls) {
         boolean flag = false;
         for (Activity activity : mActivities) {
             if (activity.getClass().equals(cls)) {
@@ -105,5 +98,9 @@ public class BaseAppManager {
 ////        }
 //        c
 //    }
+
+    private static class InstanceHolder {
+        static final BaseAppManager instance = new BaseAppManager();
+    }
 
 }
