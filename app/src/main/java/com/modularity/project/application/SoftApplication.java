@@ -38,6 +38,7 @@ public class SoftApplication extends Application {
         MultiDex.install(this);
     }
 
+
     private void initConfig() {
         Config.DEBUG = BuildConfig.DEBUG;
         Config.BUILD_TYPE = BuildConfig.BUILD_TYPE;
