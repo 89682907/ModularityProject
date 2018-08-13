@@ -3,8 +3,8 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.all { outputs ->
             //开始输出,自定义输出
-//            outputFileName = new File(variant.productFlavors[0].name + "_" + getDate() + "_v" + "${rootProject.ext.versionName}" + "_" + variant.buildType.name + ".apk")
-            outputFileName = new File(variant.buildType.name + "_" + getDate() + "_v" + "${rootProject.ext.versionName}" + "_.apk")
+            outputFileName = new File(variant.productFlavors[0].name + "_" + getDate() + "_v" + "${rootProject.ext.versionName}" + "_" + variant.buildType.name + ".apk")
+//            outputFileName = new File(variant.buildType.name + "_" + getDate() + "_v" + "${rootProject.ext.versionName}" + "_.apk")
         }
     }
 }

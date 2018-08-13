@@ -7,4 +7,5 @@ package com.modularity.mod_a;
 public interface IModuleAStatics {
     String MODULE_A_TEST_URL = "data/2.5/forecast/daily";
     String MODULE_A_BASE_URL = "http://api.openweathermap.org/";
+    String Test = "http://lk-dr-test.cloud.enndata.cn/doctor/get/";
 }
