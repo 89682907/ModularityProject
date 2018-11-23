@@ -25,9 +25,9 @@ allprojects {
         maven {
             url rootProject.ext.repoUrl
         }
-//        maven{
-//            url "http://nexus.enn.cn/content/groups/public/"
-//        }
+        maven{
+            url mavenUrl
+        }
 
     }
 }

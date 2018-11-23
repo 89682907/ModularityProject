@@ -16,10 +16,12 @@ import okhttp3.ResponseBody;
 class PerfectionSubscriber<T> extends BaseSubscriber<ResponseBody> {
     private PerfectionCallBack<T> mCallBack;
     private Type                  mClassType;
+    private boolean               isParserJson;
 
     PerfectionSubscriber(Type mClassType, PerfectionCallBack<T> callBack) {
         this.mCallBack = callBack;
         this.mClassType = mClassType;
+        isParserJson = !mClassType.getClass().getName().equals("java.lang.String");
     }
 
 
@@ -45,7 +47,13 @@ class PerfectionSubscriber<T> extends BaseSubscriber<ResponseBody> {
         try {
             byte[] bytes = responseBody.bytes();
             String jsStr = new String(bytes);
-            parserFastJson(jsStr);
+            if (isParserJson) {
+                parserFastJson(jsStr);
+            } else {
+                if (mCallBack != null) {
+                    mCallBack.onSuccess((T) jsStr);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
             onError(PerfectionException.handleException(e));
@@ -63,7 +71,7 @@ class PerfectionSubscriber<T> extends BaseSubscriber<ResponseBody> {
     @SuppressWarnings("unchecked")
     private void parserFastJson(String jsStr) {
         if (mCallBack != null) {
-            mCallBack.onSuccess((T) JSON.parseObject(jsStr, mClassType));
+            mCallBack.onSuccess(JSON.parseObject(jsStr, mClassType));
         }
     }
 

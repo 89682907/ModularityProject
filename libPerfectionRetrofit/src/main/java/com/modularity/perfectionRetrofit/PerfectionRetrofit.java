@@ -41,6 +41,7 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.ConnectionPool;
 import okhttp3.Interceptor;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -250,26 +251,29 @@ public final class PerfectionRetrofit {
     }
 
     /**
-     * 提交文件和参数
+     * 提交多文件和参数
      */
     @SuppressWarnings("unchecked")
-    public <T> void uploadFilesWithParams(String url, Map<String, Object> paramMap, Map<String, File> fileMap, PerfectionCallBack<T> callBack) {
+    public <T> void requestParamsAndFiles(String url, Map<String, RequestBody> paramMap,PerfectionCallBack<T> callBack) {
         mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
-        Map<String, RequestBody> filesBody = new HashMap<>();
-        if (fileMap != null && fileMap.size() > 0) {
-            for (Map.Entry<String, File> entry : fileMap.entrySet()) {
-                String key = entry.getKey();
-                File file = entry.getValue();
-                if (file != null) {
-                    filesBody.put(key, PerfectionUtils.createFile(file));
-                }
-            }
-        }
-        mBaseApiService.uploadFileWithPartMap(url, paramMap, filesBody)
+        mBaseApiService.requestParamsAndFiles(url, paramMap)
                 .compose(schedulersTransformer)
                 .compose(handleErrTransformer())
                 .subscribe(mSubscriber);
     }
+
+    /**
+     * 提交单文件和参数
+     */
+    @SuppressWarnings("unchecked")
+    public <T> void requestParamsAndFile(String url, Map<String, RequestBody> paramMap, MultipartBody.Part file, PerfectionCallBack<T> callBack) {
+        mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        mBaseApiService.requestParamsAndFile(url, paramMap, file)
+                .compose(schedulersTransformer)
+                .compose(handleErrTransformer())
+                .subscribe(mSubscriber);
+    }
+
 
 
     /**

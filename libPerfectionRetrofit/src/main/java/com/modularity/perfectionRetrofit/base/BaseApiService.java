@@ -66,10 +66,16 @@ public interface BaseApiService {
 
     @Multipart
     @POST
-    Observable<ResponseBody> uploadFileWithPartMap(
+    Observable<ResponseBody> requestParamsAndFiles(
             @Url() String url,
-            @PartMap() Map<String, Object> partMap,
-            @PartMap() Map<String, RequestBody> fileMap);
+            @PartMap() Map<String, RequestBody> partMap);
+
+    @Multipart
+    @POST
+    Observable<ResponseBody> requestParamsAndFile(
+            @Url() String url,
+            @PartMap() Map<String, RequestBody> partMap,
+            @Part() MultipartBody.Part file);
 
     @FormUrlEncoded
     @POST()

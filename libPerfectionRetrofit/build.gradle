@@ -19,10 +19,27 @@ uploadArchives {
     }
 }
 
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        repository(url: mavenUrl) {
+//            authentication(userName: "deployment", password: "deployment123")
+//        }
+//        pom.project {
+//            groupId = "enn.lib"
+//            artifactId = "PerfectionRetrofit"
+//            version = "1.0.7.RELEASE"
+//            packaging = "aar"
+//            description = "PerfectionRetrofit"
+//        }
+//
+//    }
+//
+//}
+
 dependencies {
-    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
-    api 'io.reactivex.rxjava2:rxjava:2.1.7'
-    api 'com.alibaba:fastjson:'+ "$rootProject.ext.fastjson"
+    api 'com.squareup.okhttp3:okhttp:3.10.0'
+    api 'io.reactivex.rxjava2:rxjava:2.1.12'
+    api 'com.alibaba:fastjson:' + "$rootProject.ext.fastjson"
     implementation('com.squareup.retrofit2:retrofit:2.3.0') {
         exclude(group: 'com.squareup.okhttp3', module: 'okhttp')
     }

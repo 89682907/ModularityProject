@@ -43,7 +43,7 @@ public class PerfectionUtils {
 
     public static RequestBody createFile(File file) {
         checkNotNull(file, "file not null!");
-        return RequestBody.create(MediaType.parse("multipart/form-data; charset=utf-8"), file);
+        return RequestBody.create(MediaType.parse("multipart/form-data"), file);
     }
 
 
