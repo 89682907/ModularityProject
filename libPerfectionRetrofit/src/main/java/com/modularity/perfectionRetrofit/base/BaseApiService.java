@@ -1,11 +1,9 @@
-
 package com.modularity.perfectionRetrofit.base;
 
+import io.reactivex.Observable;
 
 import java.util.Map;
 
-import io.reactivex.Observable;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
@@ -15,73 +13,51 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
-
 public interface BaseApiService {
-    @POST()
-    @FormUrlEncoded
-    Observable<ResponseBody> requestPost(
-            @Url() String url,
-            @FieldMap Map<String, Object> maps);
+    @POST
+    Observable<ResponseBody> requestPost(@Url String var1, @Body Object var2);
 
-    @POST()
-    Observable<ResponseBody> requestPost(
-            @Url() String url,
-            @Body Object data);
-
-    @GET()
-    Observable<ResponseBody> requestGet(
-            @Url String url,
-            @QueryMap Map<String, Object> maps);
-
-
-    @Multipart
-    @POST()
-    Observable<ResponseBody> upLoadImage(
-            @Url() String url,
-            @Part("image\"; filename=\"image.jpg") RequestBody requestBody);
-
-    @Multipart
-    @POST()
-    Observable<ResponseBody> uploadFile(
-            @Url String fileUrl,
-            @Part("description") RequestBody description,
-            @Part("files") MultipartBody.Part file);
-
-
-    @POST()
-    Observable<ResponseBody> uploadFiles(
-            @Url() String url,
-            @Body Map<String, RequestBody> maps);
-
-    @POST()
-    Observable<ResponseBody> uploadFile(
-            @Url() String url,
-            @Body RequestBody file);
+    @GET
+    Observable<ResponseBody> requestGet(@Url String var1, @QueryMap Map<String, String> var2);
 
     @Multipart
     @POST
-    Observable<ResponseBody> uploadFileWithPartMap(
-            @Url() String url,
-            @PartMap() Map<String, Object> partMap,
-            @PartMap() Map<String, RequestBody> fileMap);
+    Observable<ResponseBody> upLoadImage(@Url String var1, @Part("image\"; filename=\"image.jpg") RequestBody var2);
+
+    @Multipart
+    @POST
+    Observable<ResponseBody> uploadFile(@Url String var1, @Part("description") RequestBody var2, @Part("files") okhttp3.MultipartBody.Part var3);
+
+    @POST
+    Observable<ResponseBody> uploadFiles(@Url String var1, @Body Map<String, RequestBody> var2);
+
+    @POST
+    Observable<ResponseBody> uploadFile(@Url String var1, @Body RequestBody var2);
+
+    @Multipart
+    @POST
+    Observable<ResponseBody> requestParamsAndFiles(@Url String var1, @PartMap Map<String, RequestBody> var2);
+
+    @Multipart
+    @POST
+    Observable<ResponseBody> requestParamsAndFile(@Url String var1, @PartMap Map<String, RequestBody> var2, @Part okhttp3.MultipartBody.Part var3);
 
     @FormUrlEncoded
-    @POST()
-    Observable<ResponseBody> postForm(
-            @Url() String url,
-            @FieldMap Map<String, Object> maps);
+    @POST
+    Observable<ResponseBody> postForm(@Url String var1, @FieldMap Map<String, String> var2);
 
-    /*断点续传下载接口*/
-    @Streaming/*大文件需要加入这个判断，防止下载过程中写入到内存中*/
+    @Multipart
+    @PUT
+    Observable<ResponseBody> requestPut(@Url String var1, @PartMap Map<String, RequestBody> var2);
+
+    @Streaming
     @GET
-    Observable<ResponseBody> download(@Header("RANGE") String start, @Url String url);
-
+    Observable<ResponseBody> download(@Header("RANGE") String var1, @Url String var2);
 }
-
-

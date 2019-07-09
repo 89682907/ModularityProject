@@ -1,12 +1,8 @@
-
 package com.modularity.perfectionRetrofit;
 
 import android.content.Context;
-
 import android.text.TextUtils;
 import android.util.Log;
-
-
 import com.modularity.perfectionRetrofit.base.BaseApiService;
 import com.modularity.perfectionRetrofit.base.BaseInterceptor;
 import com.modularity.perfectionRetrofit.base.BaseSubscriber;
@@ -17,7 +13,12 @@ import com.modularity.perfectionRetrofit.https.PerfectionHttpsFactory;
 import com.modularity.perfectionRetrofit.https.TrustAllHostnameVerifier;
 import com.modularity.perfectionRetrofit.https.TrustAllManager;
 import com.modularity.perfectionRetrofit.util.PerfectionUtils;
-
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import java.io.File;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -25,576 +26,425 @@ import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
-
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.ObservableTransformer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.ConnectionPool;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-//import okhttp3.logging.HttpLoggingInterceptor;
+import okhttp3.MultipartBody.Part;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.CallAdapter;
-import retrofit2.Converter;
+import okhttp3.logging.HttpLoggingInterceptor.Level;
+import okhttp3.logging.HttpLoggingInterceptor.Logger;
 import retrofit2.Retrofit;
+import retrofit2.Converter.Factory;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.fastjson.FastJsonConverterFactory;
 import retrofit2.http.FieldMap;
 
+@SuppressWarnings("unchecked")
 public final class PerfectionRetrofit {
-
-    private BaseApiService        mBaseApiService;
-    private Retrofit              mRetrofit;
+    private BaseApiService mBaseApiService;
+    private Retrofit mRetrofit;
     private ObservableTransformer mExceptTransformer;
-    private BaseSubscriber        mSubscriber;
+    private BaseSubscriber mSubscriber;
+    private ObservableTransformer schedulersTransformer;
 
     private PerfectionRetrofit(Retrofit retrofit, BaseApiService apiManager) {
+        this.schedulersTransformer = new ObservableTransformer() {
+            public ObservableSource apply(Observable upstream) {
+                return upstream.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            }
+        };
         this.mBaseApiService = apiManager;
         this.mRetrofit = retrofit;
     }
 
-    /**
-     * 创建 ApiService
-     */
-    public <T> T create(final Class<T> service) {
-        return mRetrofit.create(service);
+    public <T> T create(Class<T> service) {
+        return this.mRetrofit.create(service);
     }
 
-    /**
-     * MethodHandler
-     */
     private List<Type> methodHandler(Type[] types) {
-        List<Type> needTypes = new ArrayList<>();
-        for (Type paramType : types) {
+        List<Type> needTypes = new ArrayList();
+        Type[] var3 = types;
+        int var4 = types.length;
+
+        for(int var5 = 0; var5 < var4; ++var5) {
+            Type paramType = var3[var5];
             if (paramType instanceof ParameterizedType) {
-                Type[] parenTypes = ((ParameterizedType) paramType).getActualTypeArguments();
-                for (Type childType : parenTypes) {
+                Type[] parenTypes = ((ParameterizedType)paramType).getActualTypeArguments();
+                Type[] var8 = parenTypes;
+                int var9 = parenTypes.length;
+
+                for(int var10 = 0; var10 < var9; ++var10) {
+                    Type childType = var8[var10];
                     needTypes.add(childType);
                     if (childType instanceof ParameterizedType) {
-                        Type[] childTypes = ((ParameterizedType) childType).getActualTypeArguments();
+                        Type[] childTypes = ((ParameterizedType)childType).getActualTypeArguments();
                         Collections.addAll(needTypes, childTypes);
                     }
                 }
             }
         }
+
         return needTypes;
     }
 
     private <T> Type classType(PerfectionCallBack<T> callBack) {
         Type type = null;
         Type[] types = callBack.getClass().getGenericInterfaces();
-        if (!methodHandler(types).isEmpty()) {
-            type = methodHandler(types).get(0);
+        if (!this.methodHandler(types).isEmpty()) {
+            type = (Type)this.methodHandler(types).get(0);
         }
+
         return type;
     }
 
-
-    private ObservableTransformer schedulersTransformer = new ObservableTransformer() {
-        @Override
-        public ObservableSource apply(Observable upstream) {
-            return upstream.subscribeOn(Schedulers.io())//发生
-                    .unsubscribeOn(Schedulers.io())//解除
-                    .observeOn(AndroidSchedulers.mainThread());//回调
-        }
-    };
-
-    private static class HttpResponseFunc<T> implements Function<Throwable, Observable<T>> {
-
-        @Override
-        public Observable<T> apply(Throwable throwable) throws Exception {
-            return Observable.error(PerfectionException.handleException((Exception) throwable));
-        }
-    }
-
-
-    @SuppressWarnings("unchecked")
     private <T> ObservableTransformer<T, T> handleErrTransformer() {
-        if (mExceptTransformer == null) {
-            mExceptTransformer = new ObservableTransformer<T, T>() {
-
-                @Override
+        if (this.mExceptTransformer == null) {
+            this.mExceptTransformer = new ObservableTransformer<T, T>() {
                 public ObservableSource<T> apply(Observable<T> upstream) {
-                    return upstream.onErrorResumeNext(new HttpResponseFunc<>());
+                    return upstream.onErrorResumeNext(new PerfectionRetrofit.HttpResponseFunc());
                 }
             };
         }
-        return mExceptTransformer;
+
+        return this.mExceptTransformer;
     }
 
-
-    /**
-     * get提交返回自定义bean
-     */
-    @SuppressWarnings("unchecked")
-    public <T> void requestGet(String url, Map<String, Object> maps, PerfectionCallBack<T> callBack) {
-        mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
-        mBaseApiService.requestGet(url, maps)
-                .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(mSubscriber);
+    public <T> void requestGet(String url, Map<String, String> maps, PerfectionCallBack<T> callBack) {
+        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
+        this.mBaseApiService.requestGet(url, maps).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
     }
 
-
-    /**
-     * get
-     */
-    @SuppressWarnings("unchecked")
-    public void get(String url, Map<String, Object> maps, BaseSubscriber<ResponseBody> subscriber) {
-        mSubscriber = subscriber;
-        mBaseApiService.requestGet(url, maps)
-                .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
+    /** @deprecated */
+    @Deprecated
+    public void get(String url, Map<String, String> maps, BaseSubscriber<ResponseBody> subscriber) {
+        this.mSubscriber = subscriber;
+        this.mBaseApiService.requestGet(url, maps).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(subscriber);
     }
 
-    /**
-     * post提交返回自定义bean
-     */
-    @SuppressWarnings("unchecked")
-    public <T> void requestPost(final String url, @FieldMap(encoded = true) Map<String, Object> parameters, PerfectionCallBack<T> callBack) {
-        mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
-        mBaseApiService.requestPost(url, parameters)
-                .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(mSubscriber);
+    public <T> void requestPost(String url, Object requestBean, PerfectionCallBack<T> callBack) {
+        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
+        this.mBaseApiService.requestPost(url, requestBean).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
     }
 
-    /**
-     * post提交返回自定义bean
-     */
-    @SuppressWarnings("unchecked")
-    public <T> void requestPost(final String url, Object requestBean, PerfectionCallBack<T> callBack) {
-        mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
-        mBaseApiService.requestPost(url, requestBean)
-                .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(mSubscriber);
+    public <T> void requestForm(String url, @FieldMap(encoded = true) Map<String, String> fields, PerfectionCallBack<T> callBack) {
+        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
+        this.mBaseApiService.postForm(url, fields).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
     }
 
-
-    /**
-     * Post提交
-     */
-    @SuppressWarnings("unchecked")
-    public void post(String url, @FieldMap(encoded = true) Map<String, Object> parameters, BaseSubscriber<ResponseBody> subscriber) {
-        mSubscriber = subscriber;
-        mBaseApiService.requestPost(url, parameters)
-                .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
+    /** @deprecated */
+    @Deprecated
+    public void post(String url, Object requestBean, BaseSubscriber<ResponseBody> subscriber) {
+        this.mSubscriber = subscriber;
+        this.mBaseApiService.requestPost(url, requestBean).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(subscriber);
     }
 
-
-    /**
-     * 表单提交，返回自定义bean
-     */
-    @SuppressWarnings("unchecked")
-    public <T> void requestForm(String url, @FieldMap(encoded = true) Map<String, Object> fields, PerfectionCallBack<T> callBack) {
-        mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
-        mBaseApiService.postForm(url, fields)
-                .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(mSubscriber);
+    /** @deprecated */
+    @Deprecated
+    public void post(String url, @FieldMap(encoded = true) Map<String, String> parameters, BaseSubscriber<ResponseBody> subscriber) {
+        this.mSubscriber = subscriber;
+        this.mBaseApiService.requestPost(url, parameters).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(subscriber);
     }
 
-
-    /**
-     * 表单提交
-     */
-    @SuppressWarnings("unchecked")
-    public void form(String url, @FieldMap(encoded = true) Map<String, Object> fields, BaseSubscriber<ResponseBody> subscriber) {
-        mSubscriber = subscriber;
-        mBaseApiService.postForm(url, fields)
-                .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(subscriber);
+    /** @deprecated */
+    @Deprecated
+    public void form(String url, @FieldMap(encoded = true) Map<String, String> fields, BaseSubscriber<ResponseBody> subscriber) {
+        this.mSubscriber = subscriber;
+        this.mBaseApiService.postForm(url, fields).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(subscriber);
     }
 
+    public <T> void requestPut(String url, @FieldMap(encoded = true) Map<String, RequestBody> fields, PerfectionCallBack<T> callBack) {
+        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
+        this.mBaseApiService.requestPut(url, fields).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
+    }
 
-    /**
-     * 提交单个图片
-     */
-    @SuppressWarnings("unchecked")
     public <T> void uploadImage(String url, File file, PerfectionCallBack<T> callBack) {
-        mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
-        mBaseApiService.upLoadImage(url, PerfectionUtils.createImage(file))
-                .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(mSubscriber);
+        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
+        this.mBaseApiService.upLoadImage(url, PerfectionUtils.createImage(file)).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
     }
 
-
-    /**
-     * 提交单个文件
-     */
-    @SuppressWarnings("unchecked")
     public <T> void uploadFlie(String url, File file, PerfectionCallBack<T> callBack) {
-        mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
-        mBaseApiService.uploadFile(url, PerfectionUtils.createFile(file))
-                .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(mSubscriber);
+        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
+        this.mBaseApiService.uploadFile(url, PerfectionUtils.createFile(file)).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
     }
 
-    /**
-     * 提交文件和参数
-     */
-    @SuppressWarnings("unchecked")
-    public <T> void uploadFilesWithParams(String url, Map<String, Object> paramMap, Map<String, File> fileMap, PerfectionCallBack<T> callBack) {
-        mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
-        Map<String, RequestBody> filesBody = new HashMap<>();
-        if (fileMap != null && fileMap.size() > 0) {
-            for (Map.Entry<String, File> entry : fileMap.entrySet()) {
-                String key = entry.getKey();
-                File file = entry.getValue();
-                if (file != null) {
-                    filesBody.put(key, PerfectionUtils.createFile(file));
-                }
-            }
-        }
-        mBaseApiService.uploadFileWithPartMap(url, paramMap, filesBody)
-                .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(mSubscriber);
+    public <T> void requestParamsAndFiles(String url, Map<String, RequestBody> paramMap, PerfectionCallBack<T> callBack) {
+        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
+        this.mBaseApiService.requestParamsAndFiles(url, paramMap).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
     }
 
+    public <T> void requestParamsAndFile(String url, Map<String, RequestBody> paramMap, Part file, PerfectionCallBack<T> callBack) {
+        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
+        this.mBaseApiService.requestParamsAndFile(url, paramMap, file).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
+    }
 
-    /**
-     * 提交文件和文件描述
-     */
-    @SuppressWarnings("unchecked")
     public <T> void uploadFlieWithDescription(String url, String description, File file, PerfectionCallBack<T> callBack) {
-        mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
-        mBaseApiService.uploadFile(url, PerfectionUtils.createPartFromString(description), PerfectionUtils.createPart(description, file))
-                .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(mSubscriber);
+        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
+        this.mBaseApiService.uploadFile(url, PerfectionUtils.createPartFromString(description), PerfectionUtils.createPart(description, file)).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
     }
 
-    /**
-     * 提交多个文件
-     */
-    @SuppressWarnings("unchecked")
     public <T> void uploadFlies(String url, Map<String, File> files, PerfectionCallBack<T> callBack) {
-        mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
-        Map<String, RequestBody> filesBody = new HashMap<>();
+        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
+        Map<String, RequestBody> filesBody = new HashMap();
         if (files != null && files.size() > 0) {
-            for (Map.Entry<String, File> entry : files.entrySet()) {
-                String key = entry.getKey();
-                File file = entry.getValue();
+            Iterator var5 = files.entrySet().iterator();
+
+            while(var5.hasNext()) {
+                Entry<String, File> entry = (Entry)var5.next();
+                String key = (String)entry.getKey();
+                File file = (File)entry.getValue();
                 if (file != null) {
                     filesBody.put(key, PerfectionUtils.createFile(file));
                 }
             }
         }
-        mBaseApiService.uploadFiles(url, filesBody)
-                .compose(schedulersTransformer)
-                .compose(handleErrTransformer())
-                .subscribe(mSubscriber);
+
+        this.mBaseApiService.uploadFiles(url, filesBody).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
     }
 
-    /**
-     * 取消请求
-     */
     public void cancelRequest() {
-        if (mSubscriber != null) {
-            mSubscriber.disposable();
+        if (this.mSubscriber != null) {
+            this.mSubscriber.disposable();
         }
+
     }
 
     public static final class Builder {
-
-        private static final int  DEFAULT_TIMEOUT              = 20;
-        private static final int  DEFAULT_MAX_IDLE_CONNECTIONS = 5;
-        private static final long DEFAULT_KEEP_ALIVE_DURATION  = 8;
-        private static final long DEFAULT_CACHE_MAX_SIZE       = 10 * 1024 * 1024;
-
-        private Boolean isLog   = true;
+        private static final int DEFAULT_TIMEOUT = 60;
+        private static final int DEFAULT_MAX_IDLE_CONNECTIONS = 5;
+        private static final long DEFAULT_KEEP_ALIVE_DURATION = 8L;
+        private static final long DEFAULT_CACHE_MAX_SIZE = 10485760L;
+        private Boolean isLog = true;
         private Boolean isCache = false;
-
-        private Context              mContext;
-        private String               mBaseUrl;
-        private HostnameVerifier     mHostnameVerifier;
-        private SSLSocketFactory     mSslSocketFactory;
-        private ConnectionPool       mConnectionPool;
-        private Converter.Factory    mConverterFactory;
-        private CallAdapter.Factory  mCallAdapterFactory;
+        private Context mContext;
+        private String mBaseUrl;
+        private HostnameVerifier mHostnameVerifier;
+        private SSLSocketFactory mSslSocketFactory;
+        private ConnectionPool mConnectionPool;
+        private Factory mConverterFactory;
+        private retrofit2.CallAdapter.Factory mCallAdapterFactory;
         private okhttp3.Call.Factory mCallFactory;
-        private OkHttpClient.Builder mOkHttpBuilder;
-        private OkHttpClient         mOkHttpClient;
-        private Retrofit.Builder     mRetrofitBuilder;
+        private okhttp3.OkHttpClient.Builder mOkHttpBuilder;
+        private OkHttpClient mOkHttpClient;
+        private retrofit2.Retrofit.Builder mRetrofitBuilder;
 
         private Builder() {
         }
 
         public Builder(Context context) {
-            mContext = context.getApplicationContext();
-            mOkHttpBuilder = new OkHttpClient.Builder();
-            mRetrofitBuilder = new Retrofit.Builder();
+            this.mContext = context.getApplicationContext();
+            this.mOkHttpBuilder = new okhttp3.OkHttpClient.Builder();
+            this.mRetrofitBuilder = new retrofit2.Retrofit.Builder();
         }
 
-        /**
-         * 指定自己的OKhttpClient
-         */
-        public Builder client(OkHttpClient client) {
+        public PerfectionRetrofit.Builder client(OkHttpClient client) {
             this.mOkHttpClient = PerfectionUtils.checkNotNull(client, "client == null");
             return this;
         }
 
-        public Builder callFactory(okhttp3.Call.Factory factory) {
+        public PerfectionRetrofit.Builder callFactory(okhttp3.Call.Factory factory) {
             this.mCallFactory = PerfectionUtils.checkNotNull(factory, "factory == null");
             return this;
         }
 
-        /**
-         * 设置连接超时时间
-         */
-        public Builder connectTimeout(int timeout) {
-            return connectTimeout(timeout, TimeUnit.SECONDS);
+        public PerfectionRetrofit.Builder connectTimeout(int timeout) {
+            return this.connectTimeout(timeout, TimeUnit.SECONDS);
         }
 
-        /**
-         * 设置写的超时时间
-         */
-        public Builder writeTimeout(int timeout) {
-            return writeTimeout(timeout, TimeUnit.SECONDS);
+        public PerfectionRetrofit.Builder writeTimeout(int timeout) {
+            return this.writeTimeout(timeout, TimeUnit.SECONDS);
         }
 
-        /**
-         * 设置读的超时时间
-         */
-        public Builder readTimeout(int timeout) {
-            return readTimeout(timeout, TimeUnit.SECONDS);
+        public PerfectionRetrofit.Builder readTimeout(int timeout) {
+            return this.readTimeout(timeout, TimeUnit.SECONDS);
         }
 
-        /**
-         * 打印LOG
-         */
-        public Builder addLog(boolean isLog) {
+        public PerfectionRetrofit.Builder addLog(boolean isLog) {
             this.isLog = isLog;
             return this;
         }
 
-
-        /**
-         * 是否打开缓存
-         */
-        public Builder addCache(boolean isCache) {
+        public PerfectionRetrofit.Builder addCache(boolean isCache) {
             this.isCache = isCache;
             return this;
         }
 
-        /**
-         * 设置代理
-         */
-        public Builder proxy(Proxy proxy) {
-            mOkHttpBuilder.proxy(PerfectionUtils.checkNotNull(proxy, "proxy == null"));
+        public PerfectionRetrofit.Builder proxy(Proxy proxy) {
+            this.mOkHttpBuilder.proxy(PerfectionUtils.checkNotNull(proxy, "proxy == null"));
             return this;
         }
 
-        private Builder writeTimeout(int timeout, TimeUnit unit) {
+        private PerfectionRetrofit.Builder writeTimeout(int timeout, TimeUnit unit) {
             if (timeout != -1) {
-                mOkHttpBuilder.writeTimeout(timeout, unit);
+                this.mOkHttpBuilder.writeTimeout((long)timeout, unit);
             } else {
-                mOkHttpBuilder.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+                this.mOkHttpBuilder.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
             }
+
             return this;
         }
 
-
-        private Builder readTimeout(int timeout, TimeUnit unit) {
+        private PerfectionRetrofit.Builder readTimeout(int timeout, TimeUnit unit) {
             if (timeout != -1) {
-                mOkHttpBuilder.readTimeout(timeout, unit);
+                this.mOkHttpBuilder.readTimeout((long)timeout, unit);
             } else {
-                mOkHttpBuilder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+                this.mOkHttpBuilder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
             }
+
             return this;
         }
 
-        private Builder connectTimeout(int timeout, TimeUnit unit) {
+        private PerfectionRetrofit.Builder connectTimeout(int timeout, TimeUnit unit) {
             if (timeout != -1) {
-                mOkHttpBuilder.connectTimeout(timeout, unit);
+                this.mOkHttpBuilder.connectTimeout((long)timeout, unit);
             } else {
-                mOkHttpBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+                this.mOkHttpBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
             }
+
             return this;
         }
 
-
-        /**
-         * 设置用于回收HTTP和HTTPS连接的连接池。
-         */
-        public Builder connectionPool(ConnectionPool connectionPool) {
+        public PerfectionRetrofit.Builder connectionPool(ConnectionPool connectionPool) {
             this.mConnectionPool = PerfectionUtils.checkNotNull(connectionPool, "mConnectionPool == null");
             return this;
         }
 
-        /**
-         * 设置baseUrl
-         */
-        public Builder baseUrl(String baseUrl) {
+        public PerfectionRetrofit.Builder baseUrl(String baseUrl) {
             this.mBaseUrl = PerfectionUtils.checkNotNull(baseUrl, "mBaseUrl == null");
             return this;
         }
 
-
-        /**
-         * 设置数据转换器
-         * 默认是fastjson
-         */
-        public Builder addConverterFactory(Converter.Factory factory) {
+        public PerfectionRetrofit.Builder addConverterFactory(Factory factory) {
             this.mConverterFactory = factory;
             return this;
         }
 
-        /**
-         * 设置回调adapter
-         * 默认是rxjava
-         */
-        public Builder addCallAdapterFactory(CallAdapter.Factory factory) {
+        public PerfectionRetrofit.Builder addCallAdapterFactory(retrofit2.CallAdapter.Factory factory) {
             this.mCallAdapterFactory = factory;
             return this;
         }
 
-
-        /**
-         * 设置请求头参数
-         */
-        public Builder addHeader(Map<String, String> headers) {
+        public PerfectionRetrofit.Builder addHeader(Map<String, String> headers) {
             if (headers != null && headers.size() > 0) {
-                mOkHttpBuilder.addInterceptor(new BaseInterceptor(headers));
+                this.mOkHttpBuilder.addInterceptor(new BaseInterceptor(headers));
             }
+
             return this;
         }
 
-
-        /**
-         * 设置https
-         */
-        private Builder addSSLSocketFactory(SSLSocketFactory sslSocketFactory) {
+        private PerfectionRetrofit.Builder addSSLSocketFactory(SSLSocketFactory sslSocketFactory) {
             this.mSslSocketFactory = sslSocketFactory;
             return this;
         }
 
-        private Builder addHostnameVerifier(HostnameVerifier hostnameVerifier) {
+        private PerfectionRetrofit.Builder addHostnameVerifier(HostnameVerifier hostnameVerifier) {
             this.mHostnameVerifier = hostnameVerifier;
             return this;
         }
 
-        /**
-         * 设置支持https需要接入证书
-         * int[] certificates = {R.raw.myssl1, R.raw.myssl2,......}
-         * certificates是你的ssl证书文件的id，项目中请放到raw资源文件下
-         * int[] hosts = {"https:// you hosturl2", "https:// you hosturl2",......}
-         */
-        public Builder addSSL(String[] hosts, int[] certificates) {
-            if (hosts == null) throw new NullPointerException("hosts == null");
-            if (certificates == null) throw new NullPointerException("ids == null");
-            addSSLSocketFactory(PerfectionHttpsFactory.getSSLSocketFactory(mContext, certificates));
-            addHostnameVerifier(PerfectionHttpsFactory.getHostnameVerifier(hosts));
-            return this;
+        public PerfectionRetrofit.Builder addSSL(String[] hosts, int[] certificates) {
+            if (hosts == null) {
+                throw new NullPointerException("hosts == null");
+            } else if (certificates == null) {
+                throw new NullPointerException("ids == null");
+            } else {
+                this.addSSLSocketFactory(PerfectionHttpsFactory.getSSLSocketFactory(this.mContext, certificates));
+                this.addHostnameVerifier(PerfectionHttpsFactory.getHostnameVerifier(hosts));
+                return this;
+            }
         }
 
-        /**
-         * setCache
-         */
         private Cache cache() {
-            String cacheControlValue = String.format("max-age=%d".toLowerCase(), CacheInterceptor.MAX_STALE);
-            Interceptor cacheInterceptor = new CacheInterceptor(mContext, cacheControlValue);
-            Interceptor cacheInterceptorOffline = new CacheInterceptorOffline(mContext, cacheControlValue);
-            mOkHttpBuilder.addNetworkInterceptor(cacheInterceptor);
-            mOkHttpBuilder.addNetworkInterceptor(cacheInterceptorOffline);
-            mOkHttpBuilder.addInterceptor(cacheInterceptorOffline);
-            File mHttpCacheDirectory = new File(mContext.getCacheDir(), "perfection_http_cache");
+            String cacheControlValue = String.format("max-age=%d".toLowerCase(), 259200);
+            Interceptor cacheInterceptor = new CacheInterceptor(this.mContext, cacheControlValue);
+            Interceptor cacheInterceptorOffline = new CacheInterceptorOffline(this.mContext, cacheControlValue);
+            this.mOkHttpBuilder.addNetworkInterceptor(cacheInterceptor);
+            this.mOkHttpBuilder.addNetworkInterceptor(cacheInterceptorOffline);
+            this.mOkHttpBuilder.addInterceptor(cacheInterceptorOffline);
+            File mHttpCacheDirectory = new File(this.mContext.getCacheDir(), "perfection_http_cache");
             return new Cache(mHttpCacheDirectory, DEFAULT_CACHE_MAX_SIZE);
         }
 
         public PerfectionRetrofit build() {
-            if (TextUtils.isEmpty(mBaseUrl)) {
+            if (TextUtils.isEmpty(this.mBaseUrl)) {
                 throw new IllegalStateException("Base URL required.");
-            }
-
-            if (mOkHttpBuilder == null) {
+            } else if (this.mOkHttpBuilder == null) {
                 throw new IllegalStateException("mOkHttpBuilder required.");
-            }
-
-            if (mRetrofitBuilder == null) {
+            } else if (this.mRetrofitBuilder == null) {
                 throw new IllegalStateException("mRetrofitBuilder required.");
-            }
-
-            mRetrofitBuilder.baseUrl(mBaseUrl);
-
-            if (mConverterFactory == null) {
-//                mConverterFactory = GsonConverterFactory.create();
-                mConverterFactory = FastJsonConverterFactory.create();
-            }
-            mRetrofitBuilder.addConverterFactory(mConverterFactory);
-
-            if (mCallAdapterFactory == null) {
-                mCallAdapterFactory = RxJava2CallAdapterFactory.create();
-            }
-            mRetrofitBuilder.addCallAdapterFactory(mCallAdapterFactory);
-
-            if (isLog) {
-                mOkHttpBuilder.addNetworkInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-                    @Override
-                    public void log(String message) {
-                        Log.i("RETROFIT", message);
-                    }
-                }).setLevel(HttpLoggingInterceptor.Level.BODY));
-            }
-
-            if (mSslSocketFactory != null) {
-                mOkHttpBuilder.sslSocketFactory(mSslSocketFactory);
             } else {
-                //默认支持所有证书
-                TrustAllManager trustAllManager = new TrustAllManager();
-                mOkHttpBuilder.sslSocketFactory(PerfectionHttpsFactory.createSSLSocketFactory(trustAllManager), trustAllManager);
-            }
+                this.mRetrofitBuilder.baseUrl(this.mBaseUrl);
+                if (this.mConverterFactory == null) {
+                    this.mConverterFactory = FastJsonConverterFactory.create();
+                }
 
-            if (mHostnameVerifier != null) {
-                mOkHttpBuilder.hostnameVerifier(mHostnameVerifier);
-            } else {
-                mOkHttpBuilder.hostnameVerifier(new TrustAllHostnameVerifier());
-            }
+                this.mRetrofitBuilder.addConverterFactory(this.mConverterFactory);
+                if (this.mCallAdapterFactory == null) {
+                    this.mCallAdapterFactory = RxJava2CallAdapterFactory.create();
+                }
 
-            if (isCache) {
-                mOkHttpBuilder.cache(cache());
-            }
+                this.mRetrofitBuilder.addCallAdapterFactory(this.mCallAdapterFactory);
+                if (this.isLog) {
+                    this.mOkHttpBuilder.addNetworkInterceptor((new HttpLoggingInterceptor(new Logger() {
+                        public void log(String message) {
+                            Log.i("Retrofit", message);
+                        }
+                    })).setLevel(Level.BODY));
+                }
 
-            if (mConnectionPool == null) {
-                mConnectionPool = new ConnectionPool(DEFAULT_MAX_IDLE_CONNECTIONS, DEFAULT_KEEP_ALIVE_DURATION, TimeUnit.SECONDS);
-            }
-            mOkHttpBuilder.connectionPool(mConnectionPool);
+                if (this.mSslSocketFactory != null) {
+                    this.mOkHttpBuilder.sslSocketFactory(this.mSslSocketFactory);
+                } else {
+                    TrustAllManager trustAllManager = new TrustAllManager();
+                    this.mOkHttpBuilder.sslSocketFactory(PerfectionHttpsFactory.createSSLSocketFactory(trustAllManager), trustAllManager);
+                }
 
-            if (mCallFactory != null) {
-                mRetrofitBuilder.callFactory(mCallFactory);
-            }
+                if (this.mHostnameVerifier != null) {
+                    this.mOkHttpBuilder.hostnameVerifier(this.mHostnameVerifier);
+                } else {
+                    this.mOkHttpBuilder.hostnameVerifier(new TrustAllHostnameVerifier());
+                }
 
-            if (mOkHttpClient == null) {
-                mOkHttpClient = mOkHttpBuilder.build();
-            }
-            mRetrofitBuilder.client(mOkHttpClient);
+                if (this.isCache) {
+                    this.mOkHttpBuilder.cache(this.cache());
+                }
 
-            Retrofit retrofit = mRetrofitBuilder.build();
-            BaseApiService apiManager = retrofit.create(BaseApiService.class);
-            return new PerfectionRetrofit(retrofit, apiManager);
+                if (this.mConnectionPool == null) {
+                    this.mConnectionPool = new ConnectionPool(DEFAULT_MAX_IDLE_CONNECTIONS, DEFAULT_KEEP_ALIVE_DURATION, TimeUnit.SECONDS);
+                }
+
+                this.mOkHttpBuilder.connectionPool(this.mConnectionPool);
+                if (this.mCallFactory != null) {
+                    this.mRetrofitBuilder.callFactory(this.mCallFactory);
+                }
+
+                if (this.mOkHttpClient == null) {
+                    this.mOkHttpClient = this.mOkHttpBuilder.build();
+                }
+
+                this.mRetrofitBuilder.client(this.mOkHttpClient);
+                Retrofit retrofit = this.mRetrofitBuilder.build();
+                BaseApiService apiManager = retrofit.create(BaseApiService.class);
+                return new PerfectionRetrofit(retrofit, apiManager);
+            }
         }
     }
 
+    private static class HttpResponseFunc<T> implements Function<Throwable, Observable<T>> {
+        private HttpResponseFunc() {
+        }
+
+        public Observable<T> apply(Throwable throwable) throws Exception {
+            return Observable.error(PerfectionException.handleException((Exception)throwable));
+        }
+    }
 }
-
-

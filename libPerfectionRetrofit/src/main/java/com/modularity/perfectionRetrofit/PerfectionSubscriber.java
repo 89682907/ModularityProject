@@ -1,71 +1,71 @@
 package com.modularity.perfectionRetrofit;
 
+import android.util.Log;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.Feature;
 import com.modularity.perfectionRetrofit.base.BaseSubscriber;
 import com.modularity.perfectionRetrofit.exception.PerfectionException;
 import com.modularity.perfectionRetrofit.exception.PerfectionThrowable;
-
 import java.lang.reflect.Type;
-
 import okhttp3.ResponseBody;
-
-/**
- * Created by jishen on 2017/1/22.
- */
 
 class PerfectionSubscriber<T> extends BaseSubscriber<ResponseBody> {
     private PerfectionCallBack<T> mCallBack;
-    private Type                  mClassType;
+    private Type mClassType;
+    private boolean isParserJson;
 
     PerfectionSubscriber(Type mClassType, PerfectionCallBack<T> callBack) {
         this.mCallBack = callBack;
         this.mClassType = mClassType;
+        this.isParserJson = !mClassType.getClass().getName().equals("java.lang.String");
     }
 
-
-    @Override
     public void onStart() {
-        if (mCallBack != null) {
-            mCallBack.onStart();
+        if (this.mCallBack != null) {
+            this.mCallBack.onStart();
         }
+
     }
 
-
-    @Override
     public void onError(PerfectionThrowable e) {
-        onComplete();//RxJava中onComplete()和onError()只会调用一个
-        if (mCallBack != null) {
-            mCallBack.onError(e);
+        this.onComplete();
+        if (this.mCallBack != null) {
+            this.mCallBack.onError(e);
         }
+
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
     public void onNext(ResponseBody responseBody) {
         try {
             byte[] bytes = responseBody.bytes();
             String jsStr = new String(bytes);
-            parserFastJson(jsStr);
-        } catch (Exception e) {
-            e.printStackTrace();
-            onError(PerfectionException.handleException(e));
+            if (BuildConfig.DEBUG) {
+                Log.i("Retrofit", "ResponseValue:" + jsStr);
+            }
+
+            if (this.isParserJson) {
+                this.parserFastJson(jsStr);
+            } else if (this.mCallBack != null) {
+                this.mCallBack.onSuccess((T) jsStr);
+            }
+        } catch (Exception var4) {
+            var4.printStackTrace();
+            this.onError(PerfectionException.handleException(var4));
         }
 
     }
 
-    @Override
     public void onComplete() {
-        if (mCallBack != null) {
-            mCallBack.onComplete();
+        if (this.mCallBack != null) {
+            this.mCallBack.onComplete();
         }
+
     }
 
-    @SuppressWarnings("unchecked")
     private void parserFastJson(String jsStr) {
-        if (mCallBack != null) {
-            mCallBack.onSuccess((T) JSON.parseObject(jsStr, mClassType));
+        if (this.mCallBack != null) {
+            this.mCallBack.onSuccess(JSON.parseObject(jsStr, this.mClassType, new Feature[0]));
         }
+
     }
-
-
 }

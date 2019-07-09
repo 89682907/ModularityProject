@@ -20,8 +20,8 @@ uploadArchives {
 }
 
 dependencies {
-    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
-    api 'io.reactivex.rxjava2:rxjava:2.1.7'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    api 'io.reactivex.rxjava2:rxjava:2.1.12'
     api 'com.alibaba:fastjson:'+ "$rootProject.ext.fastjson"
     implementation('com.squareup.retrofit2:retrofit:2.3.0') {
         exclude(group: 'com.squareup.okhttp3', module: 'okhttp')
