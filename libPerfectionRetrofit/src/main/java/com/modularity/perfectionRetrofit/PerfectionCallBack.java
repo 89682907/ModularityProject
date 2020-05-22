@@ -7,7 +7,7 @@ public interface PerfectionCallBack<T> {
 
      void onComplete();
 
-     void onSuccess(T var1);
+     void onSuccess(T resData);
 
-     void onError(PerfectionThrowable var1);
+     void onError(PerfectionThrowable err);
 }

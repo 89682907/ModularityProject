@@ -3,6 +3,7 @@ package com.modularity.perfectionRetrofit;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
+
 import com.modularity.perfectionRetrofit.base.BaseApiService;
 import com.modularity.perfectionRetrofit.base.BaseInterceptor;
 import com.modularity.perfectionRetrofit.base.BaseSubscriber;
@@ -13,12 +14,14 @@ import com.modularity.perfectionRetrofit.https.PerfectionHttpsFactory;
 import com.modularity.perfectionRetrofit.https.TrustAllHostnameVerifier;
 import com.modularity.perfectionRetrofit.https.TrustAllManager;
 import com.modularity.perfectionRetrofit.util.PerfectionUtils;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+
 import java.io.File;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -26,13 +29,14 @@ import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
+
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
+
 import okhttp3.Cache;
 import okhttp3.ConnectionPool;
 import okhttp3.Interceptor;
@@ -51,10 +55,10 @@ import retrofit2.http.FieldMap;
 
 @SuppressWarnings("unchecked")
 public final class PerfectionRetrofit {
-    private BaseApiService mBaseApiService;
-    private Retrofit mRetrofit;
+    private BaseApiService        mBaseApiService;
+    private Retrofit              mRetrofit;
     private ObservableTransformer mExceptTransformer;
-    private BaseSubscriber mSubscriber;
+    private BaseSubscriber        mSubscriber;
     private ObservableTransformer schedulersTransformer;
 
     private PerfectionRetrofit(Retrofit retrofit, BaseApiService apiManager) {
@@ -73,21 +77,13 @@ public final class PerfectionRetrofit {
 
     private List<Type> methodHandler(Type[] types) {
         List<Type> needTypes = new ArrayList();
-        Type[] var3 = types;
-        int var4 = types.length;
-
-        for(int var5 = 0; var5 < var4; ++var5) {
-            Type paramType = var3[var5];
+        for (Type paramType : types) {
             if (paramType instanceof ParameterizedType) {
-                Type[] parenTypes = ((ParameterizedType)paramType).getActualTypeArguments();
-                Type[] var8 = parenTypes;
-                int var9 = parenTypes.length;
-
-                for(int var10 = 0; var10 < var9; ++var10) {
-                    Type childType = var8[var10];
+                Type[] parenTypes = ((ParameterizedType) paramType).getActualTypeArguments();
+                for (Type childType : parenTypes) {
                     needTypes.add(childType);
                     if (childType instanceof ParameterizedType) {
-                        Type[] childTypes = ((ParameterizedType)childType).getActualTypeArguments();
+                        Type[] childTypes = ((ParameterizedType) childType).getActualTypeArguments();
                         Collections.addAll(needTypes, childTypes);
                     }
                 }
@@ -101,9 +97,8 @@ public final class PerfectionRetrofit {
         Type type = null;
         Type[] types = callBack.getClass().getGenericInterfaces();
         if (!this.methodHandler(types).isEmpty()) {
-            type = (Type)this.methodHandler(types).get(0);
+            type = this.methodHandler(types).get(0);
         }
-
         return type;
     }
 
@@ -120,95 +115,99 @@ public final class PerfectionRetrofit {
     }
 
     public <T> void requestGet(String url, Map<String, String> maps, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
-        this.mBaseApiService.requestGet(url, maps).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
+        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mBaseApiService.requestGet(url, maps == null ? new HashMap<>() : maps).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
-    /** @deprecated */
+    /**
+     * @deprecated
+     */
     @Deprecated
     public void get(String url, Map<String, String> maps, BaseSubscriber<ResponseBody> subscriber) {
         this.mSubscriber = subscriber;
-        this.mBaseApiService.requestGet(url, maps).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(subscriber);
+        this.mBaseApiService.requestGet(url, maps == null ? new HashMap<>() : maps).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(subscriber);
     }
 
     public <T> void requestPost(String url, Object requestBean, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
-        this.mBaseApiService.requestPost(url, requestBean).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
+        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mBaseApiService.requestPost(url, requestBean).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
     public <T> void requestForm(String url, @FieldMap(encoded = true) Map<String, String> fields, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
-        this.mBaseApiService.postForm(url, fields).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
+        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mBaseApiService.postForm(url, fields == null ? new HashMap<>() : fields).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
-    /** @deprecated */
+    /**
+     * @deprecated
+     */
     @Deprecated
     public void post(String url, Object requestBean, BaseSubscriber<ResponseBody> subscriber) {
         this.mSubscriber = subscriber;
-        this.mBaseApiService.requestPost(url, requestBean).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(subscriber);
+        this.mBaseApiService.requestPost(url, requestBean).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(subscriber);
     }
 
-    /** @deprecated */
+    /**
+     * @deprecated
+     */
     @Deprecated
     public void post(String url, @FieldMap(encoded = true) Map<String, String> parameters, BaseSubscriber<ResponseBody> subscriber) {
         this.mSubscriber = subscriber;
-        this.mBaseApiService.requestPost(url, parameters).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(subscriber);
+        this.mBaseApiService.requestPost(url, parameters == null ? new HashMap<>() : parameters).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(subscriber);
     }
 
-    /** @deprecated */
+    /**
+     * @deprecated
+     */
     @Deprecated
     public void form(String url, @FieldMap(encoded = true) Map<String, String> fields, BaseSubscriber<ResponseBody> subscriber) {
         this.mSubscriber = subscriber;
-        this.mBaseApiService.postForm(url, fields).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(subscriber);
+        this.mBaseApiService.postForm(url, fields == null ? new HashMap<>() : fields).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(subscriber);
     }
 
     public <T> void requestPut(String url, @FieldMap(encoded = true) Map<String, RequestBody> fields, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
-        this.mBaseApiService.requestPut(url, fields).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
+        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mBaseApiService.requestPut(url, fields == null ? new HashMap<>() : fields).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
     public <T> void uploadImage(String url, File file, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
-        this.mBaseApiService.upLoadImage(url, PerfectionUtils.createImage(file)).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
+        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mBaseApiService.upLoadImage(url, PerfectionUtils.createImage(file)).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
-    public <T> void uploadFlie(String url, File file, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
-        this.mBaseApiService.uploadFile(url, PerfectionUtils.createFile(file)).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
+    public <T> void uploadFile(String url, File file, PerfectionCallBack<T> callBack) {
+        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mBaseApiService.uploadFile(url, PerfectionUtils.createFile(file)).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
     public <T> void requestParamsAndFiles(String url, Map<String, RequestBody> paramMap, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
-        this.mBaseApiService.requestParamsAndFiles(url, paramMap).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
+        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mBaseApiService.requestParamsAndFiles(url, paramMap == null ? new HashMap<>() : paramMap).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
     public <T> void requestParamsAndFile(String url, Map<String, RequestBody> paramMap, Part file, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
-        this.mBaseApiService.requestParamsAndFile(url, paramMap, file).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
+        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mBaseApiService.requestParamsAndFile(url, paramMap == null ? new HashMap<>() : paramMap, file).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
-    public <T> void uploadFlieWithDescription(String url, String description, File file, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
-        this.mBaseApiService.uploadFile(url, PerfectionUtils.createPartFromString(description), PerfectionUtils.createPart(description, file)).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
+    public <T> void uploadFileWithDescription(String url, String description, File file, PerfectionCallBack<T> callBack) {
+        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mBaseApiService.uploadFile(url, PerfectionUtils.createPartFromString(description), PerfectionUtils.createPart(description, file)).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
     public <T> void uploadFlies(String url, Map<String, File> files, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(this.classType(callBack), callBack);
+        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
         Map<String, RequestBody> filesBody = new HashMap();
         if (files != null && files.size() > 0) {
-            Iterator var5 = files.entrySet().iterator();
-
-            while(var5.hasNext()) {
-                Entry<String, File> entry = (Entry)var5.next();
-                String key = (String)entry.getKey();
-                File file = (File)entry.getValue();
+            for (Entry<String, File> stringFileEntry : files.entrySet()) {
+                String key = stringFileEntry.getKey();
+                File file = stringFileEntry.getValue();
                 if (file != null) {
                     filesBody.put(key, PerfectionUtils.createFile(file));
                 }
             }
         }
-
-        this.mBaseApiService.uploadFiles(url, filesBody).compose(this.schedulersTransformer).compose(this.handleErrTransformer()).subscribe(this.mSubscriber);
+        this.mBaseApiService.uploadFiles(url, filesBody).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
     public void cancelRequest() {
@@ -219,29 +218,25 @@ public final class PerfectionRetrofit {
     }
 
     public static final class Builder {
-        private static final int DEFAULT_TIMEOUT = 60;
-        private static final int DEFAULT_MAX_IDLE_CONNECTIONS = 5;
-        private static final long DEFAULT_KEEP_ALIVE_DURATION = 8L;
-        private static final long DEFAULT_CACHE_MAX_SIZE = 10485760L;
-        private Boolean isLog = true;
-        private Boolean isCache = false;
-        private Context mContext;
-        private String mBaseUrl;
-        private HostnameVerifier mHostnameVerifier;
-        private SSLSocketFactory mSslSocketFactory;
-        private ConnectionPool mConnectionPool;
-        private Factory mConverterFactory;
-        private retrofit2.CallAdapter.Factory mCallAdapterFactory;
-        private okhttp3.Call.Factory mCallFactory;
-        private okhttp3.OkHttpClient.Builder mOkHttpBuilder;
-        private OkHttpClient mOkHttpClient;
-        private retrofit2.Retrofit.Builder mRetrofitBuilder;
+        private static final int                           DEFAULT_TIMEOUT              = 60;
+        private static final int                           DEFAULT_MAX_IDLE_CONNECTIONS = 5;
+        private static final long                          DEFAULT_KEEP_ALIVE_DURATION  = 8L;
+        private static final long                          DEFAULT_CACHE_MAX_SIZE       = 10 * 1024 * 1024;
+        private              Boolean                       isLog                        = true;
+        private              Boolean                       isCache                      = false;
+        private              Context                       mContext;
+        private              String                        mBaseUrl;
+        private              HostnameVerifier              mHostnameVerifier;
+        private              SSLSocketFactory              mSslSocketFactory;
+        private              ConnectionPool                mConnectionPool;
+        private              Factory                       mConverterFactory;
+        private              retrofit2.CallAdapter.Factory mCallAdapterFactory;
+        private              okhttp3.Call.Factory          mCallFactory;
+        private              okhttp3.OkHttpClient.Builder  mOkHttpBuilder;
+        private              OkHttpClient                  mOkHttpClient;
+        private              retrofit2.Retrofit.Builder    mRetrofitBuilder;
 
-        private Builder() {
-        }
-
-        public Builder(Context context) {
-            this.mContext = context.getApplicationContext();
+        public Builder() {
             this.mOkHttpBuilder = new okhttp3.OkHttpClient.Builder();
             this.mRetrofitBuilder = new retrofit2.Retrofit.Builder();
         }
@@ -273,8 +268,9 @@ public final class PerfectionRetrofit {
             return this;
         }
 
-        public PerfectionRetrofit.Builder addCache(boolean isCache) {
+        public PerfectionRetrofit.Builder addCache(Context context, boolean isCache) {
             this.isCache = isCache;
+            this.mContext = context;
             return this;
         }
 
@@ -285,7 +281,7 @@ public final class PerfectionRetrofit {
 
         private PerfectionRetrofit.Builder writeTimeout(int timeout, TimeUnit unit) {
             if (timeout != -1) {
-                this.mOkHttpBuilder.writeTimeout((long)timeout, unit);
+                this.mOkHttpBuilder.writeTimeout(timeout, unit);
             } else {
                 this.mOkHttpBuilder.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
             }
@@ -295,7 +291,7 @@ public final class PerfectionRetrofit {
 
         private PerfectionRetrofit.Builder readTimeout(int timeout, TimeUnit unit) {
             if (timeout != -1) {
-                this.mOkHttpBuilder.readTimeout((long)timeout, unit);
+                this.mOkHttpBuilder.readTimeout(timeout, unit);
             } else {
                 this.mOkHttpBuilder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
             }
@@ -305,7 +301,7 @@ public final class PerfectionRetrofit {
 
         private PerfectionRetrofit.Builder connectTimeout(int timeout, TimeUnit unit) {
             if (timeout != -1) {
-                this.mOkHttpBuilder.connectTimeout((long)timeout, unit);
+                this.mOkHttpBuilder.connectTimeout(timeout, unit);
             } else {
                 this.mOkHttpBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
             }
@@ -351,26 +347,30 @@ public final class PerfectionRetrofit {
             return this;
         }
 
-        public PerfectionRetrofit.Builder addSSL(String[] hosts, int[] certificates) {
+        public PerfectionRetrofit.Builder addSSL(Context context, String[] hosts, int[] certificates) {
+            this.mContext = context;
             if (hosts == null) {
                 throw new NullPointerException("hosts == null");
             } else if (certificates == null) {
                 throw new NullPointerException("ids == null");
             } else {
-                this.addSSLSocketFactory(PerfectionHttpsFactory.getSSLSocketFactory(this.mContext, certificates));
+                this.addSSLSocketFactory(PerfectionHttpsFactory.getSSLSocketFactory(context, certificates));
                 this.addHostnameVerifier(PerfectionHttpsFactory.getHostnameVerifier(hosts));
                 return this;
             }
         }
 
-        private Cache cache() {
+        private Cache cache(Context context) {
+            if (context == null) {
+                throw new NullPointerException("context == null");
+            }
             String cacheControlValue = String.format("max-age=%d".toLowerCase(), 259200);
-            Interceptor cacheInterceptor = new CacheInterceptor(this.mContext, cacheControlValue);
-            Interceptor cacheInterceptorOffline = new CacheInterceptorOffline(this.mContext, cacheControlValue);
+            Interceptor cacheInterceptor = new CacheInterceptor(context, cacheControlValue);
+            Interceptor cacheInterceptorOffline = new CacheInterceptorOffline(context, cacheControlValue);
             this.mOkHttpBuilder.addNetworkInterceptor(cacheInterceptor);
             this.mOkHttpBuilder.addNetworkInterceptor(cacheInterceptorOffline);
             this.mOkHttpBuilder.addInterceptor(cacheInterceptorOffline);
-            File mHttpCacheDirectory = new File(this.mContext.getCacheDir(), "perfection_http_cache");
+            File mHttpCacheDirectory = new File(context.getCacheDir(), "perfection_http_cache");
             return new Cache(mHttpCacheDirectory, DEFAULT_CACHE_MAX_SIZE);
         }
 
@@ -386,13 +386,13 @@ public final class PerfectionRetrofit {
                 if (this.mConverterFactory == null) {
                     this.mConverterFactory = FastJsonConverterFactory.create();
                 }
-
                 this.mRetrofitBuilder.addConverterFactory(this.mConverterFactory);
+
                 if (this.mCallAdapterFactory == null) {
                     this.mCallAdapterFactory = RxJava2CallAdapterFactory.create();
                 }
-
                 this.mRetrofitBuilder.addCallAdapterFactory(this.mCallAdapterFactory);
+
                 if (this.isLog) {
                     this.mOkHttpBuilder.addNetworkInterceptor((new HttpLoggingInterceptor(new Logger() {
                         public void log(String message) {
@@ -415,7 +415,7 @@ public final class PerfectionRetrofit {
                 }
 
                 if (this.isCache) {
-                    this.mOkHttpBuilder.cache(this.cache());
+                    this.mOkHttpBuilder.cache(this.cache(this.mContext));
                 }
 
                 if (this.mConnectionPool == null) {
@@ -444,7 +444,7 @@ public final class PerfectionRetrofit {
         }
 
         public Observable<T> apply(Throwable throwable) throws Exception {
-            return Observable.error(PerfectionException.handleException((Exception)throwable));
+            return Observable.error(PerfectionException.handleException((Exception) throwable));
         }
     }
 }

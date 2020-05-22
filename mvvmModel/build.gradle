@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply from: "${rootDir}/gradle/baseModule.gradle"
 
 android {
-    resourcePrefix "mb"
+    resourcePrefix "mvvm"
     defaultConfig {
         versionCode Integer.parseInt("${rootProject.ext.versionCode}")
         versionName "${rootProject.ext.versionName}"
@@ -13,6 +13,10 @@ android {
         }
     }
 
+    dataBinding {
+        enabled = true
+    }
+
 }
 
 apply plugin: 'maven'
@@ -20,8 +24,8 @@ uploadArchives {
     repositories.mavenDeployer {
         repository(url: rootProject.ext.repoUrl)
         pom.groupId = rootProject.ext.PROJ_MOD_GROUP
-        pom.artifactId = MOD_B_ARTIFACTID
-        pom.version = MOD_B_VERSION
+        pom.artifactId = MOD_MVVM_ARTIFACTID
+        pom.version = MOD_MVVM_VERSION
     }
 }
 
@@ -29,6 +33,5 @@ uploadArchives {
 
 dependencies {
     compileOnly project(':libCommon')
-//    implementation "${rootProject.ext.libFaceRecognition}"
     annotationProcessor 'com.alibaba:arouter-compiler:' + "$rootProject.ext.arouter_compiler"
 }

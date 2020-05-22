@@ -24,15 +24,12 @@
 //}
 
 android.applicationVariants.all { variant ->
-    variant.outputs.all { output ->
+    variant.outputs.each { output ->
         output.getProcessManifestProvider().get().doLast {
-            [file("${buildDir}/intermediates/instant_app_manifest/${variant.name}/AndroidManifest.xml"),
-             file("${buildDir}/intermediates/merged_manifests/${variant.name}/AndroidManifest.xml"),
-             file("${buildDir}/intermediates/instant_run_merged_manifests/${variant.name}/AndroidManifest.xml")
+            [file(output.getProcessManifestProvider().get().manifestOutputDirectory.absolutePath + "/AndroidManifest.xml"),
+             file(output.getProcessManifestProvider().get().instantRunManifestOutputDirectory.absolutePath + "/AndroidManifest.xml")
             ].forEach({ File manifestOutFile ->
-                println "manifestOutFile.exists()=" + manifestOutFile.exists()
                 if (manifestOutFile.exists()) {
-                    println "manifestOutFilePath=" + manifestOutFile.getPath()
                     def providerFix = "${rootProject.ext.PKG_FIX_NAME_RELEASE}"
                     def appName = "${rootProject.ext.APP_NAME_RELEASE}"
 //                    def baiduLocKey = "${rootProject.ext.BaiduLocKey_RELEASE}"
@@ -40,15 +37,14 @@ android.applicationVariants.all { variant ->
 //                    def umengKey = "${rootProject.ext.UMeng_RELEASE}"
 //                    def x5Key = "${rootProject.ext.QBSDKAppKey_RELEASE}"
 //                    def aMapKey = "${rootProject.ext.AMAP_RELEASE}"
-//                    if (variant.name == "debug") {
-                    if (variant.name == "standardDebug" || variant.name == ("baiduDebug") || variant.name == ("yingyongbaoDebug")) {
+                    if (variant.name == "debug") {
                         providerFix = "${rootProject.ext.PKG_FIX_NAME_DEBUG}"
                         appName = "${rootProject.ext.APP_NAME_DEBUG}"
 //                        baiduLocKey = "${rootProject.ext.BaiduLocKey_DEBUG}"
 //                        umengKey = "${rootProject.ext.UMeng_DEBUG}"
 //                        x5Key = "${rootProject.ext.QBSDKAppKey_DEBUG}"
 //                        aMapKey = "${rootProject.ext.AMAP_DEBUG}"
-                    } else if (variant.name == "standardBeta" || variant.name == ("baiduBeta") || variant.name == ("yingyongbaoBeta")) {
+                    } else if (variant.name == "beta") {
                         providerFix = "${rootProject.ext.PKG_FIX_NAME_BETA}"
                         appName = "${rootProject.ext.APP_NAME_BETA}"
 //                        baiduLocKey = "${rootProject.ext.BaiduLocKey_BETA}"
@@ -56,7 +52,6 @@ android.applicationVariants.all { variant ->
 //                        x5Key = "${rootProject.ext.QBSDKAppKey_BETA}"
 //                        aMapKey = "${rootProject.ext.BETA}"
                     }
-                    println "variant.name = " + variant.name
                     println "replace _REPLACE_PKGNAME_FIX_ to " + providerFix
                     println "replace _APP_NAME to " + appName
 //                    println "replace _BAIDU_LOC_KEY to " + baiduLocKey

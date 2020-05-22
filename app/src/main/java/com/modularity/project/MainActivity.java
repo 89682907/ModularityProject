@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.modularity.mod_a.view.ModuleAActivity;
 import com.modularity.mod_b.ModuleBActivity;
+import com.modularity.mvvm.view.MvvmMainActivity;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnA.setOnClickListener(this);
         Button mBtnB = findViewById(R.id.btn_b);
         mBtnB.setOnClickListener(this);
+        Button mBtnC = findViewById(R.id.btn_c);
+        mBtnC.setOnClickListener(this);
 
     }
 
@@ -30,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             moduleA();
         } else if (i == R.id.btn_b) {
             moduleB();
+        }else if (i == R.id.btn_c) {
+            moduleC();
         }
     }
 
@@ -39,5 +44,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void moduleB() {
         startActivity(new Intent(this, ModuleBActivity.class));
+    }
+
+    private void moduleC() {
+        startActivity(new Intent(this, MvvmMainActivity.class));
+
     }
 }

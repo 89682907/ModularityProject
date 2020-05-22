@@ -152,3 +152,12 @@
 -keep class com.alibaba.fastjson.**{*; }
 # 这儿的“com.android.beandao”是自己的bean包
 -keep class com.android.beandao.**{ *; }
+
+-keep @com.modularity.common.annotation.KeepNotProguard class * {*;}
+-keep class * {
+    @com.modularity.common.annotation.KeepNotProguard <fields>;
+}
+-keepclassmembers class * {
+    @com.modularity.common.annotation.KeepNotProguard <methods>;
+}
+

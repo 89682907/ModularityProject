@@ -7,5 +7,6 @@ package com.modularity.common.statics;
 public interface IRouteStatics {
     String MODULE_A_ACTIVITY = "/moduleA/activity";
     String MODULE_B_ACTIVITY = "/moduleB/activity";
+    String MODULE_MVVM_ACTIVITY = "/moduleMVVM/activity";
     String LIB_FACE_ACTIVITY = "/face/main/activity";
 }
