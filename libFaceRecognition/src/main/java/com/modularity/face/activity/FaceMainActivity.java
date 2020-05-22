@@ -1,6 +1,7 @@
 package com.modularity.face.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.graphics.Point;
 
 import android.graphics.Rect;
@@ -220,6 +221,7 @@ public class FaceMainActivity extends BaseActivity implements EasyPermissions.Pe
         return new Rect(x1, y1, x2, y2);
     }
 
+    @SuppressLint("HandlerLeak")
     class MainHandler extends Handler {
 
         @Override

@@ -21,6 +21,8 @@ public class ModuleBActivity extends BaseActivity {
 
     private void initButton(){
         Button button = findViewById(R.id.btn);
-        button.setOnClickListener(view -> ARouter.getInstance().build(IRouteStatics.LIB_FACE_ACTIVITY).navigation());
+        button.setOnClickListener(view -> {
+            ARouter.getInstance().build(IRouteStatics.LIB_FACE_ACTIVITY).navigation();
+        });
     }
 }

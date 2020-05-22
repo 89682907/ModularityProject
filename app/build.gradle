@@ -56,12 +56,13 @@ android {
 dependencies {
     api project(':libCommon')
     implementation project(':modModuleA')
-//    implementation project(':modModuleB')
-//    implementation project(':mvvmModel')
+    implementation project(':modModuleB')
+    implementation project(':mvvmModel')
 
 //    implementation "${rootProject.ext.modModuleA}"
-    implementation "${rootProject.ext.modModuleB}"
-    implementation "${rootProject.ext.mvvmModel}"
+//    implementation "${rootProject.ext.modModuleB}"
+//    implementation "${rootProject.ext.mvvmModel}"
+    implementation "${rootProject.ext.libFaceRecognition}"
 
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:multidex:1.0.3'

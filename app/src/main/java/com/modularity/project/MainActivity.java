@@ -48,6 +48,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void moduleC() {
         startActivity(new Intent(this, MvvmMainActivity.class));
-
     }
 }

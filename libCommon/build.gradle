@@ -6,6 +6,11 @@ android {
     defaultConfig {
         versionCode Integer.parseInt("${rootProject.ext.versionCode}")
         versionName "${rootProject.ext.versionName}"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName(), AROUTER_GENERATE_DOC: "enable"]
+            }
+        }
     }
 
 }
@@ -15,8 +20,12 @@ dependencies {
 //    api "${rootProject.ext.libPerfectionRetrofit}"
     api 'com.android.support:appcompat-v7:' + "$rootProject.ext.android_support_version"
     api 'com.android.support:recyclerview-v7:' + "$rootProject.ext.android_support_version"
-    api('com.alibaba:arouter-api:' + "$rootProject.ext.arouter_api") {
+    api ('com.alibaba:arouter-api:' + "$rootProject.ext.arouter_api") {
         exclude(group: 'com.android.support')
     }
+    api ('pub.devrel:easypermissions:2.0.1'){
+        exclude(group: 'com.android.support')
+    }
+    api 'com.blankj:utilcode:1.28.5'
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
 }

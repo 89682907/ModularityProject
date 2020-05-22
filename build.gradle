@@ -44,7 +44,7 @@ ext {
     // App dependencies version
     android_support_version = "26.1.0"
     arouter_api = "1.5.0"
-    arouter_compiler = "1.1.4"
+    arouter_compiler = "1.2.2"
     fastjson = "1.1.71.android"
 }
 

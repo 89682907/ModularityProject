@@ -8,7 +8,7 @@ android {
         versionName "${rootProject.ext.versionName}"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [moduleName: project.getName()]
+                arguments = [AROUTER_MODULE_NAME: project.getName(), AROUTER_GENERATE_DOC: "enable"]
             }
         }
     }
@@ -29,6 +29,6 @@ uploadArchives {
 
 dependencies {
     compileOnly project(':libCommon')
-//    implementation "${rootProject.ext.libFaceRecognition}"
+//    implementation project(':libFaceRecognition')
     annotationProcessor 'com.alibaba:arouter-compiler:' + "$rootProject.ext.arouter_compiler"
 }

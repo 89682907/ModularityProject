@@ -2,14 +2,13 @@ apply plugin: 'com.android.library'
 apply from: "${rootDir}/gradle/baseModule.gradle"
 
 android {
-
     resourcePrefix "face"
     defaultConfig {
         versionCode Integer.parseInt("${rootProject.ext.versionCode}")
         versionName "${rootProject.ext.versionName}"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [moduleName: project.getName()]
+                arguments = [AROUTER_MODULE_NAME: project.getName(), AROUTER_GENERATE_DOC: "enable"]
             }
         }
     }
@@ -27,9 +26,6 @@ uploadArchives {
 }
 
 dependencies {
-    compileOnly project(':libCommon')
-    implementation ('pub.devrel:easypermissions:0.4.0'){
-        exclude(group: 'com.android.support')
-    }
+    implementation project(':libCommon')
     annotationProcessor 'com.alibaba:arouter-compiler:' + "$rootProject.ext.arouter_compiler"
 }
