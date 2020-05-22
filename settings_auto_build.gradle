@@ -5,5 +5,3 @@ include ':libFaceRecognition'
 include ':modModuleA'
 include ':modModuleB'
 include ':mvvmModel'
-
-

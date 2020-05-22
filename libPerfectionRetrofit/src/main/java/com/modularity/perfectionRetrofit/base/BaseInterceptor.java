@@ -2,6 +2,8 @@
 package com.modularity.perfectionRetrofit.base;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +21,7 @@ public class BaseInterceptor implements Interceptor{
        this.headers = headers;
     }
 
+    @NotNull
     @Override
     public Response intercept(Chain chain) throws IOException {
 

@@ -44,10 +44,7 @@ public class PerfectionHttpsFactory {
             for (int i = 0; i < certificates.length; i++) {
                 InputStream certificate = context.getResources().openRawResource(certificates[i]);
                 keyStore.setCertificateEntry(String.valueOf(i), certificateFactory.generateCertificate(certificate));
-
-                if (certificate != null) {
-                    certificate.close();
-                }
+                certificate.close();
             }
             SSLContext sslContext = SSLContext.getInstance("TLS");
             TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());

@@ -7,9 +7,9 @@ import com.modularity.perfectionRetrofit.exception.PerfectionThrowable;
 
 import java.lang.ref.WeakReference;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.functions.Consumer;
 
 /**
  * 用于在Http请求开始时，自动显示一个ProgressDialog

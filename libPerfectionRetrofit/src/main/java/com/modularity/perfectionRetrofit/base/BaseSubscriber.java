@@ -5,8 +5,8 @@ package com.modularity.perfectionRetrofit.base;
 import com.modularity.perfectionRetrofit.exception.PerfectionException;
 import com.modularity.perfectionRetrofit.exception.PerfectionThrowable;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 
 /**

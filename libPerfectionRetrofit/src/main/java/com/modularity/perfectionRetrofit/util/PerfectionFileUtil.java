@@ -31,8 +31,6 @@ import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.reactivex.annotations.NonNull;
-
 public class PerfectionFileUtil {
     private static final boolean DEBUG            = false; // Set to true to enable logging
     private static final String  DEFAULT_FILENAME = "perfectionDownFile";
@@ -156,7 +154,6 @@ public class PerfectionFileUtil {
         }
     }
 
-    @NonNull
     static File getUirFile(Uri fileUri) {
         return new File(fileUri.getPath());
     }
@@ -180,10 +177,7 @@ public class PerfectionFileUtil {
      * @return Whether the URI is a local one.
      */
     public static boolean isLocal(String url) {
-        if (url != null && !url.startsWith("http://") && !url.startsWith("https://")) {
-            return true;
-        }
-        return false;
+        return url != null && !url.startsWith("http://") && !url.startsWith("https://");
     }
 
     /**

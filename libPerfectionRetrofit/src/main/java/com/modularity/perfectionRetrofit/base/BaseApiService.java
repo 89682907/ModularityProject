@@ -1,9 +1,8 @@
 package com.modularity.perfectionRetrofit.base;
 
-import io.reactivex.Observable;
-
 import java.util.Map;
 
+import io.reactivex.rxjava3.core.Observable;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;

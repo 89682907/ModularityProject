@@ -1,5 +1,8 @@
 package com.modularity.mod_a.bean;
 
+import com.modularity.common.annotation.KeepNotProguard;
+
+@KeepNotProguard
 public class TestResBean {
 
     /**

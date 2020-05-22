@@ -5,7 +5,7 @@ import android.os.Looper;
 
 import java.io.File;
 
-import io.reactivex.annotations.NonNull;
+import io.reactivex.rxjava3.annotations.NonNull;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -27,42 +27,41 @@ public class PerfectionUtils {
 
     public static RequestBody createJson(String jsonString) {
         checkNotNull(jsonString, "json not null!");
-        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonString);
+        return RequestBody.create(jsonString, MediaType.parse("application/json; charset=utf-8"));
     }
 
     public static RequestBody createText(String text) {
         checkNotNull(text, "text not null!");
-        return RequestBody.create(MediaType.parse("text/plain"), text);
+        return RequestBody.create(text, MediaType.parse("text/plain"));
     }
 
     public static RequestBody createFile(String name) {
         checkNotNull(name, "name not null!");
-        return RequestBody.create(MediaType.parse("multipart/form-data; charset=utf-8"), name);
+        return RequestBody.create(name, MediaType.parse("multipart/form-data; charset=utf-8"));
     }
 
 
     public static RequestBody createFile(File file) {
         checkNotNull(file, "file not null!");
-        return RequestBody.create(MediaType.parse("multipart/form-data; charset=utf-8"), file);
+        return RequestBody.create(file, MediaType.parse("multipart/form-data; charset=utf-8"));
     }
 
 
     @NonNull
     public static RequestBody createImage(File file) {
         checkNotNull(file, "file not null!");
-        return RequestBody.create(MediaType.parse("image/jpg; charset=utf-8"), file);
+        return RequestBody.create(file, MediaType.parse("image/jpg; charset=utf-8"));
     }
 
     @NonNull
     public static RequestBody createPartFromString(String descriptionString) {
-        return RequestBody.create(
-                MediaType.parse(MULTIPART_FORM_DATA), descriptionString);
+        return RequestBody.create(descriptionString, MediaType.parse(MULTIPART_FORM_DATA));
     }
 
     @NonNull
     public static MultipartBody.Part createPart(String partName, File file) {
         // create RequestBody instance from file
-        RequestBody requestFile = RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), file);
+        RequestBody requestFile = RequestBody.create(file, MediaType.parse(MULTIPART_FORM_DATA));
         // MultipartBody.Part is used to send also the actual file name
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
@@ -71,7 +70,7 @@ public class PerfectionUtils {
     private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
         File file = PerfectionFileUtil.getUirFile(fileUri);
         // create RequestBody instance from file
-        RequestBody requestFile = RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), file);
+        RequestBody requestFile = RequestBody.create(file, MediaType.parse(MULTIPART_FORM_DATA));
         // MultipartBody.Part is used to send also the actual file name
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }

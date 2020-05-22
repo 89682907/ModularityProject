@@ -67,7 +67,7 @@ public class ModuleAModelImpl implements IModuleAModel {
 
             @Override
             public void onSuccess(TestResBean data) {
-                if (data!=null) {
+                if (data != null) {
                     Log.i("jishen", data.getData());
                 }
             }

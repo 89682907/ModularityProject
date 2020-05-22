@@ -19,13 +19,13 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.fastjson.FastJsonConverterFactory;
 
 /**
@@ -92,7 +92,7 @@ public class PerfectionRetrofitDownManager {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(builder.build())
                     .addConverterFactory(FastJsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                     .baseUrl(info.getBaseUrl())
                     .build();
             httpService = retrofit.create(BaseApiService.class);
@@ -103,7 +103,7 @@ public class PerfectionRetrofitDownManager {
                 /*指定线程*/
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
-                   /*失败后的retry配置*/
+                /*失败后的retry配置*/
                 .retryWhen(new RetryWhenNetworkException())
                 /*读取下载写入文件*/
                 .map(new Function<ResponseBody, Object>() {
@@ -149,7 +149,7 @@ public class PerfectionRetrofitDownManager {
      */
     public void deleteDown(DownInfo info) {
         stopDown(info);
-         /*删除数据库信息和本地文件*/
+        /*删除数据库信息和本地文件*/
     }
 
 
@@ -225,10 +225,8 @@ public class PerfectionRetrofitDownManager {
                 info.getReadLength(), allLength - info.getReadLength());
         byte[] buffer = new byte[1024 * 8];
         int len;
-        int record = 0;
         while ((len = responseBody.byteStream().read(buffer)) != -1) {
             mappedBuffer.put(buffer, 0, len);
-            record += len;
         }
         responseBody.byteStream().close();
         channelOut.close();

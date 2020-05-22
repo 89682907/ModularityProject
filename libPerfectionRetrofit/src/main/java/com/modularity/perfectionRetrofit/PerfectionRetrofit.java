@@ -15,12 +15,6 @@ import com.modularity.perfectionRetrofit.https.TrustAllHostnameVerifier;
 import com.modularity.perfectionRetrofit.https.TrustAllManager;
 import com.modularity.perfectionRetrofit.util.PerfectionUtils;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.ObservableTransformer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 import java.io.File;
 import java.lang.reflect.ParameterizedType;
@@ -37,6 +31,12 @@ import java.util.concurrent.TimeUnit;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableSource;
+import io.reactivex.rxjava3.core.ObservableTransformer;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.ConnectionPool;
 import okhttp3.Interceptor;
@@ -49,7 +49,7 @@ import okhttp3.logging.HttpLoggingInterceptor.Level;
 import okhttp3.logging.HttpLoggingInterceptor.Logger;
 import retrofit2.Retrofit;
 import retrofit2.Converter.Factory;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.fastjson.FastJsonConverterFactory;
 import retrofit2.http.FieldMap;
 
@@ -389,7 +389,7 @@ public final class PerfectionRetrofit {
                 this.mRetrofitBuilder.addConverterFactory(this.mConverterFactory);
 
                 if (this.mCallAdapterFactory == null) {
-                    this.mCallAdapterFactory = RxJava2CallAdapterFactory.create();
+                    this.mCallAdapterFactory = RxJava3CallAdapterFactory.create();
                 }
                 this.mRetrofitBuilder.addCallAdapterFactory(this.mCallAdapterFactory);
 

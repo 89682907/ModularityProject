@@ -5,7 +5,6 @@ import com.modularity.common.base.BaseRequestBean;
 /**
  * Created by jishen on 2017/12/25.
  */
-
 public class ModuleARequestBean extends BaseRequestBean {
     private String mode;
     private String units;
