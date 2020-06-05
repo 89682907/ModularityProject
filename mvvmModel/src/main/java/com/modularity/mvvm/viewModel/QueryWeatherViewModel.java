@@ -12,7 +12,7 @@ import com.modularity.perfectionRetrofit.exception.PerfectionThrowable;
 
 import java.util.HashMap;
 
-public class QueryWeatherViewModel{
+public class QueryWeatherViewModel {
 
     private static final String TAG = "QueryWeatherViewModel";
 
@@ -35,6 +35,7 @@ public class QueryWeatherViewModel{
     public final ObservableField<String> time = new ObservableField<>();
 
     private Context mContext;
+
     public QueryWeatherViewModel(Context context) {
         this.mContext = context;
     }

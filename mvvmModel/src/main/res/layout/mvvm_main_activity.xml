@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.modularity.mvvm.viewModel.QueryWeatherViewModel" />
@@ -18,9 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="@string/query_weather"
             android:enabled="@{viewModel.loading ? false : true}"
-            android:onClick="@{() -> viewModel.queryWeather()}" />
+            android:onClick="@{() -> viewModel.queryWeather()}"
+            android:text="@string/query_weather" />
 
         <RelativeLayout
             android:id="@+id/vg_weather_info"
@@ -33,15 +35,16 @@
                 android:id="@+id/tv_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="@string/city" />
+                android:text="@string/city"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_city_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tv_city"
                 android:layout_alignBottom="@id/tv_city"
+                android:layout_toEndOf="@id/tv_city"
+                android:layout_toRightOf="@id/tv_city"
                 android:text="@{viewModel.city}"
                 tools:text="杭州" />
 
@@ -50,32 +53,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_city"
-                android:textStyle="bold"
-                android:text="@string/city_id" />
+                android:text="@string/city_id"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_city_id_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tv_city_id"
                 android:layout_alignBottom="@id/tv_city_id"
-                android:text="@{viewModel.cityId}"
-                tools:text="101210101" />
+                android:layout_toEndOf="@id/tv_city_id"
+                android:layout_toRightOf="@id/tv_city_id"
+                android:text="@{viewModel.cityId}" />
 
             <TextView
                 android:id="@+id/tv_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_city_id"
-                android:textStyle="bold"
-                android:text="@string/temperature" />
+                android:text="@string/temperature"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_temp1_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tv_temp"
                 android:layout_alignBottom="@id/tv_temp"
+                android:layout_toEndOf="@id/tv_temp"
+                android:layout_toRightOf="@id/tv_temp"
                 android:text="@{viewModel.temp1}"
                 tools:text="5℃" />
 
@@ -83,16 +87,18 @@
                 android:id="@+id/tv_tilde"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tv_temp1_value"
                 android:layout_alignBottom="@id/tv_temp"
+                android:layout_toEndOf="@id/tv_temp1_value"
+                android:layout_toRightOf="@id/tv_temp1_value"
                 android:text="@string/tilde" />
 
             <TextView
                 android:id="@+id/tv_temp2_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tv_tilde"
                 android:layout_alignBottom="@id/tv_temp"
+                android:layout_toEndOf="@id/tv_tilde"
+                android:layout_toRightOf="@id/tv_tilde"
                 android:text="@{viewModel.temp2}"
                 tools:text="10℃" />
 
@@ -101,15 +107,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_temp"
-                android:textStyle="bold"
-                android:text="@string/weather" />
+                android:text="@string/weather"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_weather_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tv_weather"
                 android:layout_alignBottom="@id/tv_weather"
+                android:layout_toEndOf="@id/tv_weather"
+                android:layout_toRightOf="@id/tv_weather"
                 android:text="@{viewModel.weather}"
                 tools:text="晴" />
 
@@ -118,15 +125,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_weather"
-                android:textStyle="bold"
-                android:text="@string/release_time" />
+                android:text="@string/release_time"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_time_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tv_time"
                 android:layout_alignBottom="@id/tv_time"
+                android:layout_toEndOf="@id/tv_time"
+                android:layout_toRightOf="@id/tv_time"
                 android:text="@{viewModel.time}"
                 tools:text="10:00" />
         </RelativeLayout>
