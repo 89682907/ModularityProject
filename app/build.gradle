@@ -46,7 +46,7 @@ android {
         baidu { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_baidu"] }
         yingyongbao { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_yingyongbao"] }
     }
-
+    // 集成DataBinding
     dataBinding {
         enabled = true
     }
@@ -58,11 +58,13 @@ dependencies {
     implementation project(':modModuleA')
     implementation project(':modModuleB')
     implementation project(':mvvmModel')
+//    implementation project(':libSignature')
 
 //    implementation "${rootProject.ext.modModuleA}"
 //    implementation "${rootProject.ext.modModuleB}"
 //    implementation "${rootProject.ext.mvvmModel}"
     implementation "${rootProject.ext.libFaceRecognition}"
+    implementation "${rootProject.ext.libSignature}"
 
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:multidex:1.0.3'

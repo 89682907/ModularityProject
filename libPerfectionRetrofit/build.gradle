@@ -19,6 +19,32 @@ uploadArchives {
     }
 }
 
+//uploadRepoArchives {
+//    def mavenUrl = "https://gitee.com/a_maker/repo/raw/master/"
+//    def mavenUserName = "a_maker"
+//    def mavenPassword = "QQ89682907"
+//    def mavenGroupID = "enn.lib"
+//    def mavenArtifactId = "PerfectionRetrofit"
+//    def mavenversion = "1.2.2.RELEASE"
+//    def maven_pom_packaging = "aar"
+//    def maven_pom_description = "Android PerfectionRetrofit"
+//    repositories.mavenDeployer {
+//        repository(url: mavenUrl) {
+//            authentication(userName: mavenUserName, password: mavenPassword)
+//        }
+//        pom.project {
+//            println(mavenGroupID + "--" + mavenArtifactId + "--" + mavenversion)
+//            groupId = mavenGroupID
+//            artifactId = mavenArtifactId
+//            version = mavenversion
+//            packaging = maven_pom_packaging
+//            description = maven_pom_description
+//        }
+//
+//    }
+//
+//}
+
 dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.2.2'
     api 'io.reactivex.rxjava3:rxjava:3.0.4'
@@ -33,7 +59,7 @@ dependencies {
         exclude(group: 'io.reactivex.rxjava3', module: 'rxjava')
         exclude(group: 'com.squareup.retrofit2', module: 'retrofit')
     }
-    implementation('org.ligboy.retrofit2:converter-fastjson-android:2.0.2') {
+    implementation('org.ligboy.retrofit2:converter-fastjson-android:2.1.0') {
         exclude(group: 'com.squareup.retrofit2', module: 'retrofit')
         exclude(group: 'com.alibaba', module: 'fastjson')
     }

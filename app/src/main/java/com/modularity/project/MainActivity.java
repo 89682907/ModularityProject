@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import com.modularity.mod_a.view.ModuleAActivity;
 import com.modularity.mod_b.ModuleBActivity;
-import com.modularity.mvvm.view.MvvmMainActivity;
+import com.modularity.mvvm.view.MVVMMainActivity;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnB.setOnClickListener(this);
         Button mBtnC = findViewById(R.id.btn_c);
         mBtnC.setOnClickListener(this);
+        Button mBtnSignature = findViewById(R.id.btn_signature);
+        mBtnSignature.setOnClickListener(this);
 
     }
 
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             moduleB();
         }else if (i == R.id.btn_c) {
             moduleC();
+        } else if (i == R.id.btn_signature) {
+            libSignature();
         }
     }
 
@@ -47,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void moduleC() {
-        startActivity(new Intent(this, MvvmMainActivity.class));
+        startActivity(new Intent(this, MVVMMainActivity.class));
+    }
+
+    private void libSignature() {
+        startActivity(new Intent(this, SignatureActivity.class));
     }
 }

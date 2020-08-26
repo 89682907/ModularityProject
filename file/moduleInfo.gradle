@@ -7,6 +7,8 @@ def initModuleInfo = {
 
     moduleList.add(new ModuleInfo(gradleParam.LIB_FACE_NAME, gradleParam.LIB_FACE_ARTIFACTID, gradleParam.LIB_FACE_VERSION, ":${gradleParam.LIB_FACE_NAME}", true))
 
+    moduleList.add(new ModuleInfo(gradleParam.LIB_SIGNATURE_NAME, gradleParam.LIB_SIGNATURE_ARTIFACTID, gradleParam.LIB_SIGNATURE_VERSION, ":${gradleParam.LIB_SIGNATURE_NAME}", true))
+
     moduleList.add(new ModuleInfo(gradleParam.MOD_A_NAME, gradleParam.MOD_A_ARTIFACTID, gradleParam.MOD_A_VERSION, ":${gradleParam.MOD_A_NAME}", false))
 
     moduleList.add(new ModuleInfo(gradleParam.MOD_B_NAME, gradleParam.MOD_B_ARTIFACTID, gradleParam.MOD_B_VERSION, ":${gradleParam.MOD_B_NAME}", false))

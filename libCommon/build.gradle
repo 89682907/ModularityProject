@@ -16,8 +16,8 @@ android {
 }
 
 dependencies {
-    api project(':libPerfectionRetrofit')
-//    api "${rootProject.ext.libPerfectionRetrofit}"
+//    api project(':libPerfectionRetrofit')
+    api "${rootProject.ext.libPerfectionRetrofit}"
     api 'com.android.support:appcompat-v7:' + "$rootProject.ext.android_support_version"
     api 'com.android.support:recyclerview-v7:' + "$rootProject.ext.android_support_version"
     api ('com.alibaba:arouter-api:' + "$rootProject.ext.arouter_api") {

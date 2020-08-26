@@ -2,7 +2,7 @@
     package="com.modularity.mvvm">
 
     <application>
-        <activity android:name="com.modularity.mvvm.view.MvvmMainActivity" />
+        <activity android:name="com.modularity.mvvm.view.MVVMMainActivity" />
     </application>
 
 </manifest>

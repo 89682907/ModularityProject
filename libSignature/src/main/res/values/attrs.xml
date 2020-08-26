@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <declare-styleable name="SignatureView">
+        <attr name="penMinWidth" format="dimension" tools:ignore="ResourceName" />
+        <attr name="penMaxWidth" format="dimension" tools:ignore="ResourceName" />
+        <attr name="penColor" format="color" tools:ignore="ResourceName" />
+        <attr name="velocityFilterWeight" format="float" tools:ignore="ResourceName" />
+        <attr name="clearOnDoubleClick" format="boolean" tools:ignore="ResourceName" />
+    </declare-styleable>
+</resources>

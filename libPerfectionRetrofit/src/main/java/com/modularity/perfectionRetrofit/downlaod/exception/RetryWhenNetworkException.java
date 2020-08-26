@@ -60,7 +60,7 @@ public class RetryWhenNetworkException implements Function<Observable<? extends 
                 });
     }
 
-    private class Wrapper {
+    private static class Wrapper {
         private int       index;
         private Throwable throwable;
 

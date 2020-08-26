@@ -1,0 +1,26 @@
+apply plugin: 'com.android.library'
+apply from: "${rootDir}/gradle/baseModule.gradle"
+
+android {
+    resourcePrefix "signature"
+    defaultConfig {
+        versionCode Integer.parseInt("${rootProject.ext.versionCode}")
+        versionName "${rootProject.ext.versionName}"
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+apply plugin: 'maven'
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: rootProject.ext.repoUrl)
+        pom.groupId = rootProject.ext.PROJ_LIB_GROUP
+        pom.artifactId = LIB_SIGNATURE_ARTIFACTID
+        pom.version = LIB_SIGNATURE_VERSION
+    }
+}
+
+dependencies {
+}

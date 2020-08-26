@@ -1,5 +1,7 @@
 package com.modularity.perfectionRetrofit.downlaod.progress;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -16,6 +18,7 @@ public class DownloadInterceptor implements Interceptor {
         this.listener = listener;
     }
 
+    @NotNull
     @Override
     public Response intercept(Chain chain) throws IOException {
         Response originalResponse = chain.proceed(chain.request());

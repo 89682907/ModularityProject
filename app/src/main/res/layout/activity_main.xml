@@ -41,6 +41,14 @@
                 android:textAllCaps="false"
                 android:text="@string/app_str_arouter" />
 
+            <Button
+                android:id="@+id/btn_signature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textAllCaps="false"
+                android:text="@string/app_str_signature" />
+
         </LinearLayout>
     </ScrollView>
 
