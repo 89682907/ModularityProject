@@ -3,6 +3,8 @@ package com.modularity.perfectionRetrofit.exception;
 
 import android.net.ParseException;
 
+import com.squareup.moshi.JsonDataException;
+
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
 
@@ -78,7 +80,9 @@ public class PerfectionException {
             return ex;
         } else if (e instanceof JSONException
                 || e instanceof ParseException
-                || e instanceof com.alibaba.fastjson.JSONException) {
+//                || e instanceof com.alibaba.fastjson.JSONException
+                || e instanceof JsonDataException
+        ) {
             ex = new PerfectionThrowable(e, ERROR.PARSE_ERROR);
             ex.setMessage("解析错误");
             return ex;

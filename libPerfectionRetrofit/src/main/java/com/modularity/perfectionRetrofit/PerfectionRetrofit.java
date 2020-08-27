@@ -50,7 +50,8 @@ import okhttp3.logging.HttpLoggingInterceptor.Logger;
 import retrofit2.Retrofit;
 import retrofit2.Converter.Factory;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
-import retrofit2.converter.fastjson.FastJsonConverterFactory;
+//import retrofit2.converter.fastjson.FastJsonConverterFactory;
+import retrofit2.converter.moshi.MoshiConverterFactory;
 import retrofit2.http.FieldMap;
 
 @SuppressWarnings("unchecked")
@@ -384,7 +385,8 @@ public final class PerfectionRetrofit {
             } else {
                 this.mRetrofitBuilder.baseUrl(this.mBaseUrl);
                 if (this.mConverterFactory == null) {
-                    this.mConverterFactory = FastJsonConverterFactory.create();
+//                    this.mConverterFactory = FastJsonConverterFactory.create();
+                    this.mConverterFactory = MoshiConverterFactory.create();
                 }
                 this.mRetrofitBuilder.addConverterFactory(this.mConverterFactory);
 

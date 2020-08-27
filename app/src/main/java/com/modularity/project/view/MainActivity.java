@@ -1,4 +1,4 @@
-package com.modularity.project;
+package com.modularity.project.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.modularity.mod_a.view.ModuleAActivity;
 import com.modularity.mod_b.ModuleBActivity;
 import com.modularity.mvvm.view.MVVMMainActivity;
+import com.modularity.project.R;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {

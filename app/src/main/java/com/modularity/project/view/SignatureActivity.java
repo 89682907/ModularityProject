@@ -1,4 +1,4 @@
-package com.modularity.project;
+package com.modularity.project.view;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -18,7 +18,8 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.modularity.signature.views.SignatureView;
+import com.modularity.project.R;
+import com.modularity.signature.widget.SignatureView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,9 +30,9 @@ import java.io.OutputStreamWriter;
 public class SignatureActivity extends AppCompatActivity {
 
     private static final int           REQUEST_EXTERNAL_STORAGE = 1;
-    private static       String[]      PERMISSIONS_STORAGE      = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    private              SignatureView mSignaturePad;
-    private              Button        mClearButton;
+    private static String[]      PERMISSIONS_STORAGE      = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private        SignatureView mSignaturePad;
+    private        Button        mClearButton;
     private              Button        mSaveButton;
 
     @Override

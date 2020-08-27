@@ -16,8 +16,8 @@ android {
 }
 
 dependencies {
-//    api project(':libPerfectionRetrofit')
-    api "${rootProject.ext.libPerfectionRetrofit}"
+    api project(':libPerfectionRetrofit')
+//    api "${rootProject.ext.libPerfectionRetrofit}"
     api 'com.android.support:appcompat-v7:' + "$rootProject.ext.android_support_version"
     api 'com.android.support:recyclerview-v7:' + "$rootProject.ext.android_support_version"
     api ('com.alibaba:arouter-api:' + "$rootProject.ext.arouter_api") {
@@ -26,6 +26,6 @@ dependencies {
     api ('pub.devrel:easypermissions:2.0.1'){
         exclude(group: 'com.android.support')
     }
-    api 'com.blankj:utilcode:1.28.5'
+    api 'com.blankj:utilcode:1.29.0'
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
 }

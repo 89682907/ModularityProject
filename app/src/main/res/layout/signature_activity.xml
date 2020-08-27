@@ -28,10 +28,11 @@
             android:text="@string/agreement"
             android:textColor="@android:color/darker_gray" />
 
-        <com.modularity.signature.views.SignatureView
+        <com.modularity.signature.widget.SignatureView
             android:id="@+id/signature_view"
             android:layout_width="match_parent"
             app:penColor="@android:color/holo_red_dark"
+            app:velocityFilterWeight="20"
             android:layout_height="match_parent" />
     </RelativeLayout>
 

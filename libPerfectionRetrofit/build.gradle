@@ -48,7 +48,6 @@ uploadArchives {
 dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.2.2'
     api 'io.reactivex.rxjava3:rxjava:3.0.4'
-    api 'com.alibaba:fastjson:' + "$rootProject.ext.fastjson"
     implementation('com.squareup.retrofit2:retrofit:2.9.0') {
         exclude(group: 'com.squareup.okhttp3', module: 'okhttp')
     }
@@ -59,11 +58,16 @@ dependencies {
         exclude(group: 'io.reactivex.rxjava3', module: 'rxjava')
         exclude(group: 'com.squareup.retrofit2', module: 'retrofit')
     }
-    implementation('org.ligboy.retrofit2:converter-fastjson-android:2.1.0') {
-        exclude(group: 'com.squareup.retrofit2', module: 'retrofit')
-        exclude(group: 'com.alibaba', module: 'fastjson')
-    }
+//    api 'com.alibaba:fastjson:' + "$rootProject.ext.fastjson"
+//    implementation('org.ligboy.retrofit2:converter-fastjson-android:2.1.0') {
+//        exclude(group: 'com.squareup.retrofit2', module: 'retrofit')
+//        exclude(group: 'com.alibaba', module: 'fastjson')
+//    }
     api('io.reactivex.rxjava3:rxandroid:3.0.0') {
         exclude(group: 'io.reactivex.rxjava3', module: 'rxjava')
     }
+    api "com.squareup.moshi:moshi:1.9.3"
+    api "com.squareup.moshi:moshi-kotlin:1.9.3"
+    api 'com.squareup.retrofit2:converter-moshi:2.9.0'
+
 }
