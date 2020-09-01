@@ -1,21 +1,13 @@
-apply from: "../file/moduleInfo.gradle"
-
+apply from: "${rootDir}/../modules.gradle"
 import java.lang.reflect.Field
 
-//Properties gradleParam = new Properties()
-//def localFile = new File("${rootDir}/../gradle.properties")
-//if (localFile.canRead()) {
-//    gradleParam.load(localFile.newDataInputStream())
-//} else {
-//    println("not find gradle.properties !!!")
-//}
-
+initModuleInfo()
 Properties localProperties = new Properties()
 def localFile = new File("${rootDir}/../local.properties")
 if (localFile.canRead()) {
     localProperties.load(localFile.newDataInputStream())
 } else {
-    println("not find local.properties !!!")
+    println("not find local.properties")
 }
 def develop = Boolean.parseBoolean(localProperties.getProperty('develop'))
 develop = (develop == null ? false : develop)

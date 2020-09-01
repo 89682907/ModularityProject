@@ -1,5 +1,4 @@
-apply from: "${rootDir}/file/moduleInfo.gradle"
-
+apply from: "${rootDir}/modules.gradle"
 //初始化一些属性
 rootProject.ext.set("pkgName", "com.modularity.project")
 
@@ -31,37 +30,38 @@ if (localApkPath != null && localApkPath != "") {
 }
 
 
-Properties PARAMS = new Properties()
+Properties params = new Properties()
 def propFile = new File("${rootDir}/file/params.properties")
 if (propFile.canRead()) {
-    PARAMS.load(new InputStreamReader(new FileInputStream(propFile), "UTF-8"))
-    println "PARAMS: " + PARAMS
+    params.load(new InputStreamReader(new FileInputStream(propFile), "UTF-8"))
+    println "params: " + params
+
+    rootProject.ext.set("versionCode", params.versionCode)
+    rootProject.ext.set("versionName", params.versionName)
+
+    String fixName = ""
+    if (develop) {
+        fixName = "Dv"
+    }
+    rootProject.ext.set("APP_NAME_DEBUG", fixName + params.APP_NAME_DEBUG)
+    rootProject.ext.set("APP_NAME_BETA", fixName + params.APP_NAME_BETA)
+    rootProject.ext.set("APP_NAME_RELEASE", fixName + params.APP_NAME_RELEASE)
+
+    String fixPkgName = ""
+    if (develop) {
+        fixPkgName += ".develop"
+    }
+    rootProject.ext.set("PKG_FIX_NAME_DEBUG", fixPkgName + ".debug")
+    rootProject.ext.set("PKG_FIX_NAME_BETA", fixPkgName + ".beta")
+    rootProject.ext.set("PKG_FIX_NAME_RELEASE", fixPkgName)
+
+    rootProject.ext.set("PROJ_LIB_GROUP", rootProject.ext.pkgName + fixPkgName + ".lib")
+    rootProject.ext.set("PROJ_MOD_GROUP", rootProject.ext.pkgName + fixPkgName + ".mod")
 } else {
-    println("not find params.properties !!!")
+    println("not find params.properties")
 }
 
-rootProject.ext.set("versionCode", PARAMS.versionCode)
-rootProject.ext.set("versionName", PARAMS.versionName)
-
-String fixName = ""
-if (develop) {
-    fixName = "Dv"
-}
-rootProject.ext.set("APP_NAME_DEBUG", fixName + PARAMS.APP_NAME_DEBUG)
-rootProject.ext.set("APP_NAME_BETA", fixName + PARAMS.APP_NAME_BETA)
-rootProject.ext.set("APP_NAME_RELEASE", fixName + PARAMS.APP_NAME_RELEASE)
-
-String fixPkgName = ""
-if (develop) {
-    fixPkgName += ".develop"
-}
-rootProject.ext.set("PKG_FIX_NAME_DEBUG", fixPkgName + ".debug")
-rootProject.ext.set("PKG_FIX_NAME_BETA", fixPkgName + ".beta")
-rootProject.ext.set("PKG_FIX_NAME_RELEASE", fixPkgName)
-
-rootProject.ext.set("PROJ_LIB_GROUP", rootProject.ext.pkgName + fixPkgName + ".lib")
-rootProject.ext.set("PROJ_MOD_GROUP", rootProject.ext.pkgName + fixPkgName + ".mod")
-
+initModuleInfo()
 def moduleList = rootProject.ext.MODULE_INFO_LIST
 if (moduleList != null) {
     moduleList.each { moduleInfo ->

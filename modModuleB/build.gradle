@@ -20,8 +20,8 @@ uploadArchives {
     repositories.mavenDeployer {
         repository(url: rootProject.ext.repoUrl)
         pom.groupId = rootProject.ext.PROJ_MOD_GROUP
-        pom.artifactId = MOD_B_ARTIFACTID
-        pom.version = MOD_B_VERSION
+        pom.artifactId = rootProject.ext.modules.moduleBInfo.artifactId
+        pom.version = rootProject.ext.modules.moduleBInfo.version
     }
 }
 

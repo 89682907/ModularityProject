@@ -20,8 +20,8 @@ uploadArchives {
     repositories.mavenDeployer {
         repository(url: rootProject.ext.repoUrl)
         pom.groupId = rootProject.ext.PROJ_LIB_GROUP
-        pom.artifactId = LIB_FACE_ARTIFACTID
-        pom.version = LIB_FACE_VERSION
+        pom.artifactId = rootProject.ext.modules.faceRecognitionInfo.artifactId
+        pom.version = rootProject.ext.modules.faceRecognitionInfo.version
     }
 }
 

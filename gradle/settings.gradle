@@ -1,7 +1,1 @@
-//include ':app'
-//include ':libCommon'
-//include ':libPerfectionRetrofit'
-//include ':libFaceRecognition'
-//include ':modModuleA'
-//include ':modModuleB'
-
+//执行脚本的是提示该处要放setting.gradle

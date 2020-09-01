@@ -17,8 +17,9 @@ android {
         }
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures{
+        dataBinding = true
+//        viewBinding = true
     }
 
     kotlinOptions{
@@ -32,8 +33,8 @@ uploadArchives {
     repositories.mavenDeployer {
         repository(url: rootProject.ext.repoUrl)
         pom.groupId = rootProject.ext.PROJ_MOD_GROUP
-        pom.artifactId = MOD_JETPACK_ARTIFACTID
-        pom.version = MOD_JETPACK_VERSION
+        pom.artifactId = rootProject.ext.modules.modJetpackInfo.artifactId
+        pom.version = rootProject.ext.modules.modJetpackInfo.version
     }
 }
 

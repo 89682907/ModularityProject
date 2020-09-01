@@ -24,8 +24,8 @@ uploadArchives {
     repositories.mavenDeployer {
         repository(url: rootProject.ext.repoUrl)
         pom.groupId = rootProject.ext.PROJ_MOD_GROUP
-        pom.artifactId = MOD_MVVM_ARTIFACTID
-        pom.version = MOD_MVVM_VERSION
+        pom.artifactId = rootProject.ext.modules.mvvmModelInfo.artifactId
+        pom.version = rootProject.ext.modules.mvvmModelInfo.version
     }
 }
 

@@ -14,8 +14,8 @@ uploadArchives {
     repositories.mavenDeployer {
         repository(url: rootProject.ext.repoUrl)
         pom.groupId = rootProject.ext.PROJ_LIB_GROUP
-        pom.artifactId = LIB_RETROFIT_ARTIFACTID
-        pom.version = LIB_RETROFIT_VERSION
+        pom.artifactId = rootProject.ext.modules.perfectionRetrofitInfo.artifactId
+        pom.version = rootProject.ext.modules.perfectionRetrofitInfo.version
     }
 }
 

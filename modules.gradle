@@ -1,0 +1,80 @@
+//module版本信息
+def modules = [:]
+def perfectionRetrofitInfo = [:]
+perfectionRetrofitInfo.name = "libPerfectionRetrofit"
+perfectionRetrofitInfo.artifactId = "PerfectionRetrofit"
+perfectionRetrofitInfo.version = "1.2.8-js"
+modules.perfectionRetrofitInfo = perfectionRetrofitInfo
+
+def faceRecognitionInfo = [:]
+faceRecognitionInfo.name = "libFaceRecognition"
+faceRecognitionInfo.artifactId = "FaceRecognition"
+faceRecognitionInfo.version = "1.1.8-js"
+modules.faceRecognitionInfo = faceRecognitionInfo
+
+
+def signatureInfo = [:]
+signatureInfo.name = "libSignature"
+signatureInfo.artifactId = "Signature"
+signatureInfo.version = "1.0.3-js"
+modules.signatureInfo = signatureInfo
+
+
+def moduleAInfo = [:]
+moduleAInfo.name = "modModuleA"
+moduleAInfo.artifactId = "ModuleA"
+moduleAInfo.version = "1.1.4-js"
+modules.moduleAInfo = moduleAInfo
+
+
+def moduleBInfo = [:]
+moduleBInfo.name = "modModuleB"
+moduleBInfo.artifactId = "ModuleB"
+moduleBInfo.version = "1.1.9-js"
+modules.moduleBInfo = moduleBInfo
+
+
+def mvvmModelInfo = [:]
+mvvmModelInfo.name = "mvvmModel"
+mvvmModelInfo.artifactId = "modMvvmModel"
+mvvmModelInfo.version = "1.0.8-js"
+modules.mvvmModelInfo = mvvmModelInfo
+
+
+def modJetpackInfo = [:]
+modJetpackInfo.name = "modJetpack"
+modJetpackInfo.artifactId = "modJetpackModel"
+modJetpackInfo.version = "1.0.5-js"
+modules.modJetpackInfo = modJetpackInfo
+
+ext.modules = modules
+
+def initModuleInfo() {
+    List<ModuleInfo> moduleList = new ArrayList<>()
+    moduleList.add(new ModuleInfo(ext.modules.perfectionRetrofitInfo.name, ext.modules.perfectionRetrofitInfo.artifactId, ext.modules.perfectionRetrofitInfo.version, ":${ext.modules.perfectionRetrofitInfo.name}", true))
+    moduleList.add(new ModuleInfo(ext.modules.faceRecognitionInfo.name, ext.modules.faceRecognitionInfo.artifactId, ext.modules.faceRecognitionInfo.version, ":${ext.modules.faceRecognitionInfo.name}", true))
+    moduleList.add(new ModuleInfo(ext.modules.signatureInfo.name, ext.modules.signatureInfo.artifactId, ext.modules.signatureInfo.version, ":${ext.modules.signatureInfo.name}", true))
+    moduleList.add(new ModuleInfo(ext.modules.moduleAInfo.name, ext.modules.moduleAInfo.artifactId, ext.modules.moduleAInfo.version, ":${ext.modules.moduleAInfo.name}", false))
+    moduleList.add(new ModuleInfo(ext.modules.moduleBInfo.name, ext.modules.moduleBInfo.artifactId, ext.modules.moduleBInfo.version, ":${ext.modules.moduleBInfo.name}", false))
+    moduleList.add(new ModuleInfo(ext.modules.mvvmModelInfo.name, ext.modules.mvvmModelInfo.artifactId, ext.modules.mvvmModelInfo.version, ":${ext.modules.mvvmModelInfo.name}", false))
+    moduleList.add(new ModuleInfo(ext.modules.modJetpackInfo.name, ext.modules.modJetpackInfo.artifactId, ext.modules.modJetpackInfo.version, ":${ext.modules.modJetpackInfo.name}", false))
+    rootProject.ext.set("MODULE_INFO_LIST", moduleList)
+}
+
+ext.initModuleInfo = this.&initModuleInfo
+
+class ModuleInfo {
+    String name
+    String version
+    String artifactId
+    String path
+    boolean isLib
+
+    ModuleInfo(String name, String artifactId, String version, String path, boolean isLib) {
+        this.name = name
+        this.path = path
+        this.version = version
+        this.artifactId = artifactId
+        this.isLib = isLib
+    }
+}

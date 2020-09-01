@@ -7,8 +7,9 @@ android {
         versionCode Integer.parseInt("${rootProject.ext.versionCode}")
         versionName "${rootProject.ext.versionName}"
     }
-    dataBinding {
-        enabled = true
+    buildFeatures{
+        dataBinding = true
+//        viewBinding = true
     }
 }
 
@@ -17,8 +18,8 @@ uploadArchives {
     repositories.mavenDeployer {
         repository(url: rootProject.ext.repoUrl)
         pom.groupId = rootProject.ext.PROJ_LIB_GROUP
-        pom.artifactId = LIB_SIGNATURE_ARTIFACTID
-        pom.version = LIB_SIGNATURE_VERSION
+        pom.artifactId = rootProject.ext.modules.signatureInfo.artifactId
+        pom.version = rootProject.ext.modules.signatureInfo.version
     }
 }
 
