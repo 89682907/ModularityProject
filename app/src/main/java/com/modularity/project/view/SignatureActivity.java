@@ -10,14 +10,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.modularity.common.base.BaseActivity;
 import com.modularity.project.R;
 import com.modularity.signature.widget.SignatureView;
 
@@ -27,7 +28,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-public class SignatureActivity extends AppCompatActivity {
+public class SignatureActivity extends BaseActivity {
 
     private static final int           REQUEST_EXTERNAL_STORAGE = 1;
     private static String[]      PERMISSIONS_STORAGE      = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -81,6 +82,7 @@ public class SignatureActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_EXTERNAL_STORAGE) {// If request is cancelled, the result arrays are empty.
             if (grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(SignatureActivity.this, "Cannot write images to external storage", Toast.LENGTH_SHORT).show();

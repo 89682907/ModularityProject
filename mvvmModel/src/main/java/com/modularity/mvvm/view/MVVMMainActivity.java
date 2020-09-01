@@ -1,7 +1,7 @@
 package com.modularity.mvvm.view;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.Observable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.Observable;
 import android.os.Bundle;
 import android.util.Log;
 

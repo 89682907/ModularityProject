@@ -15,6 +15,8 @@ def initModuleInfo = {
 
     moduleList.add(new ModuleInfo(gradleParam.MOD_MVVM_NAME, gradleParam.MOD_MVVM_ARTIFACTID, gradleParam.MOD_MVVM_VERSION, ":${gradleParam.MOD_MVVM_NAME}", false))
 
+    moduleList.add(new ModuleInfo(gradleParam.MOD_JETPACK_NAME, gradleParam.MOD_JETPACK_ARTIFACTID, gradleParam.MOD_JETPACK_VERSION, ":${gradleParam.MOD_JETPACK_NAME}", false))
+
     rootProject.ext.set("MODULE_INFO_LIST", moduleList)
 }
 

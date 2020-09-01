@@ -1,8 +1,8 @@
 package com.modularity.mvvm.viewModel;
 
 import android.content.Context;
-import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
+import androidx.databinding.ObservableBoolean;
+import androidx.databinding.ObservableField;
 import android.widget.Toast;
 
 import com.modularity.mvvm.bean.WeatherData;

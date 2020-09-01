@@ -10,12 +10,14 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 
+import androidx.appcompat.widget.AppCompatImageView;
+
 import com.modularity.face.util.DisplayUtil;
 
 /**
  * 人脸扫描屏幕中间正方形框
  */
-public class MaskView extends android.support.v7.widget.AppCompatImageView {
+public class MaskView extends AppCompatImageView {
     private Paint   mLinePaint;
     private Paint   mAreaPaint;
     private Rect    mCenterRect;

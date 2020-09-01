@@ -6,4 +6,5 @@ include ':modModuleA'
 include ':modModuleB'
 include ':mvvmModel'
 include ':libSignature'
+include ':modJetpack'
 

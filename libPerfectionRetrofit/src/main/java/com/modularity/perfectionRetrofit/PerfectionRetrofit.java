@@ -54,6 +54,8 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 import retrofit2.http.FieldMap;
 
+import static com.modularity.perfectionRetrofit.cache.CacheInterceptor.MAX_STALE;
+
 @SuppressWarnings("unchecked")
 public final class PerfectionRetrofit {
     private BaseApiService        mBaseApiService;
@@ -365,7 +367,7 @@ public final class PerfectionRetrofit {
             if (context == null) {
                 throw new NullPointerException("context == null");
             }
-            String cacheControlValue = String.format("max-age=%d".toLowerCase(), 259200);
+            String cacheControlValue = String.format("max-age=%d".toLowerCase(), MAX_STALE);
             Interceptor cacheInterceptor = new CacheInterceptor(context, cacheControlValue);
             Interceptor cacheInterceptorOffline = new CacheInterceptorOffline(context, cacheControlValue);
             this.mOkHttpBuilder.addNetworkInterceptor(cacheInterceptor);

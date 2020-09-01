@@ -2,30 +2,27 @@ package com.modularity.project.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 
+import com.community.jetpack.view.JetpackMainActivity;
+import com.modularity.common.base.BaseActivity;
 import com.modularity.mod_a.view.ModuleAActivity;
 import com.modularity.mod_b.ModuleBActivity;
 import com.modularity.mvvm.view.MVVMMainActivity;
 import com.modularity.project.R;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button mBtnA = findViewById(R.id.btn_a);
-        mBtnA.setOnClickListener(this);
-        Button mBtnB = findViewById(R.id.btn_b);
-        mBtnB.setOnClickListener(this);
-        Button mBtnC = findViewById(R.id.btn_c);
-        mBtnC.setOnClickListener(this);
-        Button mBtnSignature = findViewById(R.id.btn_signature);
-        mBtnSignature.setOnClickListener(this);
+        findViewById(R.id.btn_a).setOnClickListener(this);
+        findViewById(R.id.btn_b).setOnClickListener(this);
+        findViewById(R.id.btn_c).setOnClickListener(this);
+        findViewById(R.id.btn_signature).setOnClickListener(this);
+        findViewById(R.id.btn_jetpack).setOnClickListener(this);
 
     }
 
@@ -36,10 +33,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             moduleA();
         } else if (i == R.id.btn_b) {
             moduleB();
-        }else if (i == R.id.btn_c) {
+        } else if (i == R.id.btn_c) {
             moduleC();
         } else if (i == R.id.btn_signature) {
             libSignature();
+        } else if (i == R.id.btn_jetpack) {
+            modJetpack();
         }
     }
 
@@ -57,5 +56,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void libSignature() {
         startActivity(new Intent(this, SignatureActivity.class));
+    }
+
+    private void modJetpack() {
+        startActivity(new Intent(this, JetpackMainActivity.class));
     }
 }

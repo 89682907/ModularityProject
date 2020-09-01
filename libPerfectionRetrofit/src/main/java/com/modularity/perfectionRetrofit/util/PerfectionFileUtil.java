@@ -28,6 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -155,7 +156,7 @@ public class PerfectionFileUtil {
     }
 
     static File getUirFile(Uri fileUri) {
-        return new File(fileUri.getPath());
+        return new File(Objects.requireNonNull(fileUri.getPath()));
     }
 
 

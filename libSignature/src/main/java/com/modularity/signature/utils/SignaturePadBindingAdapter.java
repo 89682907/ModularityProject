@@ -1,6 +1,6 @@
 package com.modularity.signature.utils;
 
-import android.databinding.BindingAdapter;
+import androidx.databinding.BindingAdapter;
 
 import com.modularity.signature.widget.SignatureView;
 

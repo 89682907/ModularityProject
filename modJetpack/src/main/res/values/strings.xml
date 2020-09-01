@@ -1,0 +1,4 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="add_cheese" tools:ignore="ResourceName">add cheese</string>
+    <string name="add" tools:ignore="ResourceName">add</string>
+</resources>

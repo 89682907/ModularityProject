@@ -18,14 +18,40 @@ android {
 dependencies {
     api project(':libPerfectionRetrofit')
 //    api "${rootProject.ext.libPerfectionRetrofit}"
-    api 'com.android.support:appcompat-v7:' + "$rootProject.ext.android_support_version"
-    api 'com.android.support:recyclerview-v7:' + "$rootProject.ext.android_support_version"
-    api ('com.alibaba:arouter-api:' + "$rootProject.ext.arouter_api") {
+
+    api deps.activity.activity_ktx
+    api deps.app_compat
+    api deps.annotations
+    api deps.recyclerview
+    api deps.constraintlayout
+    api deps.multidex
+    api deps.easypermissions
+    api deps.utilcodex
+    api deps.findbugs
+    api deps.lifecycle.extensions
+    api (deps.arouter.arouter_api) {
         exclude(group: 'com.android.support')
     }
-    api ('pub.devrel:easypermissions:2.0.1'){
-        exclude(group: 'com.android.support')
-    }
-    api 'com.blankj:utilcode:1.29.0'
-    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    implementation deps.systembartint
+
+//    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+//    api "androidx.activity:activity-ktx:1.1.0"
+//    api "androidx.appcompat:appcompat:1.3.0-alpha02"
+//    api "androidx.annotation:annotation:1.1.0"
+//    api "androidx.recyclerview:recyclerview:1.1.0"
+//    api 'androidx.constraintlayout:constraintlayout:2.0.1'
+//    api 'androidx.multidex:multidex:2.0.1'
+//    api 'com.google.code.findbugs:jsr305:3.0.2'
+//    api ('com.alibaba:arouter-api:' + "$rootProject.ext.arouter_api") {
+//        exclude(group: 'com.android.support')
+//    }
+//    api ('pub.devrel:easypermissions:2.0.1'){
+//        exclude(group: 'com.android.support')
+//    }
+    //支持androidx
+//    api 'pub.devrel:easypermissions:3.0.0'
+
+//    api 'com.blankj:utilcodex:1.29.0'
+//    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+
 }

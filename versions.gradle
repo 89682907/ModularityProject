@@ -1,0 +1,145 @@
+/**
+ * 版本共享文件，以便每个model可以使用相同的依赖
+ **/
+ext.deps = [:]
+def versions = [:]
+versions.kotlin = "1.3.72"
+versions.android_gradle_plugin = '4.0.1'
+versions.activity = '1.1.0'
+versions.fragment = "1.2.1"
+versions.constraintlayout = "2.0.1"
+versions.annotations = "1.0.0"
+versions.appcompat = "1.2.0-alpha02"
+versions.constraint_layout = "2.0.0-alpha2"
+versions.lifecycle = "2.2.0"
+versions.okhttp_logging_interceptor = "3.9.1"
+versions.okhttp3 = "4.2.2"
+versions.paging = "3.0.0-alpha05"
+versions.room = "2.3.0-alpha01"
+versions.recyclerview = "1.0.0"
+versions.retrofit = "2.9.0"
+versions.moshi = "1.9.3"
+versions.room = "2.3.0-alpha02"
+versions.rx_android = "3.0.0"
+versions.rxjava3 = "3.0.4"
+versions.multidex = "2.0.1"
+versions.arouter_api = "1.5.0"
+versions.arouter_compiler = "1.2.2"
+versions.easypermissions = "3.0.0"
+versions.utilcodex = "1.29.0"
+versions.systembartint = "1.0.3"
+versions.findbugs = "3.0.2"
+versions.java_version = JavaVersion.VERSION_1_8
+ext.versions = versions
+
+
+def build_versions = [:]
+build_versions.min_sdk = 14
+build_versions.compile_sdk = 29
+build_versions.target_sdk = 29
+build_versions.build_tools = "29.0.3"
+ext.build_versions = build_versions
+
+def deps = [:]
+
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+deps.annotations = "androidx.annotation:annotation:$versions.annotations"
+deps.app_compat = "androidx.appcompat:appcompat:$versions.appcompat"
+deps.constraintlayout = "androidx.constraintlayout:constraintlayout:$versions.constraintlayout"
+deps.multidex = "androidx.multidex:multidex:$versions.multidex"
+deps.easypermissions = "pub.devrel:easypermissions:$versions.easypermissions"
+deps.utilcodex = "com.blankj:utilcodex:$versions.utilcodex"
+deps.systembartint = "com.readystatesoftware.systembartint:systembartint:$versions.systembartint"
+deps.findbugs = "com.google.code.findbugs:jsr305:$versions.findbugs"
+
+def kotlin = [:]
+kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+kotlin.allopen = "org.jetbrains.kotlin:kotlin-allopen:$versions.kotlin"
+deps.kotlin = kotlin
+
+def activity = [:]
+activity.activity_ktx = "androidx.activity:activity-ktx:$versions.activity"
+deps.activity = activity
+
+
+def fragment = [:]
+fragment.runtime = "androidx.fragment:fragment:${versions.fragment}"
+fragment.runtime_ktx = "androidx.fragment:fragment-ktx:${versions.fragment}"
+deps.fragment = fragment
+
+def lifecycle = [:]
+lifecycle.runtime = "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle"
+lifecycle.extensions = "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
+lifecycle.java8 = "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
+lifecycle.compiler = "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
+lifecycle.viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+lifecycle.livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
+deps.lifecycle = lifecycle
+
+//paging
+deps.paging_runtime = "androidx.paging:paging-runtime:$versions.paging"
+
+//recyclerview
+deps.recyclerview = "androidx.recyclerview:recyclerview:$versions.recyclerview"
+
+
+//okhttp3
+def okhttp3 = [:]
+okhttp3.runtime = "com.squareup.okhttp3:okhttp:$versions.okhttp3"
+okhttp3.okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_logging_interceptor"
+deps.okhttp3 = okhttp3
+
+//rxjava3
+deps.rxjava_3_runtime = "io.reactivex.rxjava3:rxjava:$versions.rxjava3"
+deps.rxjava_3_rxandroid = "io.reactivex.rxjava3:rxandroid:$versions.rx_android"
+
+
+//retrofit
+def retrofit = [:]
+retrofit.runtime = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+retrofit.rxjava_3_adapter = "com.squareup.retrofit2:adapter-rxjava3:$versions.retrofit"
+retrofit.moshi_converter = "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
+deps.retrofit = retrofit
+
+
+//moshi
+def moshi = [:]
+moshi.runtime = "com.squareup.moshi:moshi:$versions.moshi"
+moshi.moshi_kotlin = "com.squareup.moshi:moshi-kotlin:$versions.moshi"
+deps.moshi = moshi
+
+//room
+def room = [:]
+room.runtime = "androidx.room:room-runtime:$versions.room"
+room.compiler = "androidx.room:room-compiler:$versions.room" //kapt
+room.ktx = "androidx.room:room-ktx:$versions.room"
+room.rxjava_2_room = "androidx.room:room-rxjava2:$versions.room"
+deps.room = room
+
+//arouter
+def arouter = [:]
+arouter.arouter_api = "com.alibaba:arouter-api:$versions.arouter_api"
+arouter.arouter_compiler = "com.alibaba:arouter_compiler:$versions.arouter_compiler"
+deps.arouter = arouter
+
+ext.deps = deps
+
+def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+    handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    handler.maven { url "https://jitpack.io" }
+    handler.maven { url "https://maven.google.com" }
+    handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    handler.maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+    handler.maven {
+        url rootProject.ext.repoUrl
+    }
+//        maven{
+//            url "http://nexus.enn.cn/content/groups/public/"
+//        }
+}
+ext.addRepos = this.&addRepos
+
+

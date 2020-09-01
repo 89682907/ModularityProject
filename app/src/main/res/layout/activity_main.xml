@@ -49,6 +49,15 @@
                 android:textAllCaps="false"
                 android:text="@string/app_str_signature" />
 
+            <Button
+                android:id="@+id/btn_jetpack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textAllCaps="false"
+                android:text="@string/app_str_jetpack" />
+
+
         </LinearLayout>
     </ScrollView>
 

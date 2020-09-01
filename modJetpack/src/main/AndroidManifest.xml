@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.community.jetpack">
+
+    <application>
+        <activity android:name=".paging.local.view.PagingMainActivity"/>
+        <activity android:name=".livedata.LiveDataMainActivity" />
+        <activity android:name=".view.JetpackMainActivity" />
+        <activity android:name=".livedata.LiveDataActivity" />
+    </application>
+
+</manifest>

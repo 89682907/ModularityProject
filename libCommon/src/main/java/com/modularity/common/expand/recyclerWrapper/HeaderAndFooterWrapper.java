@@ -1,8 +1,9 @@
 package com.modularity.common.expand.recyclerWrapper;
 
-import android.support.v4.util.SparseArrayCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.collection.SparseArrayCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,7 +16,7 @@ public  class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerVie
     private static final int BASE_ITEM_TYPE_FOOTER = 200000;
 
     private SparseArrayCompat<View> mHeaderViews = new SparseArrayCompat<>();
-    private SparseArrayCompat<View> mFootViews = new SparseArrayCompat<>();
+    private SparseArrayCompat<View> mFootViews   = new SparseArrayCompat<>();
 
     private RecyclerView.Adapter mInnerAdapter;
 

@@ -4,10 +4,11 @@ import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -24,7 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             restoreConstants(savedInstanceState);
             isNormal = false;
         }
-        setStatuBarStyle(true);
+        setStateBarStyle(true);
         BaseAppManager.getInstance().addActivity(this);
 
     }
@@ -125,7 +126,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      *
      * @param dark true
      */
-    public void setStatuBarStyle(boolean dark) {
+    public void setStateBarStyle(boolean dark) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             View decor = getWindow().getDecorView();
             if (dark) {
