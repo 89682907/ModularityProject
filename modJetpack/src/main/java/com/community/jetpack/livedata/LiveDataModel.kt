@@ -12,7 +12,7 @@ class LiveDataModel : ViewModel() {
         Thread {
             run {
                 while (i <= 50) {
-                    mInfoEvent.postValue((i++.toString() + Thread.currentThread().name))
+                    mInfoEvent.postValue((i++.toString() + " : " + Thread.currentThread().name))
                     Thread.sleep(1000)
                 }
             }

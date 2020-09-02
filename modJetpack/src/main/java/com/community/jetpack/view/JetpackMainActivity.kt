@@ -10,6 +10,7 @@ import com.community.jetpack.R
 import com.community.jetpack.adapter.JetMainAdapter2
 import com.community.jetpack.bean.JetMainItemBean
 import com.community.jetpack.livedata.LiveDataMainActivity
+import com.community.jetpack.paging.local.view.PagingMainActivity
 import com.community.jetpack.viewModel.JetMainListModel
 import com.modularity.common.base.BaseActivity
 import com.modularity.common.expand.recyclerWrapper.listener.OnRecyclerViewItemClickListener
@@ -50,10 +51,16 @@ class JetpackMainActivity : BaseActivity(), OnRecyclerViewItemClickListener {
 
     override fun onRecyclerViewItemClick(view: View?) {
         val tag = view?.tag as JetMainItemBean
-        if (tag.type == 1) {
-            startActivity(Intent(this, LiveDataMainActivity::class.java))
-        } else {
-            ToastUtils.showLong(tag.name)
+        when (tag.type) {
+            1 -> {
+                startActivity(Intent(this, LiveDataMainActivity::class.java))
+            }
+            2 -> {
+                startActivity(Intent(this, PagingMainActivity::class.java))
+            }
+            else -> {
+                ToastUtils.showLong(tag.name)
+            }
         }
     }
 

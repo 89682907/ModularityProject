@@ -8,10 +8,16 @@ class JetMainListModel {
         val list = arrayListOf<JetMainItemBean>()
         for (index in 1..10) {
             val bean = JetMainItemBean()
-            if (index == 1) {
-                bean.name = "LiveData"
-            } else {
-                bean.name = "Item:$index"
+            when (index) {
+                1 -> {
+                    bean.name = "LiveData"
+                }
+                2 -> {
+                    bean.name = "Paging"
+                }
+                else -> {
+                    bean.name = "Item:$index"
+                }
             }
             bean.type = index
             list.add(bean)

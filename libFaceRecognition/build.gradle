@@ -27,5 +27,5 @@ uploadArchives {
 
 dependencies {
     implementation project(':libCommon')
-    annotationProcessor 'com.alibaba:arouter-compiler:' + "$rootProject.ext.arouter_compiler"
+    annotationProcessor deps.arouter.arouter_compiler
 }

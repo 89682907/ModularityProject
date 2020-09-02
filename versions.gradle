@@ -77,8 +77,6 @@ lifecycle.viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.
 lifecycle.livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
 deps.lifecycle = lifecycle
 
-//paging
-deps.paging_runtime = "androidx.paging:paging-runtime:$versions.paging"
 
 //recyclerview
 deps.recyclerview = "androidx.recyclerview:recyclerview:$versions.recyclerview"
@@ -113,14 +111,20 @@ deps.moshi = moshi
 def room = [:]
 room.runtime = "androidx.room:room-runtime:$versions.room"
 room.compiler = "androidx.room:room-compiler:$versions.room" //kapt
+room.compiler = "androidx.room:room-compiler:$versions.room" //kapt
 room.ktx = "androidx.room:room-ktx:$versions.room"
 room.rxjava_2_room = "androidx.room:room-rxjava2:$versions.room"
 deps.room = room
 
+//paging
+def paging = [:]
+paging.runtime = "androidx.paging:paging-runtime-ktx:$versions.paging"
+deps.paging = paging
+
 //arouter
 def arouter = [:]
 arouter.arouter_api = "com.alibaba:arouter-api:$versions.arouter_api"
-arouter.arouter_compiler = "com.alibaba:arouter_compiler:$versions.arouter_compiler"
+arouter.arouter_compiler = "com.alibaba:arouter-compiler:$versions.arouter_compiler"
 deps.arouter = arouter
 
 ext.deps = deps
@@ -140,6 +144,7 @@ def addRepos(RepositoryHandler handler) {
 //            url "http://nexus.enn.cn/content/groups/public/"
 //        }
 }
+
 ext.addRepos = this.&addRepos
 
 

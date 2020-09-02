@@ -30,5 +30,5 @@ uploadArchives {
 dependencies {
     compileOnly project(':libCommon')
 //    implementation project(':libFaceRecognition')
-    annotationProcessor 'com.alibaba:arouter-compiler:' + "$rootProject.ext.arouter_compiler"
+    annotationProcessor deps.arouter.arouter_compiler
 }

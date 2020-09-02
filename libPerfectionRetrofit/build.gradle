@@ -46,26 +46,6 @@ uploadArchives {
 //}
 
 dependencies {
-//    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
-//    implementation('com.squareup.okhttp3:logging-interceptor:3.9.1') {
-//        exclude(group: 'com.squareup.okhttp3', module: 'okhttp')
-//    }
-
-//    api 'io.reactivex.rxjava3:rxjava:3.0.4'
-//    api('io.reactivex.rxjava3:rxandroid:3.0.0') {
-//        exclude(group: 'io.reactivex.rxjava3', module: 'rxjava')
-//    }
-
-//    implementation('com.squareup.retrofit2:retrofit:2.9.0') {
-//        exclude(group: 'com.squareup.okhttp3', module: 'okhttp')
-//    }
-//    implementation('com.squareup.retrofit2:adapter-rxjava3:2.9.0') {
-//        exclude(group: 'io.reactivex.rxjava3', module: 'rxjava')
-//        exclude(group: 'com.squareup.retrofit2', module: 'retrofit')
-//    }
-//    api "com.squareup.moshi:moshi:1.9.3"
-//    api "com.squareup.moshi:moshi-kotlin:1.9.3"
-//    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
 
     implementation deps.okhttp3.runtime
     implementation(deps.okhttp3.okhttp_logging_interceptor) {
@@ -85,13 +65,5 @@ dependencies {
     implementation deps.retrofit.moshi_converter
     api deps.moshi.runtime
     api deps.moshi.moshi_kotlin
-
-
-//    api 'com.alibaba:fastjson:' + "$rootProject.ext.fastjson"
-//    implementation('org.ligboy.retrofit2:converter-fastjson-android:2.1.0') {
-//        exclude(group: 'com.squareup.retrofit2', module: 'retrofit')
-//        exclude(group: 'com.alibaba', module: 'fastjson')
-//    }
-
 
 }
