@@ -3,8 +3,7 @@ package com.community.jetpack.livedata
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelProvider
 import com.community.jetpack.R
 import com.modularity.common.base.BaseActivity
 import kotlinx.android.synthetic.main.jet_live_data_main_activity.*
@@ -28,7 +27,8 @@ class LiveDataMainActivity : BaseActivity() {
             Log.i("jishen", "onChange:$it")
             tvInfo?.text = it.toString()
         }
-        mLiveDataModel = ViewModelProviders.of(this).get(LiveDataModel::class.java)
+//        mLiveDataModel = ViewModelProviders.of(this).get(LiveDataModel::class.java)
+        mLiveDataModel = ViewModelProvider(this)[LiveDataModel::class.java]
         mLiveDataModel?.mInfoEvent?.observe(this, mObserver!!)
         mLiveDataModel?.senData()
     }

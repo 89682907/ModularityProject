@@ -11,7 +11,6 @@ if (localFile.canRead()) {
 def developStr = localProperties.getProperty('develop')
 def develop = (developStr == null ? false : Boolean.parseBoolean(developStr))
 def localRepoPath = localProperties.getProperty('LOCAL_REPO_PATH')
-
 task uploadModularityTask {
 
     doLast{
