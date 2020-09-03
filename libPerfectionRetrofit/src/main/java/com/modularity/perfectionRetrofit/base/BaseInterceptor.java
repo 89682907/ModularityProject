@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import okhttp3.Interceptor;
@@ -30,7 +31,7 @@ public class BaseInterceptor implements Interceptor{
         if (headers != null && headers.size() > 0) {
             Set<String> keys = headers.keySet();
             for (String headerKey : keys) {
-                builder.addHeader(headerKey, headers.get(headerKey) == null? "": headers.get(headerKey)).build();
+                builder.addHeader(headerKey, headers.get(headerKey) == null? "": Objects.requireNonNull(headers.get(headerKey))).build();
             }
         }
         return chain.proceed(builder.build());

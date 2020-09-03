@@ -134,8 +134,6 @@ public class PerfectionFileUtil {
 
     /**
      * 删除文件
-     *
-     * @param filePath
      */
     public static void deleteFile(String filePath) {
         try {

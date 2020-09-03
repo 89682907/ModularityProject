@@ -11,7 +11,7 @@ import com.modularity.perfectionRetrofit.downlaod.progress.PerfectionDownProgres
 public class DownInfo {
 
     /*超时设置*/
-    private int defaultTimeout = 10;
+    private int                            defaultTimeout = 10;
     /*存储位置*/
     private String                         savePath;
     /*下载url*/
@@ -115,7 +115,7 @@ public class DownInfo {
     }
 
     /**
-     * 读取baseurl
+     * 读取baseUrl
      */
     protected String getBasUrl(String url) {
         String head = "";

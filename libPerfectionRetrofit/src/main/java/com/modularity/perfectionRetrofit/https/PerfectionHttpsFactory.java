@@ -77,6 +77,7 @@ public class PerfectionHttpsFactory {
                 for (String host : hostUrls) {
                     if (host.equalsIgnoreCase(hostname)) {
                         ret = true;
+                        break;
                     }
                 }
                 return ret;
@@ -91,7 +92,7 @@ public class PerfectionHttpsFactory {
      */
     public static String getPins(Context context, int certificate) {
         InputStream in = context.getResources().openRawResource(certificate);
-        StringBuffer out = new StringBuffer();
+        StringBuilder out = new StringBuilder();
         byte[] b = new byte[4096];
         try {
             for (int n; (n = in.read(b)) != -1; ) {
@@ -106,9 +107,7 @@ public class PerfectionHttpsFactory {
 
     /**
      * 默认信任所有的证书
-     * TODO 最好加上证书认证，主流App都有自己的证书
-     *
-     * @return
+     * TODO 最好加上自己的证书认证，主流App都有自己的证书
      */
     @SuppressLint("TrulyRandom")
     public static SSLSocketFactory createSSLSocketFactory(TrustAllManager trustAllManager) {

@@ -10,12 +10,12 @@ import com.modularity.perfectionRetrofit.https.TrustAllHostnameVerifier;
 import com.modularity.perfectionRetrofit.https.TrustAllManager;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +27,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
-//import retrofit2.converter.fastjson.FastJsonConverterFactory;
 
 /**
  * 下载处理类
@@ -137,7 +136,9 @@ public class PerfectionRetrofitDownManager {
         info.getListener().onStop();
         if (subMap.containsKey(info.getUrl())) {
             ProgressDownSubscriber subscriber = subMap.get(info.getUrl());
-            subscriber.disposable();
+            if (subscriber != null) {
+                subscriber.disposable();
+            }
             subMap.remove(info.getUrl());
         }
         /*同步数据库*/
@@ -146,8 +147,6 @@ public class PerfectionRetrofitDownManager {
 
     /**
      * 删除
-     *
-     * @param info
      */
     public void deleteDown(DownInfo info) {
         stopDown(info);
@@ -157,8 +156,6 @@ public class PerfectionRetrofitDownManager {
 
     /**
      * 暂停下载
-     *
-     * @param info
      */
     public void pause(DownInfo info) {
         if (info == null) return;
@@ -166,7 +163,9 @@ public class PerfectionRetrofitDownManager {
         info.getListener().onPause();
         if (subMap.containsKey(info.getUrl())) {
             ProgressDownSubscriber subscriber = subMap.get(info.getUrl());
-            subscriber.disposable();
+            if (subscriber != null) {
+                subscriber.disposable();
+            }
             subMap.remove(info.getUrl());
         }
         /*这里需要讲info信息写入到数据中，可自由扩展，用自己项目的数据库*/
@@ -197,8 +196,6 @@ public class PerfectionRetrofitDownManager {
 
     /**
      * 返回全部正在下载的数据
-     *
-     * @return
      */
     public Set<DownInfo> getDownInfoSet() {
         return downInfoSet;
@@ -207,13 +204,9 @@ public class PerfectionRetrofitDownManager {
 
     /**
      * 写入文件
-     *
-     * @param file
-     * @param info
-     * @throws IOException
      */
     private void writeCache(ResponseBody responseBody, File file, DownInfo info) throws Exception {
-        if (!file.getParentFile().exists())
+        if (!Objects.requireNonNull(file.getParentFile()).exists())
             file.getParentFile().mkdirs();
         long allLength;
         if (info.getCountLength() == 0) {

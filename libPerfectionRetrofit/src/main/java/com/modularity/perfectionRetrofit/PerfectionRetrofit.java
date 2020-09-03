@@ -225,7 +225,8 @@ public final class PerfectionRetrofit {
         private static final int                           DEFAULT_MAX_IDLE_CONNECTIONS = 5;
         private static final long                          DEFAULT_KEEP_ALIVE_DURATION  = 8L;
         private static final long                          DEFAULT_CACHE_MAX_SIZE       = 10 * 1024 * 1024;
-        private              Boolean                       isLog                        = true;
+        private              Boolean                       isLog                        = false;
+        private              String                        mLogTag                      = "PerfectionRetrofit";
         private              Boolean                       isCache                      = false;
         private              Context                       mContext;
         private              String                        mBaseUrl;
@@ -266,8 +267,11 @@ public final class PerfectionRetrofit {
             return this.readTimeout(timeout, TimeUnit.SECONDS);
         }
 
-        public PerfectionRetrofit.Builder addLog(boolean isLog) {
-            this.isLog = isLog;
+        public PerfectionRetrofit.Builder addLog(boolean showLog, String tag) {
+            this.isLog = showLog;
+            if (!TextUtils.isEmpty(tag)) {
+                this.mLogTag = tag;
+            }
             return this;
         }
 
@@ -400,7 +404,7 @@ public final class PerfectionRetrofit {
                 if (this.isLog) {
                     this.mOkHttpBuilder.addNetworkInterceptor((new HttpLoggingInterceptor(new Logger() {
                         public void log(String message) {
-                            Log.i("Retrofit", message);
+                            Log.i(mLogTag, message);
                         }
                     })).setLevel(Level.BODY));
                 }

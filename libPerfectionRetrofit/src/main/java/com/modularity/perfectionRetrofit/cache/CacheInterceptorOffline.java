@@ -6,6 +6,8 @@ import android.content.Context;
 
 import com.modularity.perfectionRetrofit.util.PerfectionNetworkUtil;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 
 import okhttp3.CacheControl;
@@ -25,6 +27,7 @@ public class CacheInterceptorOffline extends CacheInterceptor {
         super(context, cacheControlValue, cacheOnlineControlValue);
     }
 
+    @NotNull
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();

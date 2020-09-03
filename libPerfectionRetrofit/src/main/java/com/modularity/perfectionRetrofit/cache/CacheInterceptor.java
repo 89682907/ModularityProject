@@ -4,7 +4,10 @@ package com.modularity.perfectionRetrofit.cache;
 import android.content.Context;
 import android.text.TextUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
+import java.util.Locale;
 
 import okhttp3.Interceptor;
 import okhttp3.Response;
@@ -22,11 +25,13 @@ public class CacheInterceptor implements Interceptor {
 
 
     public CacheInterceptor(Context context) {
-        this(context, String.format("max-age=%d", MAX_STALE_ONLINE));
+//        this(context, String.format("max-age=%d", MAX_STALE_ONLINE));
+        this(context, String.format(Locale.CHINESE, "max-age=%d", MAX_STALE_ONLINE));
     }
 
     public CacheInterceptor(Context context, String cacheControlValue) {
-        this(context, cacheControlValue, String.format("max-age=%d", MAX_STALE));
+//        this(context, cacheControlValue, String.format("max-age=%d", MAX_STALE));
+        this(context, cacheControlValue, String.format(Locale.CHINESE, "max-age=%d", MAX_STALE));
     }
 
     public CacheInterceptor(Context context, String cacheControlValueOffline, String cacheControlValueOnline) {
@@ -35,6 +40,7 @@ public class CacheInterceptor implements Interceptor {
         this.cacheControlValueOnline = cacheControlValueOnline;
     }
 
+    @NotNull
     @Override
     public Response intercept(Chain chain) throws IOException {
         Response originalResponse = chain.proceed(chain.request());

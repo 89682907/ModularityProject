@@ -33,8 +33,6 @@ public class PerfectionNetworkUtil {
 
     /**
      * 得到ip地址
-     *
-     * @return
      */
     public static String getLocalIpAddress() {
         String ret = "";
@@ -56,9 +54,6 @@ public class PerfectionNetworkUtil {
 
     /**
      * 返回当前网络状态
-     *
-     * @param context
-     * @return
      */
     public static int getNetState(Context context) {
         try {
