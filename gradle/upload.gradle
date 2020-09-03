@@ -1,6 +1,5 @@
-apply from: "${rootDir}/../modules.gradle"
 import java.lang.reflect.Field
-
+apply from: "${rootDir}/../modules.gradle"
 initModuleInfo()
 Properties localProperties = new Properties()
 def localFile = new File("${rootDir}/../local.properties")
@@ -9,8 +8,8 @@ if (localFile.canRead()) {
 } else {
     println("not find local.properties")
 }
-def develop = Boolean.parseBoolean(localProperties.getProperty('develop'))
-develop = (develop == null ? false : develop)
+def developStr = localProperties.getProperty('develop')
+def develop = (developStr == null ? false : Boolean.parseBoolean(developStr))
 def localRepoPath = localProperties.getProperty('LOCAL_REPO_PATH')
 
 task uploadModularityTask {

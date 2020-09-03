@@ -1,66 +1,89 @@
 apply from: "${rootDir}/modules.gradle"
-//初始化一些属性
+
+//设置基础包名
 rootProject.ext.set("pkgName", "com.modularity.project")
 
+//设置一些基本信息
 Properties localProperties = new Properties()
 def localFile = new File("${rootDir}/local.properties")
 if (localFile.canRead()) {
     localProperties.load(localFile.newDataInputStream())
     println "localProperties: " + localProperties
+
+    //设置dev
+    def developStr = localProperties.getProperty('develop')
+    def develop = (developStr == null ? false : Boolean.parseBoolean(developStr))
+    rootProject.ext.set("develop", develop)
+
+    //设置maven地址
+    def localRepoUrl = localProperties.getProperty('LOCAL_REPO_URL')
+    if (localRepoUrl != null && localRepoUrl != "") {
+        rootProject.ext.set("repoUrl", localRepoUrl)
+    } else {
+        rootProject.ext.set("repoUrl", "file://" + rootDir.absolutePath + "/maven")
+    }
+
+    //设置apk输出路径
+    def localApkPath = localProperties.getProperty('LOCAL_APK_PATH')
+    if (localApkPath != null && localApkPath != "") {
+        rootProject.ext.set("apkPath", localApkPath)
+    }
+
+    //设置签名debug
+    def storePasswordDebug = localProperties.getProperty('storePassword_debug')
+    def keyAliasDebug = localProperties.getProperty('keyAlias_debug')
+    def keyPasswordDebug = localProperties.getProperty('keyPassword_debug')
+    if (storePasswordDebug != null && storePasswordDebug != "" && keyAliasDebug != null && keyAliasDebug != "" && keyPasswordDebug != null && keyPasswordDebug != "") {
+        rootProject.ext.set("storePasswordDebug", storePasswordDebug)
+        rootProject.ext.set("keyAliasDebug", keyAliasDebug)
+        rootProject.ext.set("keyPasswordDebug", keyPasswordDebug)
+    }
+
+    //设置签名release
+    def storePasswordRelease = localProperties.getProperty('storePassword_release')
+    def keyAliasRelease = localProperties.getProperty('keyAlias_release')
+    def keyPasswordRelease = localProperties.getProperty('keyPassword_release')
+    if (storePasswordRelease != null && storePasswordRelease != "" && keyAliasRelease != null && keyAliasRelease != "" && keyPasswordRelease != null && keyPasswordRelease != "") {
+        rootProject.ext.set("storePasswordRelease", storePasswordRelease)
+        rootProject.ext.set("keyAliasRelease", keyAliasRelease)
+        rootProject.ext.set("keyPasswordRelease", keyPasswordRelease)
+    }
 } else {
-    println("not find local.properties !!!")
+    println("not find local.properties")
 }
-
-def developStr = localProperties.getProperty('develop')
-def develop = (developStr == null ? false : Boolean.parseBoolean(developStr))
-rootProject.ext.set("develop", develop)
-
-//设置maven地址
-def localRepoUrl = localProperties.getProperty('LOCAL_REPO_URL')
-if (localRepoUrl != null && localRepoUrl != "") {
-    rootProject.ext.set("repoUrl", localRepoUrl)
-} else {
-    rootProject.ext.set("repoUrl", "file://" + rootDir.absolutePath + "/maven")
-}
-
-//设置apk输出路径
-def localApkPath = localProperties.getProperty('LOCAL_APK_PATH')
-if (localApkPath != null && localApkPath != "") {
-    rootProject.ext.set("apkPath", localApkPath)
-}
-
 
 Properties params = new Properties()
 def propFile = new File("${rootDir}/file/params.properties")
 if (propFile.canRead()) {
     params.load(new InputStreamReader(new FileInputStream(propFile), "UTF-8"))
     println "params: " + params
-
+    //设置版本
     rootProject.ext.set("versionCode", params.versionCode)
     rootProject.ext.set("versionName", params.versionName)
 
+    //修改名称
     String fixName = ""
-    if (develop) {
+    if (rootProject.ext.develop) {
         fixName = "Dv"
     }
     rootProject.ext.set("APP_NAME_DEBUG", fixName + params.APP_NAME_DEBUG)
     rootProject.ext.set("APP_NAME_BETA", fixName + params.APP_NAME_BETA)
     rootProject.ext.set("APP_NAME_RELEASE", fixName + params.APP_NAME_RELEASE)
-
+    //修改包名
     String fixPkgName = ""
-    if (develop) {
+    if (rootProject.ext.develop) {
         fixPkgName += ".develop"
     }
     rootProject.ext.set("PKG_FIX_NAME_DEBUG", fixPkgName + ".debug")
     rootProject.ext.set("PKG_FIX_NAME_BETA", fixPkgName + ".beta")
     rootProject.ext.set("PKG_FIX_NAME_RELEASE", fixPkgName)
-
+    //根据包名设置本地maven引用
     rootProject.ext.set("PROJ_LIB_GROUP", rootProject.ext.pkgName + fixPkgName + ".lib")
     rootProject.ext.set("PROJ_MOD_GROUP", rootProject.ext.pkgName + fixPkgName + ".mod")
 } else {
     println("not find params.properties")
 }
-
+//获取module信息
 initModuleInfo()
 def moduleList = rootProject.ext.MODULE_INFO_LIST
 if (moduleList != null) {

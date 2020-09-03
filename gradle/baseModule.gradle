@@ -21,18 +21,18 @@ android {
         release {
             if (rootProject.ext.develop) {
                 storeFile file("${rootDir}/file/key/debug.keystore")
-                storePassword "android"
-                keyAlias "androiddebugkey"
-                keyPassword "android"
+                storePassword rootProject.ext.storePasswordDebug
+                keyAlias rootProject.ext.keyAliasDebug
+                keyPassword rootProject.ext.keyPasswordDebug
             } else {//此处设置自己的签名
 //                storeFile file(String.valueOf(System.getenv("ANDROID_KEYSTORE")))
 //                storePassword System.getenv("ANDROID_KEYSTORE_PWD")
 //                keyAlias System.getenv("ANDROID_KEYSTORE_ALIAS")
 //                keyPassword System.getenv("ANDROID_KEYSTORE_KEY_PWD")
                 storeFile file("${rootDir}/file/key/debug.keystore")
-                storePassword "android"
-                keyAlias "androiddebugkey"
-                keyPassword "android"
+                storePassword rootProject.ext.storePasswordRelease
+                keyAlias rootProject.ext.keyAliasRelease
+                keyPassword rootProject.ext.keyPasswordRelease
             }
         }
     }

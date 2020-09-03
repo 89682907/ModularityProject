@@ -7,8 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 /**
- * Singleton database object. Note that for a real app, you should probably use a Dependency
- * Injection framework or Service Locator to create the singleton database.
+ * 单例的数据库对象
  */
 @Database(entities = [Cheese::class], version = 1, exportSchema = false)
 abstract class CheeseDb : RoomDatabase() {
@@ -32,13 +31,14 @@ abstract class CheeseDb : RoomDatabase() {
         }
 
         /**
-         * fill database with list of cheeses
+         * 插入数据
          */
         private fun fillInDb(context: Context) {
-            // inserts in Room are executed on the current thread, so we insert in the background
+            // 在后台线程插入数据
             ioThread {
-                get(context).cheeseDao().insert(
-                        CHEESE_DATA.map { Cheese(id = 0, name = it) })
+                get(context).cheeseDao().insert(CHEESE_DATA.map {
+                    Cheese(id = 0, name = it)
+                })
             }
         }
     }

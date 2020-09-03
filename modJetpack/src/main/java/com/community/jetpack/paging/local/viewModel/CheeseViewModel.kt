@@ -11,114 +11,26 @@ import com.community.jetpack.paging.local.db.ioThread
 import kotlinx.coroutines.flow.Flow
 
 /**
- * A simple [AndroidViewModel] that provides a [Flow]<[PagingData]> of delicious cheeses.
+ * ViewModel层提供[Flow]<[PagingData]>Cheese。
  */
 class CheeseViewModel(app: Application) : AndroidViewModel(app) {
     private val dao = CheeseDb.get(app).cheeseDao()
 
     /**
-     * We use the Kotlin [Flow] property available on [Pager]. Java developers should use the
-     * RxJava or LiveData extension properties available in `PagingRx` and `PagingLiveData`.
+     * [Pager]上可用的Kotlin [Flow]属性。Java开发人员应该使用“PagingRx”和“PagingLiveData”中可用的RxJava或LiveData扩展属性。
      */
     val allCheeses = Pager(
             PagingConfig(
-                    /**
-                     * A good page size is a value that fills at least a few screens worth of content on a
-                     * large device so the User is unlikely to see a null item.
-                     * You can play with this constant to observe the paging behavior.
-                     *
-                     * It's possible to vary this with list device size, but often unnecessary, unless a
-                     * user scrolling on a large device is expected to scroll through items more quickly
-                     * than a small device, such as when the large device uses a grid layout of items.
-                     */
-                    /**
-                     * A good page size is a value that fills at least a few screens worth of content on a
-                     * large device so the User is unlikely to see a null item.
-                     * You can play with this constant to observe the paging behavior.
-                     *
-                     * It's possible to vary this with list device size, but often unnecessary, unless a
-                     * user scrolling on a large device is expected to scroll through items more quickly
-                     * than a small device, such as when the large device uses a grid layout of items.
-                     */
-                    /**
-                     * A good page size is a value that fills at least a few screens worth of content on a
-                     * large device so the User is unlikely to see a null item.
-                     * You can play with this constant to observe the paging behavior.
-                     *
-                     * It's possible to vary this with list device size, but often unnecessary, unless a
-                     * user scrolling on a large device is expected to scroll through items more quickly
-                     * than a small device, such as when the large device uses a grid layout of items.
-                     */
-                    /**
-                     * A good page size is a value that fills at least a few screens worth of content on a
-                     * large device so the User is unlikely to see a null item.
-                     * You can play with this constant to observe the paging behavior.
-                     *
-                     * It's possible to vary this with list device size, but often unnecessary, unless a
-                     * user scrolling on a large device is expected to scroll through items more quickly
-                     * than a small device, such as when the large device uses a grid layout of items.
-                     */
-                    pageSize = 60,
+                    pageSize = 20,
 
                     /**
-                     * If placeholders are enabled, PagedList will report the full size but some items might
-                     * be null in onBind method (PagedListAdapter triggers a rebind when data is loaded).
-                     *
-                     * If placeholders are disabled, onBind will never receive null but as more pages are
-                     * loaded, the scrollbars will jitter as new pages are loaded. You should probably
-                     * disable scrollbars if you disable placeholders.
-                     */
-
-                    /**
-                     * If placeholders are enabled, PagedList will report the full size but some items might
-                     * be null in onBind method (PagedListAdapter triggers a rebind when data is loaded).
-                     *
-                     * If placeholders are disabled, onBind will never receive null but as more pages are
-                     * loaded, the scrollbars will jitter as new pages are loaded. You should probably
-                     * disable scrollbars if you disable placeholders.
-                     */
-
-                    /**
-                     * If placeholders are enabled, PagedList will report the full size but some items might
-                     * be null in onBind method (PagedListAdapter triggers a rebind when data is loaded).
-                     *
-                     * If placeholders are disabled, onBind will never receive null but as more pages are
-                     * loaded, the scrollbars will jitter as new pages are loaded. You should probably
-                     * disable scrollbars if you disable placeholders.
-                     */
-
-                    /**
-                     * If placeholders are enabled, PagedList will report the full size but some items might
-                     * be null in onBind method (PagedListAdapter triggers a rebind when data is loaded).
-                     *
-                     * If placeholders are disabled, onBind will never receive null but as more pages are
-                     * loaded, the scrollbars will jitter as new pages are loaded. You should probably
-                     * disable scrollbars if you disable placeholders.
+                     * 如果占位符是启用的，PagedList将报告完整的大小，但有些项目可能会在onBind方法中为null (PagedListAdapter在加载数据时触发重新绑定)。
+                     * 如果占位符被禁用，onBind将永远不会接收空值，但是更多的页面会接收空值加载时，滚动条会在新页面加载时抖动。你应该禁用占位符时禁用滚动条。
                      */
                     enablePlaceholders = true,
 
                     /**
-                     * Maximum number of items a PagedList should hold in memory at once.
-                     *
-                     * This number triggers the PagedList to start dropping distant pages as more are loaded.
-                     */
-
-                    /**
-                     * Maximum number of items a PagedList should hold in memory at once.
-                     *
-                     * This number triggers the PagedList to start dropping distant pages as more are loaded.
-                     */
-
-                    /**
-                     * Maximum number of items a PagedList should hold in memory at once.
-                     *
-                     * This number triggers the PagedList to start dropping distant pages as more are loaded.
-                     */
-
-                    /**
-                     * Maximum number of items a PagedList should hold in memory at once.
-                     *
-                     * This number triggers the PagedList to start dropping distant pages as more are loaded.
+                     * PagedList一次应该在内存中保存的最大项数。
                      */
                     maxSize = 200
             )

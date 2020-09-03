@@ -33,23 +33,23 @@ class PagingMainActivity : AppCompatActivity() {
         val adapter = CheeseAdapter()
         cheeseList.adapter = adapter
 
-        // Subscribe the adapter to the ViewModel, so the items in the adapter are refreshed
-        // when the list changes
+        // 将适配器订阅到ViewModel，以便刷新适配器中的项
         lifecycleScope.launch {
             @OptIn(ExperimentalCoroutinesApi::class)
-            viewModel.allCheeses.collectLatest { adapter.submitData(it) }
+            viewModel.allCheeses.collectLatest {
+                adapter.submitData(it)
+            }
         }
     }
 
     private fun initSwipeToDelete() {
         ItemTouchHelper(object : ItemTouchHelper.Callback() {
-            // enable the items to swipe to the left or right
+            // 允许向左或向右滑动
             override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int = makeMovementFlags(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
 
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean = false
 
-            // When an item is swiped, remove the item via the view model. The list item will be
-            // automatically removed in response, because the adapter is observing the live list.
+            //当滑动一个项时，通过视图模型删除该项。在响应中自动删除，因为适配器正在观察活动列表。
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 (viewHolder as CheeseViewHolder).cheese?.let {
                     viewModel.remove(it)
@@ -71,21 +71,20 @@ class PagingMainActivity : AppCompatActivity() {
             addCheese()
         }
 
-        // when the user taps the "Done" button in the on screen keyboard, save the item.
         inputText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 addCheese()
                 return@setOnEditorActionListener true
             }
-            false // action that isn't DONE occurred - ignore
+            false
         }
-        // When the user clicks on the button, or presses enter, save the item.
+
         inputText.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                 addCheese()
                 return@setOnKeyListener true
             }
-            false // event that isn't DOWN or ENTER occurred - ignore
+            false
         }
     }
 }
