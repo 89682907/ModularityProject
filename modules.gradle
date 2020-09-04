@@ -1,4 +1,9 @@
-//module版本信息
+/**
+ * module版本信息
+ * 规则：name[module名称]，artifactId[自定义]， version[版本号-最后修改者名字]
+ * 注意：第一次添加 module 要在initModuleInfo()方法里初始化
+*/
+
 def modules = [:]
 def perfectionRetrofitInfo = [:]
 perfectionRetrofitInfo.name = "libPerfectionRetrofit"
@@ -68,7 +73,7 @@ class ModuleInfo {
     String version
     String artifactId
     String path
-    boolean isLib
+    boolean isLib // 是否是公用组件 true，如果是单独业务module设置 false
 
     ModuleInfo(String name, String artifactId, String version, String path, boolean isLib) {
         this.name = name

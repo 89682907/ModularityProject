@@ -119,11 +119,11 @@ static boolean checkVersion(String oldVersion, String version) {
 class LibInfo {
 
     boolean needBuild
-    private String name
+    public String name
     String version
-    private String path
+    public String path
     String versionPath
-    private boolean success
+    public boolean success
 
     LibInfo(String name, String path, String version) {
         this.name = name
@@ -133,7 +133,7 @@ class LibInfo {
 
     @Override
     String toString() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder()
         sb.append(getClass().getSimpleName() + " [ ")
         getValue(getClass(), sb)
         sb.delete(sb.length() - 2, sb.length())
@@ -204,7 +204,7 @@ class PrintThread extends Thread {
         }
     }
 
-    void log(String msg) {
+    static void log(String msg) {
         println msg
     }
 }

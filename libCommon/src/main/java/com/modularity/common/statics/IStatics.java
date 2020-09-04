@@ -15,7 +15,7 @@ public interface IStatics {
     String BUILD_TYPE_BETA    = "beta";
     String BUILD_TYPE_RELEASE = "release";
 
-    String CACHE_DIR_NAME    = (Config.BUILD_TYPE.equals(BUILD_TYPE_DEBUG) ? "modularity开发版" : Config.BUILD_TYPE.equals(BUILD_TYPE_BETA) ? "modularity测试版" : "modularity") + (Config.DEVELOP ? "Dv" : "");
+    String CACHE_DIR_NAME    = (Config.BUILD_TYPE.equals(BUILD_TYPE_DEBUG) ? "modularityDev" : Config.BUILD_TYPE.equals(BUILD_TYPE_BETA) ? "modularityBeta" : "modularity") + (Config.DEVELOP ? "Dv" : "");
     String CACHE_DIR         = File.separator + CACHE_DIR_NAME + File.separator;
     String SDCARD_UPDATE_DIR = CACHE_DIR + "update/";
     String SDCARD_LOG_DIR    = CACHE_DIR + "log/";

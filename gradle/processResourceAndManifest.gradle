@@ -1,27 +1,3 @@
-//android.applicationVariants.all { variant ->
-//    variant.mergeResources.doLast {
-//        def providerFix = "${rootProject.ext.PKG_FIX_NAME_RELEASE}"
-//        def appName = "${rootProject.ext.APP_NAME_RELEASE}"
-//        def pkgName = "${rootProject.ext.pkgName}"
-//        if (variant.name == "debug") {
-//            providerFix = "${rootProject.ext.PKG_FIX_NAME_DEBUG}"
-//            appName = "${rootProject.ext.APP_NAME_DEBUG}"
-//        } else if (variant.name == "beta") {
-//            providerFix = "${rootProject.ext.PKG_FIX_NAME_BETA}"
-//            appName = "${rootProject.ext.APP_NAME_BETA}"
-//        }
-//        println "replace !_REPLACE_HOLDER_PROVIDER_FIX to " + providerFix
-//        println "replace !_APP_NAME to " + appName
-//        println "replace !_PKGNAME_ORIGIN to " + pkgName
-//
-//        File valuesFile = file("${buildDir}/intermediates/res/merged/${variant.dirName}/values/values.xml")
-//        String content = valuesFile.getText('UTF-8')
-//        content = content.replaceAll("!_REPLACE_HOLDER_PROVIDER_FIX", providerFix)
-//        content = content.replaceAll("!_APP_NAME", appName)
-//        content = content.replaceAll("!_PKGNAME_ORIGIN", pkgName)
-//        valuesFile.write(content, 'UTF-8')
-//    }
-//}
 
 android.applicationVariants.all { variant ->
     variant.outputs.all { output ->
