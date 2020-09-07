@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+apply from: "${rootDir}/gradle/baseModule.gradle"
+
+android {
+    resourcePrefix "jsb"
+    defaultConfig {
+        versionCode Integer.parseInt("${rootProject.ext.versionCode}")
+        versionName "${rootProject.ext.versionName}"
+    }
+
+    lintOptions { // 消除lint警告
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
+
+apply plugin: 'maven'
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: rootProject.ext.repoUrl)
+        pom.groupId = rootProject.ext.PROJ_LIB_GROUP
+        pom.artifactId = rootProject.ext.modules.libJsBridgeInfo.artifactId
+        pom.version = rootProject.ext.modules.libJsBridgeInfo.version
+    }
+}
+
+dependencies {
+    compileOnly project(':libCommon')
+    api deps.gson
+}

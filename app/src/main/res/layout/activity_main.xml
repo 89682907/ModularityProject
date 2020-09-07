@@ -57,6 +57,14 @@
                 android:textAllCaps="false"
                 android:text="@string/app_str_jetpack" />
 
+            <Button
+                android:id="@+id/btn_jsbridge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textAllCaps="false"
+                android:text="@string/app_str_jsbridge" />
+
 
         </LinearLayout>
     </ScrollView>

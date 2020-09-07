@@ -29,6 +29,7 @@ versions.easypermissions = "3.0.0"
 versions.utilcodex = "1.29.0"
 versions.systembartint = "1.0.3"
 versions.findbugs = "3.0.2"
+versions.gson = "2.8.5"
 versions.java_version = JavaVersion.VERSION_1_8
 ext.versions = versions
 
@@ -51,6 +52,7 @@ deps.easypermissions = "pub.devrel:easypermissions:$versions.easypermissions"
 deps.utilcodex = "com.blankj:utilcodex:$versions.utilcodex"
 deps.systembartint = "com.readystatesoftware.systembartint:systembartint:$versions.systembartint"
 deps.findbugs = "com.google.code.findbugs:jsr305:$versions.findbugs"
+deps.gson = "com.google.code.gson:gson:$versions.gson"
 
 def kotlin = [:]
 kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"

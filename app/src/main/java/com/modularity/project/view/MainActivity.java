@@ -10,6 +10,7 @@ import com.modularity.mod_a.view.ModuleAActivity;
 import com.modularity.mod_b.ModuleBActivity;
 import com.modularity.mvvm.view.MVVMMainActivity;
 import com.modularity.project.R;
+import com.modularity.project.jsbridage.JsBridgeMainActivity;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -23,6 +24,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.btn_c).setOnClickListener(this);
         findViewById(R.id.btn_signature).setOnClickListener(this);
         findViewById(R.id.btn_jetpack).setOnClickListener(this);
+        findViewById(R.id.btn_jsbridge).setOnClickListener(this);
 
     }
 
@@ -39,6 +41,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             libSignature();
         } else if (i == R.id.btn_jetpack) {
             modJetpack();
+        } else if (i == R.id.btn_jsbridge) {
+            modJsBridge();
         }
     }
 
@@ -60,5 +64,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void modJetpack() {
         startActivity(new Intent(this, JetpackMainActivity.class));
+    }
+
+    private void modJsBridge() {
+        startActivity(new Intent(this, JsBridgeMainActivity.class));
     }
 }

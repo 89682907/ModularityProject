@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply from: "${rootDir}/gradle/baseModule.gradle"
+apply from: "${rootDir}/gradle/processResourceAndManifest.gradle"
+apply from: "${rootDir}/gradle/generateApk.gradle"
 
 android {
     defaultConfig {
@@ -62,6 +64,7 @@ dependencies {
     implementation project(':libFaceRecognition')
     implementation project(':libSignature')
     implementation project(':modJetpack')
+    implementation project(':libJsBridge')
 
 //    implementation "${rootProject.ext.modModuleA}"
 //    implementation "${rootProject.ext.modModuleB}"
@@ -69,7 +72,7 @@ dependencies {
 //    implementation "${rootProject.ext.libFaceRecognition}"
 //    implementation "${rootProject.ext.libSignature}"
 //    implementation "${rootProject.ext.modJetpack}"
+//    implementation "${rootProject.ext.libJsBridge}"
 }
-apply from: "${rootDir}/gradle/processResourceAndManifest.gradle"
-apply from: "${rootDir}/gradle/generateApk.gradle"
+
 
