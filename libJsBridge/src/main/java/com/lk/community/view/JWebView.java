@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.webkit.WebSettings;
 
-import com.blankj.utilcode.util.NetworkUtils;
 import com.lk.community.jsbridge.BridgeWebView;
 
 public class JWebView extends BridgeWebView {
@@ -36,15 +35,15 @@ public class JWebView extends BridgeWebView {
         mWebSettings.setSavePassword(false);
 //        if (NetworkUtils.isAvailable()) {
 //            //根据cache-control获取数据。
-//            mWebSettings.setCacheMode(android.webkit.WebSettings.LOAD_DEFAULT);
+//            mWebSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
 //        } else {
 //            //没网，则从本地获取，即离线加载
-//            mWebSettings.setCacheMode(android.webkit.WebSettings.LOAD_CACHE_ELSE_NETWORK);
+//            mWebSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 //        }
 
         if (Build.VERSION.SDK_INT >= 21) {
             //适配5.0不允许http和https混合使用情况
-            mWebSettings.setMixedContentMode(android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+            mWebSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
             setLayerType(View.LAYER_TYPE_HARDWARE, null);
         } else if (Build.VERSION.SDK_INT >= 19) {
             setLayerType(View.LAYER_TYPE_HARDWARE, null);
@@ -63,7 +62,7 @@ public class JWebView extends BridgeWebView {
         mWebSettings.setAllowUniversalAccessFromFileURLs(false);//允许通过 file url 加载的 Javascript 可以访问其他的源，包括其他的文件和 http，https 等其他的源
         mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         if (Build.VERSION.SDK_INT >= 19)
-            mWebSettings.setLayoutAlgorithm(android.webkit.WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+            mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         else
             mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         mWebSettings.setLoadWithOverviewMode(true);

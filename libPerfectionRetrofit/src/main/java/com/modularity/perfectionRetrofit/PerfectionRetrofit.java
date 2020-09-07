@@ -54,6 +54,10 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 import retrofit2.http.FieldMap;
 
+import static com.modularity.perfectionRetrofit.IPerfectionRetrofitStatics.DEFAULT_CACHE_MAX_SIZE;
+import static com.modularity.perfectionRetrofit.IPerfectionRetrofitStatics.DEFAULT_KEEP_ALIVE_DURATION;
+import static com.modularity.perfectionRetrofit.IPerfectionRetrofitStatics.DEFAULT_MAX_IDLE_CONNECTIONS;
+import static com.modularity.perfectionRetrofit.IPerfectionRetrofitStatics.DEFAULT_TIMEOUT;
 import static com.modularity.perfectionRetrofit.cache.CacheInterceptor.MAX_STALE;
 
 @SuppressWarnings("unchecked")
@@ -221,24 +225,22 @@ public final class PerfectionRetrofit {
     }
 
     public static final class Builder {
-        private static final int                           DEFAULT_TIMEOUT              = 60;
-        private static final int                           DEFAULT_MAX_IDLE_CONNECTIONS = 5;
-        private static final long                          DEFAULT_KEEP_ALIVE_DURATION  = 8L;
-        private static final long                          DEFAULT_CACHE_MAX_SIZE       = 10 * 1024 * 1024;
-        private              Boolean                       isLog                        = false;
-        private              String                        mLogTag                      = "PerfectionRetrofit";
-        private              Boolean                       isCache                      = false;
-        private              Context                       mContext;
-        private              String                        mBaseUrl;
-        private              HostnameVerifier              mHostnameVerifier;
-        private              SSLSocketFactory              mSslSocketFactory;
-        private              ConnectionPool                mConnectionPool;
-        private              Factory                       mConverterFactory;
-        private              retrofit2.CallAdapter.Factory mCallAdapterFactory;
-        private              okhttp3.Call.Factory          mCallFactory;
-        private              okhttp3.OkHttpClient.Builder  mOkHttpBuilder;
-        private              OkHttpClient                  mOkHttpClient;
-        private              retrofit2.Retrofit.Builder    mRetrofitBuilder;
+        public static String LOG_TAG = "PerfectionRetrofit";
+
+        private Boolean                       isLog   = false;
+        private Boolean                       isCache = false;
+        private Context                       mContext;
+        private String                        mBaseUrl;
+        private HostnameVerifier              mHostnameVerifier;
+        private SSLSocketFactory              mSslSocketFactory;
+        private ConnectionPool                mConnectionPool;
+        private Factory                       mConverterFactory;
+        private retrofit2.CallAdapter.Factory mCallAdapterFactory;
+        private okhttp3.Call.Factory          mCallFactory;
+        private okhttp3.OkHttpClient.Builder  mOkHttpBuilder;
+        private OkHttpClient                  mOkHttpClient;
+        private retrofit2.Retrofit.Builder    mRetrofitBuilder;
+
 
         public Builder() {
             this.mOkHttpBuilder = new okhttp3.OkHttpClient.Builder();
@@ -270,7 +272,7 @@ public final class PerfectionRetrofit {
         public PerfectionRetrofit.Builder addLog(boolean showLog, String tag) {
             this.isLog = showLog;
             if (!TextUtils.isEmpty(tag)) {
-                this.mLogTag = tag;
+                LOG_TAG = tag;
             }
             return this;
         }
@@ -404,7 +406,7 @@ public final class PerfectionRetrofit {
                 if (this.isLog) {
                     this.mOkHttpBuilder.addNetworkInterceptor((new HttpLoggingInterceptor(new Logger() {
                         public void log(String message) {
-                            Log.i(mLogTag, message);
+                            Log.i(LOG_TAG, message);
                         }
                     })).setLevel(Level.BODY));
                 }

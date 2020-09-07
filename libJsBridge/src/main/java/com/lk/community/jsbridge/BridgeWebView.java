@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.webkit.WebView;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.Map;
 @SuppressLint("SetJavaScriptEnabled")
 public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
 
+    private final       String TAG      = "BridgeWebView";
     public static final String toLoadJs = "WebViewJavascriptBridge.js";
     Map<String, CallBackFunction> responseCallbacks = new HashMap<>();
     Map<String, BridgeHandler>    messageHandlers   = new HashMap<>();
@@ -49,10 +51,6 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
         init();
     }
 
-    /**
-     * @param handler default handler,handle messages send by js without assigned handler name,
-     *                if js message has handler name, it will be handled by named handlers registered by native
-     */
     public void setDefaultHandler(BridgeHandler handler) {
         this.defaultHandler = handler;
     }
@@ -117,7 +115,6 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
 
     void dispatchMessage(Message m) {
         String messageJson = m.toJson();
-        //escape special characters for json string
         messageJson = messageJson.replaceAll("(\\\\)([^utrn])", "\\\\\\\\$1$2");
         messageJson = messageJson.replaceAll("(?<=[^\\\\])(\")", "\\\\\"");
         String javascriptCommand = String.format(BridgeUtil.JS_HANDLE_MESSAGE_FROM_JAVA, messageJson);
@@ -132,7 +129,6 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
 
                 @Override
                 public void onCallBack(String data) {
-                    // deserializeMessage
                     List<Message> list;
                     try {
                         list = Message.toArrayList(data);
@@ -170,7 +166,7 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
                                 responseFunction = new CallBackFunction() {
                                     @Override
                                     public void onCallBack(String data) {
-                                        // do nothing
+                                        Log.i(TAG, data);
                                     }
                                 };
                             }
@@ -197,9 +193,8 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
 
     /**
      * register handler,so that javascript can call it
-     *
-     * @param handlerName
-     * @param handler
+     * @param handlerName 注册名称
+     * @param handler     传递
      */
     public void registerHandler(String handlerName, BridgeHandler handler) {
         if (handler != null) {
@@ -209,10 +204,9 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
 
     /**
      * call javascript registered handler
-     *
-     * @param handlerName
-     * @param data
-     * @param callBack
+     * @param handlerName 注册名称
+     * @param data        传递数据
+     * @param callBack    回调
      */
     public void callHandler(String handlerName, String data, CallBackFunction callBack) {
         doSend(handlerName, data, callBack);

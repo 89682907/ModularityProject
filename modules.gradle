@@ -8,7 +8,7 @@ def modules = [:]
 def perfectionRetrofitInfo = [:]
 perfectionRetrofitInfo.name = "libPerfectionRetrofit"
 perfectionRetrofitInfo.artifactId = "PerfectionRetrofit"
-perfectionRetrofitInfo.version = "1.2.8-js"
+perfectionRetrofitInfo.version = "1.2.9-js"
 modules.perfectionRetrofitInfo = perfectionRetrofitInfo
 
 def faceRecognitionInfo = [:]
@@ -55,7 +55,7 @@ modules.modJetpackInfo = modJetpackInfo
 def libJsBridgeInfo = [:]
 libJsBridgeInfo.name = "libJsBridge"
 libJsBridgeInfo.artifactId = "libJsBridgeModel"
-libJsBridgeInfo.version = "1.0.1-js"
+libJsBridgeInfo.version = "1.0.2-js"
 modules.libJsBridgeInfo = libJsBridgeInfo
 
 ext.modules = modules

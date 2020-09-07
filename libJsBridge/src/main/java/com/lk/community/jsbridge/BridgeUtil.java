@@ -16,10 +16,10 @@ public class BridgeUtil {
     final static String UNDERLINE_STR      = "_";
     final static String SPLIT_MARK         = "/";
 
-    final static        String CALLBACK_ID_FORMAT          = "JAVA_CB_%s";
-    final static        String JS_HANDLE_MESSAGE_FROM_JAVA = "javascript:WebViewJavascriptBridge._handleMessageFromNative('%s');";
-    final static        String JS_FETCH_QUEUE_FROM_JAVA    = "javascript:WebViewJavascriptBridge._fetchQueue();";
-    public final static String JAVASCRIPT_STR              = "javascript:";
+    final static String CALLBACK_ID_FORMAT          = "JAVA_CB_%s";
+    final static String JS_HANDLE_MESSAGE_FROM_JAVA = "javascript:WebViewJavascriptBridge._handleMessageFromNative('%s');";
+    final static String JS_FETCH_QUEUE_FROM_JAVA    = "javascript:WebViewJavascriptBridge._fetchQueue();";
+    final static String JAVASCRIPT_STR              = "javascript:";
 
     public static String parseFunctionName(String jsUrl) {
         return jsUrl.replace("javascript:WebViewJavascriptBridge.", "").replaceAll("\\(.*\\);", "");
@@ -56,20 +56,17 @@ public class BridgeUtil {
 
     /**
      * js 文件将注入为第一个script引用
-     *
-     * @param view
-     * @param url
      */
     public static void webViewLoadJs(WebView view, String url) {
         String js = "var newscript = document.createElement(\"script\");";
         js += "newscript.src=\"" + url + "\";";
         js += "document.scripts[0].parentNode.insertBefore(newscript,document.scripts[0]);";
-        view.loadUrl("javascript:" + js);
+        view.loadUrl(JAVASCRIPT_STR + js);
     }
 
     public static void webViewLoadLocalJs(WebView view, String path) {
         String jsContent = assetFile2Str(view.getContext(), path);
-        view.loadUrl("javascript:" + jsContent);
+        view.loadUrl(JAVASCRIPT_STR + jsContent);
     }
 
     public static String assetFile2Str(Context c, String urlStr) {
@@ -77,7 +74,7 @@ public class BridgeUtil {
         try {
             in = c.getAssets().open(urlStr);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-            String line = null;
+            String line;
             StringBuilder sb = new StringBuilder();
             do {
                 line = bufferedReader.readLine();

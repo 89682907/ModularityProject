@@ -2,7 +2,6 @@ package com.modularity.perfectionRetrofit;
 
 import android.util.Log;
 
-//import com.alibaba.fastjson.JSON;
 import com.modularity.perfectionRetrofit.base.BaseSubscriber;
 import com.modularity.perfectionRetrofit.exception.PerfectionException;
 import com.modularity.perfectionRetrofit.exception.PerfectionThrowable;
@@ -15,6 +14,8 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 
 import okhttp3.ResponseBody;
+
+import static com.modularity.perfectionRetrofit.PerfectionRetrofit.Builder.LOG_TAG;
 
 class PerfectionSubscriber<T> extends BaseSubscriber<ResponseBody> {
     private PerfectionCallBack<T> mCallBack;
@@ -46,7 +47,7 @@ class PerfectionSubscriber<T> extends BaseSubscriber<ResponseBody> {
             byte[] bytes = responseBody.bytes();
             String jsStr = new String(bytes);
             if (BuildConfig.DEBUG) {
-                Log.i("Retrofit", "ResponseValue:" + jsStr);
+                Log.i(LOG_TAG, "ResponseValue:" + jsStr);
             }
             parseByMosh(jsStr);
         } catch (Exception var4) {
