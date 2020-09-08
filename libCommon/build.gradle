@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 apply from: "${rootDir}/gradle/baseModule.gradle"
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
 
@@ -36,5 +38,7 @@ dependencies {
     api (deps.arouter.arouter_api) {
         exclude(group: 'com.android.support')
     }
+    api deps.glide.glide_api
+    kapt deps.glide.glide_api
     implementation deps.systembartint
 }
