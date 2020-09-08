@@ -13,6 +13,7 @@ import android.os.Environment;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -31,16 +32,16 @@ import java.io.OutputStreamWriter;
 public class SignatureActivity extends BaseActivity {
 
     private static final int           REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[]      PERMISSIONS_STORAGE      = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    private        SignatureView mSignaturePad;
-    private        Button        mClearButton;
+    private static       String[]      PERMISSIONS_STORAGE      = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private              SignatureView mSignaturePad;
+    private              Button        mClearButton;
     private              Button        mSaveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signature_activity);
-        mSignaturePad = (SignatureView) findViewById(R.id.signature_view);
+        mSignaturePad = findViewById(R.id.signature_view);
         mSignaturePad.setOnSignedListener(new SignatureView.OnSignedListener() {
             @Override
             public void onStartSigning() {
@@ -60,8 +61,8 @@ public class SignatureActivity extends BaseActivity {
             }
         });
 
-        mClearButton = (Button) findViewById(R.id.clear_button);
-        mSaveButton = (Button) findViewById(R.id.save_button);
+        mClearButton = findViewById(R.id.clear_button);
+        mSaveButton = findViewById(R.id.save_button);
 
         mClearButton.setOnClickListener(view -> mSignaturePad.clear());
 

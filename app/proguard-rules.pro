@@ -145,6 +145,7 @@
   **[] $VALUES;
   public *;
 }
+-keep class com.bumptech.glide.GeneratedAppGlideModuleImpl
 -dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
 
 #fastjson

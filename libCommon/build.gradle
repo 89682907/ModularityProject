@@ -39,6 +39,6 @@ dependencies {
         exclude(group: 'com.android.support')
     }
     api deps.glide.glide_api
-    kapt deps.glide.glide_api
+//    kapt deps.glide.glide_compiler
     implementation deps.systembartint
 }

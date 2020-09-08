@@ -141,14 +141,12 @@ ext.deps = deps
 def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
-    handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     handler.maven { url "https://jitpack.io" }
     handler.maven { url "https://maven.google.com" }
     handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     handler.maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
-    handler.maven {
-        url rootProject.ext.repoUrl
-    }
+    handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    handler.maven { url rootProject.ext.repoUrl }
 //        maven{
 //            url "http://nexus.enn.cn/content/groups/public/"
 //        }

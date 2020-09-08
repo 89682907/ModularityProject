@@ -87,10 +87,7 @@ public class SoftApplication extends Application {
 
         @Override
         public void uncaughtException(Thread thread, Throwable ex) {
-
-            /** 以下为将捕获的异常信息，格式化输出到文件中 */
-
-            // create file
+            /* 以下为将捕获的异常信息，格式化输出到文件中 */
             String info = null;
             ByteArrayOutputStream baos = null;
             PrintStream printStream = null;
@@ -114,7 +111,6 @@ public class SoftApplication extends Application {
                     e.printStackTrace();
                 }
             }
-            // print info
             long threadId = thread.getId();
             String tag = "ANDROID_LAB";
             Log.e(tag, "Thread.getName()=" + thread.getName() + " id=" + threadId + " state=" + thread.getState());
@@ -130,8 +126,6 @@ public class SoftApplication extends Application {
 //			}
             // kill App Progress
             android.os.Process.killProcess(android.os.Process.myPid());
-
-
         }
     }
 
