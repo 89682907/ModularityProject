@@ -1,0 +1,28 @@
+apply plugin: 'maven'
+
+def current = [:]
+def common = [:]
+common.mavenArtifactId = "common"
+common.mavenVersion = "1.0.5"
+
+def pr = [:]
+pr.mavenArtifactId = "pr"
+pr.mavenVersion = "1.0.1"
+
+
+current.module = pr
+uploadArchives {
+    def mavenArtifactId = current.module.mavenArtifactId
+    def mavenVersion = current.module.mavenVersion
+    repositories.mavenDeployer {
+        repository(url: rootProject.ext.localUAUrl) {
+            authentication(userName: rootProject.ext.localUAUserName, password: rootProject.ext.localUAPassword)
+        }
+        pom.project {
+            groupId = rootProject.ext.localUAGroupID
+            artifactId = mavenArtifactId
+            version = mavenVersion
+        }
+
+    }
+}

@@ -19,32 +19,6 @@ uploadArchives {
     }
 }
 
-//uploadRepoArchives {
-//    def mavenUrl = "https://gitee.com/a_maker/repo/raw/master/"
-//    def mavenUserName = "a_maker"
-//    def mavenPassword = "QQ89682907"
-//    def mavenGroupID = "enn.lib"
-//    def mavenArtifactId = "PerfectionRetrofit"
-//    def mavenversion = "1.2.2.RELEASE"
-//    def maven_pom_packaging = "aar"
-//    def maven_pom_description = "Android PerfectionRetrofit"
-//    repositories.mavenDeployer {
-//        repository(url: mavenUrl) {
-//            authentication(userName: mavenUserName, password: mavenPassword)
-//        }
-//        pom.project {
-//            println(mavenGroupID + "--" + mavenArtifactId + "--" + mavenversion)
-//            groupId = mavenGroupID
-//            artifactId = mavenArtifactId
-//            version = mavenversion
-//            packaging = maven_pom_packaging
-//            description = maven_pom_description
-//        }
-//
-//    }
-//
-//}
-
 dependencies {
 
     implementation deps.okhttp3.runtime
@@ -67,3 +41,4 @@ dependencies {
     api deps.moshi.moshi_kotlin
 
 }
+//apply from: "${rootDir}/gradle/uploadArchives.gradle"

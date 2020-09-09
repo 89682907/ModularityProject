@@ -48,6 +48,18 @@ if (localFile.canRead()) {
         rootProject.ext.set("keyAliasRelease", keyAliasRelease)
         rootProject.ext.set("keyPasswordRelease", keyPasswordRelease)
     }
+
+    //设置uploadArchives参数
+    def localUAUrl = localProperties.getProperty('localUAUrl')
+    def localUAUserName = localProperties.getProperty('localUAUserName')
+    def localUAPassword = localProperties.getProperty('localUAPassword')
+    def localUAGroupID = localProperties.getProperty('localUAGroupID')
+    if (localUAUrl != null && localUAUrl != "" && localUAUserName != null && localUAUserName != "" && localUAPassword != null && localUAPassword != "" && localUAGroupID != null && localUAGroupID != "") {
+        rootProject.ext.set("localUAUrl", localUAUrl)
+        rootProject.ext.set("localUAUserName", localUAUserName)
+        rootProject.ext.set("localUAPassword", localUAPassword)
+        rootProject.ext.set("localUAGroupID", localUAGroupID)
+    }
 } else {
     println("not find local.properties")
 }
