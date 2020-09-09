@@ -4,6 +4,7 @@
 ext.deps = [:]
 def versions = [:]
 versions.kotlin = "1.3.72"
+versions.ktx = "1.3.1"
 versions.android_gradle_plugin = '4.0.1'
 versions.activity = '1.1.0'
 versions.fragment = "1.2.1"
@@ -54,9 +55,11 @@ deps.utilcodex = "com.blankj:utilcodex:$versions.utilcodex"
 deps.systembartint = "com.readystatesoftware.systembartint:systembartint:$versions.systembartint"
 deps.findbugs = "com.google.code.findbugs:jsr305:$versions.findbugs"
 deps.gson = "com.google.code.gson:gson:$versions.gson"
+deps.ktx = "androidx.core:core-ktx:$versions.ktx"
 
 def kotlin = [:]
-kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+kotlin.stdlib_jdk = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
+kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
 kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
 kotlin.allopen = "org.jetbrains.kotlin:kotlin-allopen:$versions.kotlin"
 deps.kotlin = kotlin

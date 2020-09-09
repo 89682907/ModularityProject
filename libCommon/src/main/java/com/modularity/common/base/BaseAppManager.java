@@ -30,9 +30,7 @@ public class BaseAppManager {
     }
 
     public synchronized void removeActivity(Activity activity) {
-        if (mActivities.contains(activity)) {
-            mActivities.remove(activity);
-        }
+        mActivities.remove(activity);
     }
 
     public synchronized void clear() {

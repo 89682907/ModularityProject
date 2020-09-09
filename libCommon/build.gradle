@@ -26,6 +26,8 @@ dependencies {
 //    api "${rootProject.ext.libPerfectionRetrofit}"
 
     api deps.activity.activity_ktx
+    api deps.ktx
+    api deps.kotlin.stdlib
     api deps.app_compat
     api deps.annotations
     api deps.recyclerview
