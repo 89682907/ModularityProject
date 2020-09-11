@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -24,50 +25,50 @@ import java.util.List;
 
 /**
  * private void initTabs(){
- *         List<String> tabslist = new ArrayList<>();
- *         tabslist.add(getString(R.string.tab_fuel_card_loss));
- *         tabslist.add(getString(R.string.tab_fuel_card_change));
+ * List<String> tabslist = new ArrayList<>();
+ * tabslist.add(getString(R.string.tab_fuel_card_loss));
+ * tabslist.add(getString(R.string.tab_fuel_card_change));
+ * <p>
+ * fuelCardLossFragment = new FuelCardLossFragment();
+ * fuelCardChangeFragment = new FuelCardChangeFragment();
+ * List<Fragment> fragments = new ArrayList<>();
+ * fragments.add(fuelCardLossFragment);
+ * fragments.add(fuelCardChangeFragment);
+ * <p>
+ * new StickyTabFragment.Builder(this)
+ * .setTabFragmentsList(fragments)
+ * .setTabsList(tabslist)
+ * .setTabSpace(this,60,60)
+ * .setTabLayout((TabLayout) View.inflate(this,R.layout.refuel_order_tab_layout,null))
+ * .setFragmentSelectListener(new StickyFragmentPagerAdapter.FragmentSelectListener() {
  *
- *         fuelCardLossFragment = new FuelCardLossFragment();
- *         fuelCardChangeFragment = new FuelCardChangeFragment();
- *         List<Fragment> fragments = new ArrayList<>();
- *         fragments.add(fuelCardLossFragment);
- *         fragments.add(fuelCardChangeFragment);
- *
- *         new StickyTabFragment.Builder(this)
- *                 .setTabFragmentsList(fragments)
- *                 .setTabsList(tabslist)
- *                 .setTabSpace(this,60,60)
- *                 .setTabLayout((TabLayout) View.inflate(this,R.layout.refuel_order_tab_layout,null))
- *                 .setFragmentSelectListener(new StickyFragmentPagerAdapter.FragmentSelectListener() {
- *                     @Override
- *                     public void onFragmentSelectListener(int position,String tab, Fragment fragment) {
- *                         selectTab = position;
- *                     }
- *                 })
- *                 .create();
- *     }
- *
- *
- *  TabLayout
+ * @Override public void onFragmentSelectListener(int position,String tab, Fragment fragment) {
+ * selectTab = position;
+ * }
+ * })
+ * .create();
+ * }
+ * <p>
+ * <p>
+ * TabLayout
  * <?xml version="1.0" encoding="utf-8"?>
  * <android.support.design.widget.TabLayout
- *     xmlns:android="http://schemas.android.com/apk/res/android"
- *     style="@style/CustomTabLayout"
- *     android:id="@+id/tablayout"
- *     android:background="@android:color/white"
- *     android:layout_width="match_parent"
- *     android:layout_height="44dp"/>
+ * xmlns:android="http://schemas.android.com/apk/res/android"
+ * style="@style/CustomTabLayout"
+ * android:id="@+id/tablayout"
+ * android:background="@android:color/white"
+ * android:layout_width="match_parent"
+ * android:layout_height="44dp"/>
  */
 
 public class StickyTabFragment extends Fragment {
 
-    private ViewPager mViewPager;
-    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private ViewPager                  mViewPager;
+    private CollapsingToolbarLayout    mCollapsingToolbarLayout;
     private StickyFragmentPagerAdapter mAdapter;
-    private TabLayout mTabLayout;
-    private View mView;
-    private LinearLayout mTabLinearLayout;
+    private TabLayout                  mTabLayout;
+    private View                       mView;
+    private LinearLayout               mTabLinearLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,7 @@ public class StickyTabFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mView == null) {
             mView = inflater.inflate(R.layout.sticky_tab_fragment, container, false);
             initView(mView);
@@ -90,9 +91,9 @@ public class StickyTabFragment extends Fragment {
     }
 
     private void initView(View view) {
-        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.ctl_hedaview);
-        mTabLinearLayout = (LinearLayout) view.findViewById(R.id.ll_tab);
+        mViewPager = view.findViewById(R.id.viewPager);
+        mCollapsingToolbarLayout = view.findViewById(R.id.ctl_hedaview);
+        mTabLinearLayout = view.findViewById(R.id.ll_tab);
     }
 
 
@@ -192,15 +193,15 @@ public class StickyTabFragment extends Fragment {
 
     public static final class Builder {
 
-        private FragmentManager fragmentManager;
-        private List<String> tabsList;
-        private List<Fragment> tabFragmentsList;
-        private View headView;
-        private StickyTabFragment stickyTabFragment;
+        private FragmentManager                                   fragmentManager;
+        private List<String>                                      tabsList;
+        private List<Fragment>                                    tabFragmentsList;
+        private View                                              headView;
+        private StickyTabFragment                                 stickyTabFragment;
         private StickyFragmentPagerAdapter.FragmentSelectListener fragmentSelectListener;
-        private TabLayout tabLayout;
-        private Context context;
-        private int leftSpace, rightSpace;
+        private TabLayout                                         tabLayout;
+        private Context                                           context;
+        private int                                               leftSpace, rightSpace;
 
 
         public Builder(Fragment parentFragment) {

@@ -7,12 +7,12 @@ package com.modularity.signature.utils;
  */
 public class SvgPathBuilder {
 
-    public static final Character SVG_RELATIVE_CUBIC_BEZIER_CURVE = 'c';
-    public static final Character SVG_MOVE = 'M';
-    private final StringBuilder mStringBuilder;
-    private final Integer mStrokeWidth;
-    private final SvgPoint mStartPoint;
-    private SvgPoint mLastPoint;
+    public static final Character     SVG_RELATIVE_CUBIC_BEZIER_CURVE = 'c';
+    public static final Character     SVG_MOVE                        = 'M';
+    private final       StringBuilder mStringBuilder;
+    private final       Integer       mStrokeWidth;
+    private final       SvgPoint      mStartPoint;
+    private             SvgPoint      mLastPoint;
 
     public SvgPathBuilder(final SvgPoint startPoint, final Integer strokeWidth) {
         mStrokeWidth = strokeWidth;

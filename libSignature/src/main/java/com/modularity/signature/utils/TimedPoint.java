@@ -3,7 +3,7 @@ package com.modularity.signature.utils;
 public class TimedPoint {
     public float x;
     public float y;
-    public long timestamp;
+    public long  timestamp;
 
     public TimedPoint set(float x, float y) {
         this.x = x;
@@ -14,7 +14,7 @@ public class TimedPoint {
 
     public float velocityFrom(TimedPoint start) {
         long diff = this.timestamp - start.timestamp;
-        if(diff <= 0) {
+        if (diff <= 0) {
             diff = 1;
         }
         float velocity = distanceTo(start) / diff;

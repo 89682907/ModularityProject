@@ -5,11 +5,14 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.modularity.common.statics.Config;
 import com.modularity.common.statics.IStatics;
+import com.modularity.common.utils.utilcode.util.FileIOUtils;
+import com.modularity.common.utils.utilcode.util.Utils;
 import com.modularity.project.BuildConfig;
 
 import java.io.ByteArrayOutputStream;
@@ -32,7 +35,7 @@ public class SoftApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
-//        Utils.init(this);
+        Utils.init(this);
     }
 
 
@@ -87,7 +90,7 @@ public class SoftApplication extends Application {
     private static class UEHandler implements Thread.UncaughtExceptionHandler {
 
         @Override
-        public void uncaughtException(Thread thread, Throwable ex) {
+        public void uncaughtException(@NonNull Thread thread, @NonNull Throwable ex) {
             /* 以下为将捕获的异常信息，格式化输出到文件中 */
             String info = null;
             ByteArrayOutputStream baos = null;
@@ -117,14 +120,13 @@ public class SoftApplication extends Application {
             Log.e(tag, "Thread.getName()=" + thread.getName() + " id=" + threadId + " state=" + thread.getState());
             Log.e(tag, "Error[" + info + "]");
             Log.e(tag, "sdcard =>" + Environment.getExternalStorageState());
-//			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) { // sd卡是否挂载
-            // 打印log
-//				PublicUtils.writeErrorLog(SoftApplication.this, info,"SoftApplication");
-//				// softApp.startService(new Intent(softApp,
-//				// UploadService.class));
-//				// 上传log
+			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) { // sd卡是否挂载
+                FileIOUtils.writeFileFromString(IStatics.SDCARD_LOG_DIR +"log.txt",info,true);
+				// softApp.startService(new Intent(softApp,
+				// UploadService.class));
+				// 上传log
 //				PublicUtils.uploadLog(SoftApplication.this, "log");
-//			}
+			}
             // kill App Progress
             android.os.Process.killProcess(android.os.Process.myPid());
         }

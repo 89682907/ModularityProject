@@ -26,19 +26,19 @@ import com.modularity.common.R;
 
 public class ExpandSwipeRefreshLayout extends ViewGroup {
     // Maps to ProgressBar.Large style
-    public static final int LARGE = MaterialProgressDrawable.LARGE;
+    public static final int LARGE   = MaterialProgressDrawable.LARGE;
     // Maps to ProgressBar default style
     public static final int DEFAULT = MaterialProgressDrawable.DEFAULT;
 
-    private static final int MAX_ALPHA = 255;
+    private static final int MAX_ALPHA               = 255;
     private static final int STARTING_PROGRESS_ALPHA = (int) (.3f * MAX_ALPHA);
 
-    private static final int CIRCLE_DIAMETER = 40;
+    private static final int CIRCLE_DIAMETER       = 40;
     private static final int CIRCLE_DIAMETER_LARGE = 56;
 
     private static final float DECELERATE_INTERPOLATION_FACTOR = 2f;
-    private static final int INVALID_POINTER = -1;
-    private static final float DRAG_RATE = .5f;
+    private static final int   INVALID_POINTER                 = -1;
+    private static final float DRAG_RATE                       = .5f;
 
     // Max amount of circle that can be filled by progress during swipe gesture,
     // where 1.0 is a full circle
@@ -53,38 +53,38 @@ public class ExpandSwipeRefreshLayout extends ViewGroup {
     private static final int ANIMATE_TO_START_DURATION = 200;
 
     // Default background for the progress spinner
-    private static final int CIRCLE_BG_LIGHT = 0xFFFAFAFA;
+    private static final int CIRCLE_BG_LIGHT       = 0xFFFAFAFA;
     // Default offset in dips from the top of the view to where the progress spinner should stop
     private static final int DEFAULT_CIRCLE_TARGET = 64;
 
-    private View mTarget; // the target of the gesture
+    private View                        mTarget; // the target of the gesture
     private SwipeRefreshLayoutDirection mDirection;
-    private boolean mBothDirection;
-    private OnRefreshListener mListener;
-    private boolean mRefreshing = false;
-    private int mTouchSlop;
-    private float mTotalDragDistance = -1;
-    private int mMediumAnimationDuration;
-    private int mCurrentTargetOffsetTop;
+    private boolean                     mBothDirection;
+    private OnRefreshListener           mListener;
+    private boolean                     mRefreshing               = false;
+    private int                         mTouchSlop;
+    private float                       mTotalDragDistance        = -1;
+    private int                         mMediumAnimationDuration;
+    private int                         mCurrentTargetOffsetTop;
     // Whether or not the starting offset has been determined.
-    private boolean mOriginalOffsetCalculated = false;
+    private boolean                     mOriginalOffsetCalculated = false;
 
-    private float mInitialMotionY;
+    private float   mInitialMotionY;
     private boolean mIsBeingDragged;
-    private int mActivePointerId = INVALID_POINTER;
+    private int     mActivePointerId = INVALID_POINTER;
     // Whether this item is scaled up rather than clipped
     private boolean mScale;
 
     // Target is returning to its start offset because it was cancelled or a
     // refresh was triggered.
-    private boolean mReturningToStart;
-    private final DecelerateInterpolator mDecelerateInterpolator;
-    private static final int[] LAYOUT_ATTRS = new int[]{
+    private              boolean                mReturningToStart;
+    private final        DecelerateInterpolator mDecelerateInterpolator;
+    private static final int[]                  LAYOUT_ATTRS = new int[]{
             android.R.attr.enabled
     };
 
     private CircleImageView mCircleView;
-    private int mCircleViewIndex = -1;
+    private int             mCircleViewIndex = -1;
 
     protected int mFrom;
 
@@ -425,7 +425,6 @@ public class ExpandSwipeRefreshLayout extends ViewGroup {
      * Set the color resources used in the progress animation from color resources.
      * The first color will also be the color of the bar that grows in response
      * to a user swipe gesture.
-     *
      */
     public void setColorSchemeResources(int... colorResIds) {
         final Resources res = getResources();
@@ -470,7 +469,6 @@ public class ExpandSwipeRefreshLayout extends ViewGroup {
 
     /**
      * Set the distance to trigger a sync in dips
-     *
      */
     public void setDistanceToTriggerSync(int distance) {
         mTotalDragDistance = distance;

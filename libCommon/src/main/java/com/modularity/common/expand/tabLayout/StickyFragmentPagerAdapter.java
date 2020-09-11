@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StickyFragmentPagerAdapter extends FragmentPagerAdapter {
-    private List<Fragment> mFragments;
-    private List<String> mTitles;
+    private List<Fragment>  mFragments;
+    private List<String>    mTitles;
     private FragmentManager mFragmentManager;
-    private List<String> mTagList = new ArrayList<>();
+    private List<String>    mTagList = new ArrayList<>();
 
     public StickyFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);

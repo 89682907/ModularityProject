@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.modularity.common.R;
-import com.modularity.common.expand.banner.adapter.JPageAdapter;
-import com.modularity.common.expand.banner.helper.JLoopScaleHelper;
-import com.modularity.common.expand.banner.holder.JViewHolderCreator;
-import com.modularity.common.expand.banner.listener.JPageChangeListener;
+import com.modularity.common.expand.banner.adapter.PageAdapter;
+import com.modularity.common.expand.banner.helper.LoopScaleHelper;
+import com.modularity.common.expand.banner.holder.IBannerHolderCreator;
+import com.modularity.common.expand.banner.listener.PageChangeListener;
 import com.modularity.common.expand.banner.listener.OnItemClickListener;
 import com.modularity.common.expand.banner.listener.OnPageChangeListener;
-import com.modularity.common.expand.banner.view.JLoopViewPager;
+import com.modularity.common.expand.banner.view.LoopViewPager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -28,20 +28,20 @@ import java.util.List;
 import java.util.Objects;
 
 public class BannerView<T> extends RelativeLayout {
-    private List<T> mDates;
-    private int[] mPageIndicatorId;
-    private JPageAdapter mPageAdapter;
-    private JLoopViewPager mViewPager;
-    private ViewGroup mPageTurningPoint;
-    private long autoTurningTime = -1;
-    private boolean turning;
-    private boolean canTurn = false;
-    private boolean canLoop = true;
-    private JLoopScaleHelper mLoopScaleHelper;
-    private JPageChangeListener mPageChangeListener;
+    private List<T>              mDates;
+    private int[]                mPageIndicatorId;
+    private PageAdapter          mPageAdapter;
+    private LoopViewPager        mViewPager;
+    private ViewGroup            mPageTurningPoint;
+    private boolean              turning;
+    private LoopScaleHelper      mLoopScaleHelper;
+    private PageChangeListener   mPageChangeListener;
     private OnPageChangeListener onPageChangeListener;
-    private AdSwitchTask mSwitchTask;
-    private ArrayList<ImageView> mPointViews = new ArrayList<>();
+    private AdSwitchTask         mSwitchTask;
+    private boolean              canTurn         = false;
+    private boolean              canLoop         = true;
+    private long                 autoTurningTime = -1;
+    private ArrayList<ImageView> mPointViews     = new ArrayList<>();
 
     public enum PageIndicatorAlign {
         ALIGN_PARENT_LEFT, ALIGN_PARENT_RIGHT, CENTER_HORIZONTAL
@@ -67,7 +67,7 @@ public class BannerView<T> extends RelativeLayout {
         mPageTurningPoint = hView.findViewById(R.id.loPageTurningPoint);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         mViewPager.setLayoutManager(linearLayoutManager);
-        mLoopScaleHelper = new JLoopScaleHelper();
+        mLoopScaleHelper = new LoopScaleHelper();
         mSwitchTask = new AdSwitchTask(this);
     }
 
@@ -76,9 +76,9 @@ public class BannerView<T> extends RelativeLayout {
         return this;
     }
 
-    public BannerView setPages(JViewHolderCreator holderCreator, List<T> datas) {
+    public BannerView setPages(IBannerHolderCreator holderCreator, List<T> datas) {
         this.mDates = datas;
-        mPageAdapter = new JPageAdapter(holderCreator, mDates, canLoop);
+        mPageAdapter = new PageAdapter(holderCreator, mDates, canLoop);
         mViewPager.setAdapter(mPageAdapter);
         if (mPageIndicatorId != null)
             setPageIndicator(mPageIndicatorId);
@@ -112,7 +112,6 @@ public class BannerView<T> extends RelativeLayout {
 
     /**
      * 设置底部指示器是否可见
-     *
      */
     public BannerView setPointViewVisible(boolean visible) {
         mPageTurningPoint.setVisibility(visible ? View.VISIBLE : View.GONE);
@@ -138,7 +137,7 @@ public class BannerView<T> extends RelativeLayout {
             mPointViews.add(pointView);
             mPageTurningPoint.addView(pointView);
         }
-        mPageChangeListener = new JPageChangeListener(mPointViews, page_indicatorId);
+        mPageChangeListener = new PageChangeListener(mPointViews, page_indicatorId);
         mLoopScaleHelper.setOnPageChangeListener(mPageChangeListener);
         if (onPageChangeListener != null)
             mPageChangeListener.setOnPageChangeListener(onPageChangeListener);

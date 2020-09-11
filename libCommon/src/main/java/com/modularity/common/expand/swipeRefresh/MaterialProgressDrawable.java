@@ -34,26 +34,26 @@ import java.util.ArrayList;
  * Fancy progress indicator for Material theme.
  */
 class MaterialProgressDrawable extends Drawable implements Animatable {
-    private static final Interpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
-    private static final Interpolator END_CURVE_INTERPOLATOR = new EndCurveInterpolator();
+    private static final Interpolator LINEAR_INTERPOLATOR      = new LinearInterpolator();
+    private static final Interpolator END_CURVE_INTERPOLATOR   = new EndCurveInterpolator();
     private static final Interpolator START_CURVE_INTERPOLATOR = new StartCurveInterpolator();
-    private static final Interpolator EASE_INTERPOLATOR = new AccelerateDecelerateInterpolator();
+    private static final Interpolator EASE_INTERPOLATOR        = new AccelerateDecelerateInterpolator();
 
     @Retention(RetentionPolicy.CLASS)
     @IntDef({LARGE, DEFAULT})
     public @interface ProgressDrawableSize {
     }
 
-    static final int LARGE = 0;
+    static final int LARGE   = 0;
     static final int DEFAULT = 1;
 
-    private static final int CIRCLE_DIAMETER = 40;
-    private static final float CENTER_RADIUS = 8.75f; //should add up to 10 when + stroke_width
-    private static final float STROKE_WIDTH = 2.5f;
+    private static final int   CIRCLE_DIAMETER = 40;
+    private static final float CENTER_RADIUS   = 8.75f; //should add up to 10 when + stroke_width
+    private static final float STROKE_WIDTH    = 2.5f;
 
-    private static final int CIRCLE_DIAMETER_LARGE = 56;
-    private static final float CENTER_RADIUS_LARGE = 12.5f;
-    private static final float STROKE_WIDTH_LARGE = 3f;
+    private static final int   CIRCLE_DIAMETER_LARGE = 56;
+    private static final float CENTER_RADIUS_LARGE   = 12.5f;
+    private static final float STROKE_WIDTH_LARGE    = 3f;
 
     /**
      * The duration of a single progress spin in milliseconds.
@@ -63,11 +63,11 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
     /**
      * The number of points in the progress "star".
      */
-    private static final float NUM_POINTS = 5f;
+    private static final float                NUM_POINTS = 5f;
     /**
      * The list of animators operating on this drawable.
      */
-    private final ArrayList<Animation> mAnimators = new ArrayList<Animation>();
+    private final        ArrayList<Animation> mAnimators = new ArrayList<Animation>();
 
     /**
      * The indicator ring, used to manage animation state.
@@ -82,23 +82,23 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
     /**
      * Layout info for the arrowhead in dp
      */
-    private static final int ARROW_WIDTH = 10;
-    private static final int ARROW_HEIGHT = 5;
+    private static final int   ARROW_WIDTH        = 10;
+    private static final int   ARROW_HEIGHT       = 5;
     private static final float ARROW_OFFSET_ANGLE = 5;
 
     /**
      * Layout info for the arrowhead for the large spinner in dp
      */
-    private static final int ARROW_WIDTH_LARGE = 12;
-    private static final int ARROW_HEIGHT_LARGE = 6;
-    private static final float MAX_PROGRESS_ARC = .8f;
+    private static final int   ARROW_WIDTH_LARGE  = 12;
+    private static final int   ARROW_HEIGHT_LARGE = 6;
+    private static final float MAX_PROGRESS_ARC   = .8f;
 
     private Resources mResources;
-    private View mParent;
+    private View      mParent;
     private Animation mAnimation;
-    private float mRotationCount;
-    private double mWidth;
-    private double mHeight;
+    private float     mRotationCount;
+    private double    mWidth;
+    private double    mHeight;
     private Animation mFinishAnimation;
 
     public MaterialProgressDrawable(Context context, View parent) {
@@ -389,31 +389,31 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
 
     private static class Ring {
         private final RectF mTempBounds = new RectF();
-        private final Paint mPaint = new Paint();
+        private final Paint mPaint      = new Paint();
         private final Paint mArrowPaint = new Paint();
 
         private final Callback mCallback;
 
-        private float mStartTrim = 0.0f;
-        private float mEndTrim = 0.0f;
-        private float mRotation = 0.0f;
+        private float mStartTrim   = 0.0f;
+        private float mEndTrim     = 0.0f;
+        private float mRotation    = 0.0f;
         private float mStrokeWidth = 5.0f;
         private float mStrokeInset = 2.5f;
 
-        private int[] mColors;
-        private int mColorIndex;
-        private float mStartingStartTrim;
-        private float mStartingEndTrim;
-        private float mStartingRotation;
-        private boolean mShowArrow;
-        private Path mArrow;
-        private float mArrowScale;
-        private double mRingCenterRadius;
-        private int mArrowWidth;
-        private int mArrowHeight;
-        private int mAlpha;
-        private final Paint mCirclePaint = new Paint();
-        private int mBackgroundColor;
+        private       int[]   mColors;
+        private       int     mColorIndex;
+        private       float   mStartingStartTrim;
+        private       float   mStartingEndTrim;
+        private       float   mStartingRotation;
+        private       boolean mShowArrow;
+        private       Path    mArrow;
+        private       float   mArrowScale;
+        private       double  mRingCenterRadius;
+        private       int     mArrowWidth;
+        private       int     mArrowHeight;
+        private       int     mAlpha;
+        private final Paint   mCirclePaint = new Paint();
+        private       int     mBackgroundColor;
 
         public Ring(Callback callback) {
             mCallback = callback;

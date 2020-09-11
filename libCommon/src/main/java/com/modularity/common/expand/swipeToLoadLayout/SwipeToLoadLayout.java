@@ -2,8 +2,10 @@ package com.modularity.common.expand.swipeToLoadLayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+
 import androidx.core.view.MotionEventCompat;
 import androidx.core.view.ViewCompat;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;

@@ -2,8 +2,8 @@ package com.modularity.signature.utils;
 
 public class SvgBuilder {
 
-    private final StringBuilder mSvgPathsBuilder = new StringBuilder();
-    private SvgPathBuilder mCurrentPathBuilder = null;
+    private final StringBuilder  mSvgPathsBuilder    = new StringBuilder();
+    private       SvgPathBuilder mCurrentPathBuilder = null;
 
     public SvgBuilder() {
     }

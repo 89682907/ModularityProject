@@ -81,22 +81,6 @@ public class BaseAppManager {
         return flag;
     }
 
-//    /**
-//     * 退出应用程序
-//     */
-//    public synchronized void AppExit(Context context) {
-////        try {
-////            clear();
-////            ActivityManager activityMgr = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-////            activityMgr.killBackgroundProcesses(context.getPackageName());
-////            System.exit(0);
-////        } catch (Exception e) {
-////            e.printStackTrace();
-////            clear();
-////        }
-//        c
-//    }
-
     private static class InstanceHolder {
         static final BaseAppManager instance = new BaseAppManager();
     }

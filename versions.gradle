@@ -27,7 +27,6 @@ versions.multidex = "2.0.1"
 versions.arouter_api = "1.5.0"
 versions.arouter_compiler = "1.2.2"
 versions.easypermissions = "3.0.0"
-versions.utilcodex = "1.29.0"
 versions.systembartint = "1.0.3"
 versions.findbugs = "3.0.2"
 versions.gson = "2.8.5"
@@ -152,9 +151,6 @@ def addRepos(RepositoryHandler handler) {
     handler.maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
     handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     handler.maven { url rootProject.ext.repoUrl }
-//        maven{
-//            url "http://nexus.enn.cn/content/groups/public/"
-//        }
 }
 
 ext.addRepos = this.&addRepos

@@ -3,18 +3,18 @@ apply plugin: 'maven'
 def current = [:]
 def common = [:]
 common.mavenArtifactId = "common"
-common.mavenVersion = "1.0.5"
+common.mavenVersion = "1.0.6"
 
 def pr = [:]
 pr.mavenArtifactId = "pr"
-pr.mavenVersion = "1.0.1"
+pr.mavenVersion = "1.0.2"
 
 def wb = [:]
 wb.mavenArtifactId = "wb"
-wb.mavenVersion = "1.0.0"
+wb.mavenVersion = "1.0.1"
 
 
-current.module = wb
+current.module = common
 uploadArchives {
     def mavenArtifactId = current.module.mavenArtifactId
     def mavenVersion = current.module.mavenVersion

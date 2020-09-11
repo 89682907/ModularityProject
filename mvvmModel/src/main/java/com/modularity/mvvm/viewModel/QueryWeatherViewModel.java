@@ -6,9 +6,9 @@ import androidx.databinding.ObservableField;
 import android.widget.Toast;
 
 import com.modularity.mvvm.bean.WeatherData;
-import com.modularity.perfectionRetrofit.PerfectionCallBack;
-import com.modularity.perfectionRetrofit.PerfectionRetrofit;
-import com.modularity.perfectionRetrofit.exception.PerfectionThrowable;
+import com.modularity.perfection.Perfection;
+import com.modularity.perfection.PerfectionCallBack;
+import com.modularity.perfection.exception.PerfectionThrowable;
 
 import java.util.HashMap;
 
@@ -41,7 +41,7 @@ public class QueryWeatherViewModel {
     }
 
     public void queryWeather() {
-        PerfectionRetrofit retrofit = new PerfectionRetrofit.Builder()
+        Perfection retrofit = new Perfection.Builder()
                 .baseUrl("http://www.weather.com.cn/")
                 .build();
         retrofit.requestGet("data/cityinfo/101210101.html", new HashMap<>(), new PerfectionCallBack<WeatherData>() {

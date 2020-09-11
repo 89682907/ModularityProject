@@ -8,9 +8,9 @@ import com.modularity.mod_a.bean.ModuleARequestBean;
 import com.modularity.mod_a.bean.ModuleAResponseBean;
 import com.modularity.mod_a.IModuleAStatics;
 import com.modularity.mod_a.bean.TestResBean;
-import com.modularity.perfectionRetrofit.PerfectionCallBack;
-import com.modularity.perfectionRetrofit.PerfectionRetrofit;
-import com.modularity.perfectionRetrofit.exception.PerfectionThrowable;
+import com.modularity.perfection.Perfection;
+import com.modularity.perfection.PerfectionCallBack;
+import com.modularity.perfection.exception.PerfectionThrowable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class ModuleAModelImpl implements IModuleAModel {
 
 
-    private PerfectionRetrofit    retrofit;
+    private Perfection            retrofit;
     private Context               mContext;
     private IModuleAModelListener mListener;
 
@@ -45,7 +45,7 @@ public class ModuleAModelImpl implements IModuleAModel {
         parmasMap.put("password", "jishen001");
         Map<String, String> header = new HashMap<>();
         header.put("appType", "android");
-        retrofit = new PerfectionRetrofit.Builder()
+        retrofit = new Perfection.Builder()
                 .baseUrl("http://entropy-qa.op.laikang.com/")
                 .addHeader(header)
                 .build();
@@ -88,7 +88,7 @@ public class ModuleAModelImpl implements IModuleAModel {
 
         Map<String, String> header = new HashMap<>();
         header.put("appType", "android");
-        retrofit = new PerfectionRetrofit.Builder()
+        retrofit = new Perfection.Builder()
                 .baseUrl(IModuleAStatics.MODULE_A_BASE_URL)
                 .addHeader(header)
                 .build();

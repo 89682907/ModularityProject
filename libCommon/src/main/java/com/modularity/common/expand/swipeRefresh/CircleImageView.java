@@ -24,15 +24,15 @@ import androidx.core.view.ViewCompat;
 @SuppressLint("ViewConstructor")
 class CircleImageView extends AppCompatImageView {
 
-    private static final int KEY_SHADOW_COLOR = 0x1E000000;
-    private static final int FILL_SHADOW_COLOR = 0x3D000000;
-    private static final float X_OFFSET = 0f;
-    private static final float Y_OFFSET = 1.75f;
-    private static final float SHADOW_RADIUS = 3.5f;
-    private static final int SHADOW_ELEVATION = 4;
+    private static final int   KEY_SHADOW_COLOR  = 0x1E000000;
+    private static final int   FILL_SHADOW_COLOR = 0x3D000000;
+    private static final float X_OFFSET          = 0f;
+    private static final float Y_OFFSET          = 1.75f;
+    private static final float SHADOW_RADIUS     = 3.5f;
+    private static final int   SHADOW_ELEVATION  = 4;
 
     private Animation.AnimationListener mListener;
-    private int mShadowRadius;
+    private int                         mShadowRadius;
 
     public CircleImageView(Context context, int color, final float radius) {
         super(context);
@@ -102,9 +102,9 @@ class CircleImageView extends AppCompatImageView {
     }
 
     private class OvalShadow extends OvalShape {
-        private int mShadowRadius;
+        private int   mShadowRadius;
         private Paint mShadowPaint;
-        private int mCircleDiameter;
+        private int   mCircleDiameter;
 
         public OvalShadow(int shadowRadius, int circleDiameter) {
             super();

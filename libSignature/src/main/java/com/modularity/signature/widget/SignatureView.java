@@ -32,40 +32,33 @@ public class SignatureView extends View {
     //View state
     private List<TimedPoint> mPoints;
     private boolean          mIsEmpty;
-    private Boolean mHasEditState;
-    private float mLastTouchX;
-    private float mLastTouchY;
-    private float mLastVelocity;
-    private float mLastWidth;
-    private RectF mDirtyRect;
-    private Bitmap mBitmapSavedState;
+    private Boolean          mHasEditState;
+    private float            mLastTouchX;
+    private float            mLastTouchY;
+    private float            mLastVelocity;
+    private float            mLastWidth;
+    private RectF            mDirtyRect;
+    private Bitmap           mBitmapSavedState;
 
     private final SvgBuilder mSvgBuilder = new SvgBuilder();
 
     // Cache
-    private List<TimedPoint> mPointsCache = new ArrayList<>();
+    private List<TimedPoint>   mPointsCache              = new ArrayList<>();
     private ControlTimedPoints mControlTimedPointsCached = new ControlTimedPoints();
-    private Bezier mBezierCached = new Bezier();
+    private Bezier             mBezierCached             = new Bezier();
 
     //Configurable parameters
-    private int mMinWidth;
-    private int mMaxWidth;
-    private float mVelocityFilterWeight;
+    private int              mMinWidth;
+    private int              mMaxWidth;
+    private float            mVelocityFilterWeight;
     private OnSignedListener mOnSignedListener;
-    private boolean mClearOnDoubleClick;
+    private boolean          mClearOnDoubleClick;
 
     //Double click detector
     private GestureDetector mGestureDetector;
 
-    //Default attribute values
-    private final int DEFAULT_ATTR_PEN_MIN_WIDTH_PX = 3;
-    private final int DEFAULT_ATTR_PEN_MAX_WIDTH_PX = 7;
-    private final int DEFAULT_ATTR_PEN_COLOR = Color.BLACK;
-    private final float DEFAULT_ATTR_VELOCITY_FILTER_WEIGHT = 0.9f;
-    private final boolean DEFAULT_ATTR_CLEAR_ON_DOUBLE_CLICK = false;
-
-    private Paint mPaint = new Paint();
-    private Bitmap mSignatureBitmap = null;
+    private Paint  mPaint                 = new Paint();
+    private Bitmap mSignatureBitmap       = null;
     private Canvas mSignatureBitmapCanvas = null;
 
     public SignatureView(Context context, AttributeSet attrs) {
@@ -78,11 +71,16 @@ public class SignatureView extends View {
 
         //Configurable parameters
         try {
+            //Default attribute values
+            int DEFAULT_ATTR_PEN_MIN_WIDTH_PX = 3;
             mMinWidth = a.getDimensionPixelSize(R.styleable.SignatureView_penMinWidth, convertDpToPx(DEFAULT_ATTR_PEN_MIN_WIDTH_PX));
+            int DEFAULT_ATTR_PEN_MAX_WIDTH_PX = 7;
             mMaxWidth = a.getDimensionPixelSize(R.styleable.SignatureView_penMaxWidth, convertDpToPx(DEFAULT_ATTR_PEN_MAX_WIDTH_PX));
+            int DEFAULT_ATTR_PEN_COLOR = Color.BLACK;
             mPaint.setColor(a.getColor(R.styleable.SignatureView_penColor, DEFAULT_ATTR_PEN_COLOR));
+            float DEFAULT_ATTR_VELOCITY_FILTER_WEIGHT = 0.9f;
             mVelocityFilterWeight = a.getFloat(R.styleable.SignatureView_velocityFilterWeight, DEFAULT_ATTR_VELOCITY_FILTER_WEIGHT);
-            mClearOnDoubleClick = a.getBoolean(R.styleable.SignatureView_clearOnDoubleClick, DEFAULT_ATTR_CLEAR_ON_DOUBLE_CLICK);
+            mClearOnDoubleClick = a.getBoolean(R.styleable.SignatureView_clearOnDoubleClick, false);
         } finally {
             a.recycle();
         }
