@@ -31,5 +31,18 @@
         <attr name="default_to_loading_more_scrolling_duration" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="BannerView">
+        <attr name="canLoop" format="boolean" />
+        <attr name="autoTurningTime" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="ExpandSwipeRefreshLayout">
+        <attr name="direction">
+            <enum name="top" value="0" />
+            <enum name="bottom" value="1" />
+            <enum name="both" value="2" />
+        </attr>
+    </declare-styleable>
+
 
 </resources>

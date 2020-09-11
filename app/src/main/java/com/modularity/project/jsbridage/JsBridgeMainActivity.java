@@ -4,18 +4,18 @@ package com.modularity.project.jsbridage;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.lk.community.jsbridge.BridgeHandler;
 import com.lk.community.jsbridge.CallBackFunction;
 import com.lk.community.jsbridge.DefaultHandler;
-import com.lk.community.view.JWebView;
+import com.lk.community.view.WebView;
 import com.modularity.common.base.BaseActivity;
+import com.modularity.common.utils.utilcode.util.ToastUtils;
 import com.modularity.project.R;
 
 public class JsBridgeMainActivity extends BaseActivity {
 
-    private JWebView mWebView;
+    private WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -9,8 +9,12 @@ def pr = [:]
 pr.mavenArtifactId = "pr"
 pr.mavenVersion = "1.0.1"
 
+def wb = [:]
+wb.mavenArtifactId = "wb"
+wb.mavenVersion = "1.0.0"
 
-current.module = pr
+
+current.module = wb
 uploadArchives {
     def mavenArtifactId = current.module.mavenArtifactId
     def mavenVersion = current.module.mavenVersion

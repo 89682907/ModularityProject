@@ -1,0 +1,16 @@
+<resources>
+    <dimen name="activity_horizontal_margin">12dp</dimen>
+    <dimen name="activity_vertical_margin">12dp</dimen>
+
+
+    <dimen name="text_size_title">20sp</dimen>
+    <dimen name="text_size_button">17sp</dimen>
+
+    <dimen name="text_size_one">16sp</dimen>
+    <dimen name="text_size_two">14sp</dimen>
+    <dimen name="text_size_three">12sp</dimen>
+    <dimen name="line_spacing_extra">3dp</dimen>
+
+    <dimen name="convenientbanner_margin">10dp</dimen>
+
+</resources>

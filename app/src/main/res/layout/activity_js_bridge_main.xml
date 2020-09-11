@@ -20,7 +20,7 @@
 
 
     <!-- webview 演示web调用Java -->
-    <com.lk.community.view.JWebView
+    <com.lk.community.view.WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

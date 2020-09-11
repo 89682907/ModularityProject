@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--全局主色调 背景-->
+    <color name="kGlobalBGColor">#f5f5f5</color>
+
+    <!--红色-->
+    <color name="kRedColor">#c81623</color>
+    <color name="kRedHightColor">#af1722</color>
+
+    <color name="kOrangeColor">#F76120</color>
+
+    <color name="titleBarBG">#f9f9f9</color>
+    <!-- 一级字体颜色 -->
+    <color name="kOneLevelColor">#333333</color>
+    <!-- 二级字体颜色 -->
+    <color name="kTwoLevelColor">#999999</color>
+    <!-- 线的颜色 -->
+    <color name="kLineColor">#DFDFDF</color>
+    <!-- 二级导航颜色 -->
+    <color name="kSubLevelColor">#666666</color>
+
+    <color name="colorPrimary">#f9f9f9</color>
+    <color name="colorPrimaryDark">#666666</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="bule_dark">#6495ED</color>
+
+    <color name="fuel_save_bg">#494949</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="refuel_help_statebar">#262626</color>
+
+    <color name="launch_status_bar">#00dad8dd</color>
+    <color name="photo_browse_bar">#00FFFFFF</color>
+
+
+
+    <color name="login_disable_btn">#ABABAB</color>
+
+    <color name="refuel_record">#292b3c</color>
+    <color name="sc_title_bg">#bf001a</color>
+
+
+</resources>

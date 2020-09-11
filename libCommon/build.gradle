@@ -35,13 +35,13 @@ dependencies {
     api deps.constraintlayout
     api deps.multidex
     api deps.easypermissions
-    api deps.utilcodex
+    api deps.gson
     api deps.findbugs
     api deps.lifecycle.extensions
-    api (deps.arouter.arouter_api) {
-        exclude(group: 'com.android.support')
-    }
+    api deps.systembartint
+    api deps.material
+    api (deps.arouter.arouter_api)
     api deps.glide.glide_api
 //    kapt deps.glide.glide_compiler
-    implementation deps.systembartint
+
 }

@@ -958,8 +958,6 @@ public class SwipeToLoadLayout extends ViewGroup {
     }
 
     /**
-     * copy from {@link androidx.core.widget.SwipeRefreshLayout#canChildScrollUp()}
-     *
      * @return Whether it is possible for the child view of this layout to
      * scroll up. Override this if the child view is a custom view.
      */

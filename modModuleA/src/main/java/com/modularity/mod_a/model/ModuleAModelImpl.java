@@ -7,7 +7,6 @@ import android.widget.Toast;
 import com.modularity.mod_a.bean.ModuleARequestBean;
 import com.modularity.mod_a.bean.ModuleAResponseBean;
 import com.modularity.mod_a.IModuleAStatics;
-import com.modularity.mod_a.bean.TestReqBean;
 import com.modularity.mod_a.bean.TestResBean;
 import com.modularity.perfectionRetrofit.PerfectionCallBack;
 import com.modularity.perfectionRetrofit.PerfectionRetrofit;

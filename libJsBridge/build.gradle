@@ -26,5 +26,6 @@ uploadArchives {
 
 dependencies {
     compileOnly project(':libCommon')
-    api deps.gson
+    implementation deps.gson
 }
+//apply from: "${rootDir}/gradle/uploadArchives.gradle"

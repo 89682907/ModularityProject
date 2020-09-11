@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ToastUtils
 import com.community.jetpack.R
 import com.community.jetpack.adapter.JetMainAdapter2
 import com.community.jetpack.bean.JetMainItemBean
@@ -14,6 +13,7 @@ import com.community.jetpack.paging.local.view.PagingMainActivity
 import com.community.jetpack.viewModel.JetMainListModel
 import com.modularity.common.base.BaseActivity
 import com.modularity.common.expand.recyclerWrapper.listener.OnRecyclerViewItemClickListener
+import com.modularity.common.utils.utilcode.util.ToastUtils
 
 class JetpackMainActivity : BaseActivity(), OnRecyclerViewItemClickListener {
 

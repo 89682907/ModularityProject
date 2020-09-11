@@ -30,5 +30,6 @@ uploadArchives {
 
 dependencies {
     compileOnly project(':libCommon')
+    implementation "${rootProject.ext.libPerfectionRetrofit}"
     annotationProcessor deps.arouter.arouter_compiler
 }

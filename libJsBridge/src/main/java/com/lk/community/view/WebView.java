@@ -9,19 +9,19 @@ import android.webkit.WebSettings;
 
 import com.lk.community.jsbridge.BridgeWebView;
 
-public class JWebView extends BridgeWebView {
+public class WebView extends BridgeWebView {
 
-    public JWebView(Context context, AttributeSet attrs) {
+    public WebView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initWebSetting();
     }
 
-    public JWebView(Context context, AttributeSet attrs, int defStyle) {
+    public WebView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initWebSetting();
     }
 
-    public JWebView(Context context) {
+    public WebView(Context context) {
         super(context);
         initWebSetting();
     }
