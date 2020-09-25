@@ -142,7 +142,7 @@ deps.glide = glide
 
 ext.deps = deps
 
-def addRepos(RepositoryHandler handler) {
+def addRepos(RepositoryHandler handler, Project project) {
     handler.google()
     handler.jcenter()
     handler.maven { url "https://jitpack.io" }
@@ -150,7 +150,7 @@ def addRepos(RepositoryHandler handler) {
     handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     handler.maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
     handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-    handler.maven { url rootProject.ext.repoUrl }
+    handler.maven { url project.ext.repoUrl }
 }
 
 ext.addRepos = this.&addRepos

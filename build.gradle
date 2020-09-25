@@ -2,14 +2,14 @@
 buildscript {
     apply from: 'gradle/init.gradle'
     apply from: 'versions.gradle'
-    addRepos(repositories)
+    addRepos(repositories, rootProject)
     dependencies {
         classpath deps.android_gradle_plugin
         classpath deps.kotlin.plugin
     }
 }
 allprojects {
-    addRepos(repositories)
+    addRepos(repositories, rootProject)
 }
 
 

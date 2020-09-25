@@ -60,16 +60,20 @@ modules.libJsBridgeInfo = libJsBridgeInfo
 
 ext.modules = modules
 
+//主意引用顺序
 def initModuleInfo() {
     List<ModuleInfo> moduleList = new ArrayList<>()
+    //lib
     moduleList.add(new ModuleInfo(ext.modules.perfectionRetrofitInfo.name, ext.modules.perfectionRetrofitInfo.artifactId, ext.modules.perfectionRetrofitInfo.version, ":${ext.modules.perfectionRetrofitInfo.name}", true))
     moduleList.add(new ModuleInfo(ext.modules.faceRecognitionInfo.name, ext.modules.faceRecognitionInfo.artifactId, ext.modules.faceRecognitionInfo.version, ":${ext.modules.faceRecognitionInfo.name}", true))
+    moduleList.add(new ModuleInfo(ext.modules.libJsBridgeInfo.name, ext.modules.libJsBridgeInfo.artifactId, ext.modules.libJsBridgeInfo.version, ":${ext.modules.libJsBridgeInfo.name}", true))
+
+    //module
     moduleList.add(new ModuleInfo(ext.modules.signatureInfo.name, ext.modules.signatureInfo.artifactId, ext.modules.signatureInfo.version, ":${ext.modules.signatureInfo.name}", true))
     moduleList.add(new ModuleInfo(ext.modules.moduleAInfo.name, ext.modules.moduleAInfo.artifactId, ext.modules.moduleAInfo.version, ":${ext.modules.moduleAInfo.name}", false))
     moduleList.add(new ModuleInfo(ext.modules.moduleBInfo.name, ext.modules.moduleBInfo.artifactId, ext.modules.moduleBInfo.version, ":${ext.modules.moduleBInfo.name}", false))
     moduleList.add(new ModuleInfo(ext.modules.mvvmModelInfo.name, ext.modules.mvvmModelInfo.artifactId, ext.modules.mvvmModelInfo.version, ":${ext.modules.mvvmModelInfo.name}", false))
     moduleList.add(new ModuleInfo(ext.modules.modJetpackInfo.name, ext.modules.modJetpackInfo.artifactId, ext.modules.modJetpackInfo.version, ":${ext.modules.modJetpackInfo.name}", false))
-    moduleList.add(new ModuleInfo(ext.modules.libJsBridgeInfo.name, ext.modules.libJsBridgeInfo.artifactId, ext.modules.libJsBridgeInfo.version, ":${ext.modules.libJsBridgeInfo.name}", true))
     rootProject.ext.set("MODULE_INFO_LIST", moduleList)
 }
 

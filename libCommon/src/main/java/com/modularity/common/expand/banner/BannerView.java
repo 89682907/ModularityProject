@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class BannerView<T> extends RelativeLayout {
-    private List<T>              mDates;
+    private List<Object>         mDates;
     private int[]                mPageIndicatorId;
     private PageAdapter          mPageAdapter;
     private LoopViewPager        mViewPager;
@@ -76,7 +76,7 @@ public class BannerView<T> extends RelativeLayout {
         return this;
     }
 
-    public BannerView setPages(IBannerHolderCreator holderCreator, List<T> datas) {
+    public BannerView setPages(IBannerHolderCreator holderCreator, List<Object> datas) {
         this.mDates = datas;
         mPageAdapter = new PageAdapter(holderCreator, mDates, canLoop);
         mViewPager.setAdapter(mPageAdapter);

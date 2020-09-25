@@ -121,7 +121,7 @@ public class SoftApplication extends Application {
             Log.e(tag, "Error[" + info + "]");
             Log.e(tag, "sdcard =>" + Environment.getExternalStorageState());
 			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) { // sd卡是否挂载
-                FileIOUtils.writeFileFromString(IStatics.SDCARD_LOG_DIR +"log.txt",info,true);
+                FileIOUtils.writeFileFromString(IStatics.IPathStatics.LOG_DIR +"log.txt",info,true);
 				// softApp.startService(new Intent(softApp,
 				// UploadService.class));
 				// 上传log

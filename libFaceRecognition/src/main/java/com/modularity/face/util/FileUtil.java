@@ -10,8 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static com.modularity.common.statics.IStatics.SDCARD_FACE_DIR;
-
+import static com.modularity.common.statics.IStatics.IPathStatics.CACHE_DIR;
 
 /**
  * 图片保存控制类
@@ -19,14 +18,14 @@ import static com.modularity.common.statics.IStatics.SDCARD_FACE_DIR;
 public class FileUtil {
     private static final String sTAG        = "FileUtil";
     private static final File   sParentPath = Environment.getExternalStorageDirectory();
-    private static String sStoragePath;
+    private static       String sStoragePath;
 
     /**
      * 初始化保存路径
      */
     private static String initPath() {
         if (TextUtils.isEmpty(sStoragePath)) {
-            sStoragePath = sParentPath.getAbsolutePath() + SDCARD_FACE_DIR;
+            sStoragePath = CACHE_DIR + "face";
         }
         File f = new File(sStoragePath);
         if (!f.exists()) {

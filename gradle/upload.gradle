@@ -28,6 +28,8 @@ task uploadModularityTask {
             versionDir = new File("${localRepoPath}/cache/develop/" + projectType)
         } else if (hasLocalPath) {
             versionDir = new File("${localRepoPath}/cache/fake_server/" + projectType)
+        } else if (develop) {
+            versionDir = new File("${rootDir}/../maven/cache/develop/" + projectType)
         } else {
             versionDir = new File("${rootDir}/../maven/cache/" + projectType)
 

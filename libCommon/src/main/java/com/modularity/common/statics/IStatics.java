@@ -1,6 +1,10 @@
 package com.modularity.common.statics;
 
+import com.modularity.common.utils.utilcode.util.SDCardUtils;
+
 import java.io.File;
+
+import static com.modularity.common.statics.Config.APP_NAME;
 
 /**
  * 存放一些静态参数
@@ -9,17 +13,16 @@ import java.io.File;
 
 public interface IStatics {
 
-    String STRING_SEPARATOR = "_";
-
     String BUILD_TYPE_DEBUG   = "debug";
     String BUILD_TYPE_BETA    = "beta";
     String BUILD_TYPE_RELEASE = "release";
 
-    String CACHE_DIR_NAME    = (Config.BUILD_TYPE.equals(BUILD_TYPE_DEBUG) ? "modularityDev" : Config.BUILD_TYPE.equals(BUILD_TYPE_BETA) ? "modularityBeta" : "modularity") + (Config.DEVELOP ? "Dv" : "");
-    String CACHE_DIR         = File.separator + CACHE_DIR_NAME + File.separator;
-    String SDCARD_UPDATE_DIR = CACHE_DIR + "update/";
-    String SDCARD_LOG_DIR    = CACHE_DIR + "log/";
-    String SDCARD_CACHE_DIR  = CACHE_DIR + "cache/";
-    String SDCARD_FACE_DIR   = CACHE_DIR + "cache/face/";
+    interface IPathStatics {
+        String SDCARD_PATH = SDCardUtils.getSDCardPathByEnvironment();
+        String APP_DIR     = SDCARD_PATH + File.separator + APP_NAME + File.separator;
+        String APK_DIR     = APP_DIR + "apk/";
+        String LOG_DIR     = APP_DIR + "log/";
+        String CACHE_DIR   = APP_DIR + "cache/";
+    }
 
 }
