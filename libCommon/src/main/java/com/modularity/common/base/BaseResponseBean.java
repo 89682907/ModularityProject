@@ -5,11 +5,11 @@ package com.modularity.common.base;
  */
 
 public class BaseResponseBean {
-    private int code;
+    private int    code;
     private String message;
 
     public boolean isSuccess() {
-        return true;//实际情况根据code设置
+        return 200 == code;//实际情况根据code设置
     }
 
     public int getCode() {

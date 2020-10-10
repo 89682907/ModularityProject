@@ -3,6 +3,7 @@ package com.modularity.perfection.base;
 import java.util.Map;
 
 import io.reactivex.rxjava3.core.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
@@ -16,6 +17,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.QueryMap;
+import retrofit2.http.QueryName;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
@@ -32,11 +34,17 @@ public interface BaseApiService {
 
     @Multipart
     @POST
-    Observable<ResponseBody> uploadFile(@Url String var1, @Part("description") RequestBody var2, @Part("files") okhttp3.MultipartBody.Part var3);
+    Observable<ResponseBody> upLoadImage(@Url String var1, @Part MultipartBody.Part file);
 
+    @Multipart
     @POST
-    Observable<ResponseBody> uploadFiles(@Url String var1, @Body Map<String, RequestBody> var2);
+    Observable<ResponseBody> uploadFile(@Url String var1, @Part("description") RequestBody var2, @Part MultipartBody.Part var3);
 
+    @Multipart
+    @POST
+    Observable<ResponseBody> uploadFiles(@Url String var1, @PartMap Map<String, RequestBody> var2);
+
+    @Multipart
     @POST
     Observable<ResponseBody> uploadFile(@Url String var1, @Body RequestBody var2);
 

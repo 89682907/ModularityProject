@@ -4,7 +4,7 @@ package com.modularity.common.utils.global;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import com.modularity.common.utils.utilcode.util.Utils;
+import com.modularity.common.utils.managers.manager.Managers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +24,7 @@ public class Global {
     }
 
     public Context getContext() {
-        return mContext == null ? Utils.getApp() : mContext;
+        return mContext == null ? Managers.getApp() : mContext;
     }
 
     public void setParams(String key, Object params) {

@@ -23,7 +23,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 public abstract class BaseFragment extends Fragment {
 
 
-    private View view;
+    private   View         view;
     protected BaseActivity mActivity;
 
     protected abstract void initView(View view, Bundle savedInstanceState);
@@ -39,8 +39,8 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if(view==null){
-            view=inflater.inflate(getLayoutId(), null);
+        if (view == null) {
+            view = inflater.inflate(getLayoutId(), null);
             initView(view, savedInstanceState);
         }
         ViewGroup parent = (ViewGroup) view.getParent();
@@ -55,6 +55,7 @@ public abstract class BaseFragment extends Fragment {
         super.onResume();
 
     }
+
     public void onPause() {
         super.onPause();
     }
@@ -63,7 +64,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 设置沉浸式状态栏颜色
      */
-    public void setStatusBarTintColor(String barColor){
+    public void setStatusBarTintColor(String barColor) {
         // 4.4及以上版本开启
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
@@ -91,7 +92,6 @@ public abstract class BaseFragment extends Fragment {
         }
         win.setAttributes(winParams);
     }
-
 
 
 }

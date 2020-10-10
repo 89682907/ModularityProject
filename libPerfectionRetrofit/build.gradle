@@ -41,4 +41,4 @@ dependencies {
     api deps.moshi.moshi_kotlin
 
 }
-//apply from: "${rootDir}/gradle/uploadArchives.gradle"
+apply from: "${rootDir}/gradle/uploadArchives.gradle"

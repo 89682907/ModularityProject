@@ -13,7 +13,7 @@ import com.community.jetpack.paging.local.view.PagingMainActivity
 import com.community.jetpack.viewModel.JetMainListModel
 import com.modularity.common.base.BaseActivity
 import com.modularity.common.expand.recyclerWrapper.listener.OnRecyclerViewItemClickListener
-import com.modularity.common.utils.utilcode.util.ToastUtils
+import com.modularity.common.utils.managers.manager.ToastManager
 
 class JetpackMainActivity : BaseActivity(), OnRecyclerViewItemClickListener {
 
@@ -59,7 +59,7 @@ class JetpackMainActivity : BaseActivity(), OnRecyclerViewItemClickListener {
                 startActivity(Intent(this, PagingMainActivity::class.java))
             }
             else -> {
-                ToastUtils.showLong(tag.name)
+                ToastManager.showLong(tag.name)
             }
         }
     }

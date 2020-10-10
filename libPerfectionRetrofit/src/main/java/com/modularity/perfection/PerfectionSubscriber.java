@@ -9,20 +9,20 @@ import com.modularity.perfectionRetrofit.BuildConfig;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory;
+import com.tamic.novate.util.ReflectionUtil;
 
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 
 class PerfectionSubscriber<T> extends BaseSubscriber<ResponseBody> {
     private PerfectionCallBack<T> mCallBack;
-    private Type                  mClassType;
 
-    PerfectionSubscriber(Type mClassType, PerfectionCallBack<T> callBack) {
+    PerfectionSubscriber(PerfectionCallBack<T> callBack) {
         this.mCallBack = callBack;
-        this.mClassType = mClassType;
     }
 
 
@@ -61,15 +61,28 @@ class PerfectionSubscriber<T> extends BaseSubscriber<ResponseBody> {
 //        }
 //    }
 
-    private void parseByMosh(String jsStr) throws IOException, PerfectionThrowable {
+    private void parseByMosh(String jsStr) throws PerfectionThrowable {
         if (this.mCallBack != null) {
-            Moshi moshi = new Moshi.Builder()
-                    .add(new KotlinJsonAdapterFactory())
-                    .build();
-            JsonAdapter<T> jsonAdapter = moshi.adapter(mClassType);
-            this.mCallBack.onSuccess(jsonAdapter.fromJson(jsStr));
+            Type classType = Objects.requireNonNull(ReflectionUtil.getParameterizedTypes(mCallBack))[0];
+            String typeName = ReflectionUtil.getClassName(classType);
+            if (BuildConfig.DEBUG) {
+                Log.i(Perfection.Builder.LOG_TAG, "ClassType:" + typeName);
+            }
+            if ("java.lang.String".equals(typeName)) {
+                this.mCallBack.onSuccess((T) jsStr);
+            } else {
+                Moshi moshi = new Moshi.Builder()
+                        .add(new KotlinJsonAdapterFactory())
+                        .build();
+                JsonAdapter<T> jsonAdapter = moshi.adapter(classType);
+                try {
+                    this.mCallBack.onSuccess(jsonAdapter.fromJson(jsStr));
+                } catch (IOException e) {
+                    throw PerfectionException.handleException(new Exception("数据解析失败IO[" + jsStr + "]"));
+                }
+            }
         } else {
-            throw PerfectionException.handleException(null);
+            throw PerfectionException.handleException(new Exception("数据解析失败[" + jsStr + "]"));
         }
     }
 

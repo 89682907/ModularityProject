@@ -1,10 +1,9 @@
 package com.modularity.common.statics;
 
-import com.modularity.common.utils.utilcode.util.SDCardUtils;
+import com.modularity.common.utils.managers.manager.AppManager;
+import com.modularity.common.utils.managers.manager.SDCardManager;
 
 import java.io.File;
-
-import static com.modularity.common.statics.Config.APP_NAME;
 
 /**
  * 存放一些静态参数
@@ -18,8 +17,8 @@ public interface IStatics {
     String BUILD_TYPE_RELEASE = "release";
 
     interface IPathStatics {
-        String SDCARD_PATH = SDCardUtils.getSDCardPathByEnvironment();
-        String APP_DIR     = SDCARD_PATH + File.separator + APP_NAME + File.separator;
+        String SDCARD_PATH = SDCardManager.getSDCardPathByEnvironment();
+        String APP_DIR     = SDCARD_PATH + File.separator + AppManager.getAppName() + File.separator;
         String APK_DIR     = APP_DIR + "apk/";
         String LOG_DIR     = APP_DIR + "log/";
         String CACHE_DIR   = APP_DIR + "cache/";

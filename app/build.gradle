@@ -67,7 +67,6 @@ dependencies {
     implementation project(':libSignature')
     implementation project(':modJetpack')
     implementation project(':libJsBridge')
-
     kapt deps.glide.glide_compiler //编译器必须在主Application模块中
 
 //    implementation "${rootProject.ext.modModuleA}"

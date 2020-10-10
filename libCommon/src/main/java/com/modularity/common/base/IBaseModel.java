@@ -8,7 +8,7 @@ import com.modularity.common.interfaces.Destroyable;
 
 public interface IBaseModel extends Destroyable {
 
-    interface IBaseModelListener{
+    interface IBaseModelListener {
 
     }
 }

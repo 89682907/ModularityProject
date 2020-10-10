@@ -11,8 +11,8 @@ import androidx.multidex.MultiDex;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.modularity.common.statics.Config;
 import com.modularity.common.statics.IStatics;
-import com.modularity.common.utils.utilcode.util.FileIOUtils;
-import com.modularity.common.utils.utilcode.util.Utils;
+import com.modularity.common.utils.managers.manager.FileIOManager;
+import com.modularity.common.utils.managers.manager.Managers;
 import com.modularity.project.BuildConfig;
 
 import java.io.ByteArrayOutputStream;
@@ -35,7 +35,7 @@ public class SoftApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
-        Utils.init(this);
+        Managers.init(this);
     }
 
 
@@ -121,7 +121,7 @@ public class SoftApplication extends Application {
             Log.e(tag, "Error[" + info + "]");
             Log.e(tag, "sdcard =>" + Environment.getExternalStorageState());
 			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) { // sd卡是否挂载
-                FileIOUtils.writeFileFromString(IStatics.IPathStatics.LOG_DIR +"log.txt",info,true);
+                FileIOManager.writeFileFromString(IStatics.IPathStatics.LOG_DIR +"log.txt",info,true);
 				// softApp.startService(new Intent(softApp,
 				// UploadService.class));
 				// 上传log

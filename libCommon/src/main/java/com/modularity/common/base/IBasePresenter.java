@@ -6,5 +6,6 @@ package com.modularity.common.base;
 
 public interface IBasePresenter {
     void attachView(IBaseView mView);
+
     void detachView();
 }

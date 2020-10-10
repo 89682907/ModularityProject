@@ -15,13 +15,8 @@ import com.modularity.perfection.util.PerfectionUtils;
 
 
 import java.io.File;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.net.Proxy;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +34,7 @@ import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.ConnectionPool;
 import okhttp3.Interceptor;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -84,33 +80,6 @@ public final class Perfection {
         return this.mRetrofit.create(service);
     }
 
-    private List<Type> methodHandler(Type[] types) {
-        List<Type> needTypes = new ArrayList();
-        for (Type paramType : types) {
-            if (paramType instanceof ParameterizedType) {
-                Type[] parenTypes = ((ParameterizedType) paramType).getActualTypeArguments();
-                for (Type childType : parenTypes) {
-                    needTypes.add(childType);
-                    if (childType instanceof ParameterizedType) {
-                        Type[] childTypes = ((ParameterizedType) childType).getActualTypeArguments();
-                        Collections.addAll(needTypes, childTypes);
-                    }
-                }
-            }
-        }
-
-        return needTypes;
-    }
-
-    private <T> Type classType(PerfectionCallBack<T> callBack) {
-        Type type = null;
-        Type[] types = callBack.getClass().getGenericInterfaces();
-        if (!this.methodHandler(types).isEmpty()) {
-            type = this.methodHandler(types).get(0);
-        }
-        return type;
-    }
-
     private <T> ObservableTransformer<T, T> handleErrTransformer() {
         if (this.mExceptTransformer == null) {
             this.mExceptTransformer = new ObservableTransformer<T, T>() {
@@ -124,7 +93,7 @@ public final class Perfection {
     }
 
     public <T> void requestGet(String url, Map<String, String> maps, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.requestGet(url, maps == null ? new HashMap<>() : maps).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
@@ -138,12 +107,12 @@ public final class Perfection {
     }
 
     public <T> void requestPost(String url, Object requestBean, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.requestPost(url, requestBean).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
     public <T> void requestForm(String url, @FieldMap(encoded = true) Map<String, String> fields, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.postForm(url, fields == null ? new HashMap<>() : fields).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
@@ -175,37 +144,45 @@ public final class Perfection {
     }
 
     public <T> void requestPut(String url, @FieldMap(encoded = true) Map<String, RequestBody> fields, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.requestPut(url, fields == null ? new HashMap<>() : fields).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
+    @Deprecated
     public <T> void uploadImage(String url, File file, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.upLoadImage(url, PerfectionUtils.createImage(file)).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
+    public <T> void uploadImage(String url, String key, File file, PerfectionCallBack<T> callBack) {
+        this.mSubscriber = new PerfectionSubscriber(callBack);
+        RequestBody requestFile = PerfectionUtils.createImage(file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData(key, file.getName(), requestFile);
+        this.mBaseApiService.upLoadImage(url, body).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
+    }
+
     public <T> void uploadFile(String url, File file, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.uploadFile(url, PerfectionUtils.createFile(file)).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
     public <T> void requestParamsAndFiles(String url, Map<String, RequestBody> paramMap, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.requestParamsAndFiles(url, paramMap == null ? new HashMap<>() : paramMap).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
     public <T> void requestParamsAndFile(String url, Map<String, RequestBody> paramMap, Part file, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.requestParamsAndFile(url, paramMap == null ? new HashMap<>() : paramMap, file).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
-    public <T> void uploadFileWithDescription(String url, String description, File file, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
-        this.mBaseApiService.uploadFile(url, PerfectionUtils.createPartFromString(description), PerfectionUtils.createPart(description, file)).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
+    public <T> void uploadFileWithDescription(String url, String description, String fileKey, File file, PerfectionCallBack<T> callBack) {
+        this.mSubscriber = new PerfectionSubscriber(callBack);
+        this.mBaseApiService.uploadFile(url, PerfectionUtils.createPartFromString(description), PerfectionUtils.createPart(fileKey, file)).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
     public <T> void uploadFlies(String url, Map<String, File> files, PerfectionCallBack<T> callBack) {
-        this.mSubscriber = new PerfectionSubscriber(classType(callBack), callBack);
+        this.mSubscriber = new PerfectionSubscriber(callBack);
         Map<String, RequestBody> filesBody = new HashMap();
         if (files != null && files.size() > 0) {
             for (Entry<String, File> stringFileEntry : files.entrySet()) {
