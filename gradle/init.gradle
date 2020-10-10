@@ -15,6 +15,11 @@ if (localFile.canRead()) {
     def develop = (developStr == null ? false : Boolean.parseBoolean(developStr))
     rootProject.ext.set("develop", develop)
 
+    //设置加载aar开关
+    def isModuleStr = localProperties.getProperty('isModule')
+    def isModule = (isModuleStr == null ? false : Boolean.parseBoolean(isModuleStr))
+    rootProject.ext.set("isModule", isModule)
+
     //设置maven地址
     def localRepoUrl = localProperties.getProperty('LOCAL_REPO_URL')
     if (localRepoUrl != null && localRepoUrl != "") {

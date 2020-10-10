@@ -27,10 +27,13 @@ uploadArchives {
 }
 
 
-
 dependencies {
     compileOnly project(':libCommon')
-//    implementation "${rootProject.ext.libPerfectionRetrofit}"
-    implementation project(':libPerfectionRetrofit')
+    if (rootProject.ext.isModule) {
+        implementation project(':libPerfectionRetrofit')
+    } else {
+        implementation "${rootProject.ext.libPerfectionRetrofit}"
+    }
+
     annotationProcessor deps.arouter.arouter_compiler
 }

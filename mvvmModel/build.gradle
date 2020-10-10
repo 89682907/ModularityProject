@@ -13,7 +13,7 @@ android {
         }
     }
 
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
 //        viewBinding = true
     }
@@ -32,6 +32,10 @@ uploadArchives {
 
 dependencies {
     compileOnly project(':libCommon')
-    implementation "${rootProject.ext.libPerfectionRetrofit}"
+    if (rootProject.ext.isModule) {
+        implementation project(':libPerfectionRetrofit')
+    } else {
+        implementation "${rootProject.ext.libPerfectionRetrofit}"
+    }
     annotationProcessor deps.arouter.arouter_compiler
 }

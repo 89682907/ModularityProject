@@ -51,7 +51,7 @@ android {
         yingyongbao { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_yingyongbao"] }
     }
     // 集成DataBinding
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
 //        viewBinding = true
     }
@@ -60,22 +60,24 @@ android {
 
 dependencies {
     api project(':libCommon')
-    implementation project(':modModuleA')
-    implementation project(':modModuleB')
-    implementation project(':mvvmModel')
-    implementation project(':libFaceRecognition')
-    implementation project(':libSignature')
-    implementation project(':modJetpack')
-    implementation project(':libJsBridge')
+    if (rootProject.ext.isModule) {
+        implementation project(':modModuleA')
+        implementation project(':modModuleB')
+        implementation project(':mvvmModel')
+        implementation project(':libFaceRecognition')
+        implementation project(':libSignature')
+        implementation project(':modJetpack')
+        implementation project(':libJsBridge')
+    } else {
+        implementation "${rootProject.ext.modModuleA}"
+        implementation "${rootProject.ext.modModuleB}"
+        implementation "${rootProject.ext.mvvmModel}"
+        implementation "${rootProject.ext.libFaceRecognition}"
+        implementation "${rootProject.ext.libSignature}"
+        implementation "${rootProject.ext.modJetpack}"
+        implementation "${rootProject.ext.libJsBridge}"
+    }
     kapt deps.glide.glide_compiler //编译器必须在主Application模块中
-
-//    implementation "${rootProject.ext.modModuleA}"
-//    implementation "${rootProject.ext.modModuleB}"
-//    implementation "${rootProject.ext.mvvmModel}"
-//    implementation "${rootProject.ext.libFaceRecognition}"
-//    implementation "${rootProject.ext.libSignature}"
-//    implementation "${rootProject.ext.modJetpack}"
-//    implementation "${rootProject.ext.libJsBridge}"
 }
 
 
