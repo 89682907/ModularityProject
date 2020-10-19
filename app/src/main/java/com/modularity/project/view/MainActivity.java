@@ -11,6 +11,7 @@ import com.modularity.mod_b.ModuleBActivity;
 import com.modularity.mvvm.view.MVVMMainActivity;
 import com.modularity.project.R;
 import com.modularity.project.jsbridage.JsBridgeMainActivity;
+import com.modularity.view.CameraActivity;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -25,6 +26,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.btn_signature).setOnClickListener(this);
         findViewById(R.id.btn_jetpack).setOnClickListener(this);
         findViewById(R.id.btn_jsbridge).setOnClickListener(this);
+        findViewById(R.id.btn_camera).setOnClickListener(this);
 
     }
 
@@ -43,6 +45,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             modJetpack();
         } else if (i == R.id.btn_jsbridge) {
             modJsBridge();
+        } else if (i == R.id.btn_camera) {
+            libCamera();
         }
     }
 
@@ -68,5 +72,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void modJsBridge() {
         startActivity(new Intent(this, JsBridgeMainActivity.class));
+    }
+
+    private void libCamera() {
+        startActivity(new Intent(this, CameraActivity.class));
     }
 }

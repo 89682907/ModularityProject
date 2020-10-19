@@ -1,3 +1,4 @@
+include ':libCamera'
 include ':app'
 include ':libCommon'
 include ':libPerfectionRetrofit'

@@ -1,0 +1,26 @@
+apply plugin: 'com.android.library'
+apply from: "${rootDir}/gradle/baseModule.gradle"
+
+android {
+    resourcePrefix "camera"
+    defaultConfig {
+        versionCode Integer.parseInt("${rootProject.ext.versionCode}")
+        versionName "${rootProject.ext.versionName}"
+    }
+
+}
+
+apply plugin: 'maven'
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: rootProject.ext.repoUrl)
+        pom.groupId = rootProject.ext.PROJ_LIB_GROUP
+        pom.artifactId = rootProject.ext.modules.libCamera.artifactId
+        pom.version = rootProject.ext.modules.libCamera.version
+    }
+}
+
+dependencies {
+    compileOnly project(':libCommon')
+}
+//apply from: "${rootDir}/gradle/uploadArchives.gradle"

@@ -18,7 +18,7 @@ public interface IStatics {
 
     interface IPathStatics {
         String SDCARD_PATH = SDCardManager.getSDCardPathByEnvironment();
-        String APP_DIR     = SDCARD_PATH + File.separator + AppManager.getAppName() + File.separator;
+        String APP_DIR     = SDCARD_PATH + File.separator + AppManager.getAppPackageName() + File.separator;
         String APK_DIR     = APP_DIR + "apk/";
         String LOG_DIR     = APP_DIR + "log/";
         String CACHE_DIR   = APP_DIR + "cache/";

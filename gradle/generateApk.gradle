@@ -11,6 +11,7 @@ android {
 
 static def getDate() {
     def date = new Date()
-    def formattedDate = date.format('yyyy_MM_dd_HH_mm')
+//    def formattedDate = date.format('yyyy_MM_dd_HH_mm')
+    def formattedDate = date.format('yyyyMMdd')
     return formattedDate
 }

@@ -51,7 +51,6 @@ public class WebView extends BridgeWebView {
             setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
 
-        mWebSettings.setTextZoom(100);
         mWebSettings.setDatabaseEnabled(true);
         mWebSettings.setAppCacheEnabled(true);
         mWebSettings.setLoadsImagesAutomatically(true);
@@ -70,8 +69,8 @@ public class WebView extends BridgeWebView {
         mWebSettings.setDomStorageEnabled(true);
         mWebSettings.setNeedInitialFocus(true);
         mWebSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
-        mWebSettings.setDefaultFontSize(16);
-        mWebSettings.setMinimumFontSize(12);//设置 WebView 支持的最小字体大小，默认为 8
+//        mWebSettings.setDefaultFontSize(16);
+//        mWebSettings.setMinimumFontSize(12);//设置 WebView 支持的最小字体大小，默认为 8
         mWebSettings.setGeolocationEnabled(true);
 
         String dir = getContext().getApplicationContext().getCacheDir().getAbsolutePath();

@@ -58,6 +58,12 @@ libJsBridgeInfo.artifactId = "libJsBridgeModel"
 libJsBridgeInfo.version = "1.0.4-js"
 modules.libJsBridgeInfo = libJsBridgeInfo
 
+def libCamera = [:]
+libCamera.name = "libCamera"
+libCamera.artifactId = "libCameraModel"
+libCamera.version = "1.0.0-js"
+modules.libCamera = libCamera
+
 ext.modules = modules
 
 //主意引用顺序
@@ -67,6 +73,7 @@ def initModuleInfo() {
     moduleList.add(new ModuleInfo(ext.modules.perfectionRetrofitInfo.name, ext.modules.perfectionRetrofitInfo.artifactId, ext.modules.perfectionRetrofitInfo.version, ":${ext.modules.perfectionRetrofitInfo.name}", true))
     moduleList.add(new ModuleInfo(ext.modules.faceRecognitionInfo.name, ext.modules.faceRecognitionInfo.artifactId, ext.modules.faceRecognitionInfo.version, ":${ext.modules.faceRecognitionInfo.name}", true))
     moduleList.add(new ModuleInfo(ext.modules.libJsBridgeInfo.name, ext.modules.libJsBridgeInfo.artifactId, ext.modules.libJsBridgeInfo.version, ":${ext.modules.libJsBridgeInfo.name}", true))
+    moduleList.add(new ModuleInfo(ext.modules.libCamera.name, ext.modules.libCamera.artifactId, ext.modules.libCamera.version, ":${ext.modules.libCamera.name}", true))
 
     //module
     moduleList.add(new ModuleInfo(ext.modules.signatureInfo.name, ext.modules.signatureInfo.artifactId, ext.modules.signatureInfo.version, ":${ext.modules.signatureInfo.name}", true))

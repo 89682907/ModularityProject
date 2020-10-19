@@ -39,6 +39,8 @@ dependencies {
     implementation deps.retrofit.moshi_converter
     api deps.moshi.runtime
     api deps.moshi.moshi_kotlin
+    api deps.conscrypt
+
 
 }
 apply from: "${rootDir}/gradle/uploadArchives.gradle"
