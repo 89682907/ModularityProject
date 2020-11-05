@@ -22,56 +22,96 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:textAllCaps="false"
-                android:text="@string/app_str_mvp" />
+                android:text="@string/app_str_mvp"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/btn_c"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:textAllCaps="false"
-                android:text="@string/app_str_mvvm" />
+                android:text="@string/app_str_mvvm"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/btn_b"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:textAllCaps="false"
-                android:text="@string/app_str_arouter" />
+                android:text="@string/app_str_arouter"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/btn_signature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:textAllCaps="false"
-                android:text="@string/app_str_signature" />
+                android:text="@string/app_str_signature"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/btn_jetpack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:textAllCaps="false"
-                android:text="@string/app_str_jetpack" />
+                android:text="@string/app_str_jetpack"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/btn_jsbridge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:textAllCaps="false"
-                android:text="@string/app_str_jsbridge" />
+                android:text="@string/app_str_jsbridge"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/btn_camera"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:textAllCaps="false"
-                android:text="@string/app_str_camera" />
+                android:text="@string/app_str_camera"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_tts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/app_str_tts"
+                android:textAllCaps="false" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/load1"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/circle_shape" />
+
+                <View
+                    android:id="@+id/load2"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_margin="10dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/circle_shape" />
+
+                <View
+                    android:id="@+id/load3"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_margin="10dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/circle_shape" />
+            </LinearLayout>
 
 
         </LinearLayout>

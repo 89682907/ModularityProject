@@ -10,4 +10,6 @@
     <string name="agreement">I agree the terms and conditions.</string>
     <string name="clear_pad">清除</string>
     <string name="save_signature">保存</string>
+    <string name="app_str_tts">播放语音</string>
+    <string name="app_str_load">Loading动画</string>
 </resources>

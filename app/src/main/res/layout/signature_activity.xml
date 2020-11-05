@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
 
     <RelativeLayout
@@ -26,14 +26,15 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="16dp"
             android:text="@string/agreement"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@android:color/darker_gray"
+            android:visibility="gone" />
 
         <com.modularity.signature.widget.SignatureView
             android:id="@+id/signature_view"
             android:layout_width="match_parent"
-            app:penColor="@android:color/holo_red_dark"
-            app:velocityFilterWeight="20"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:penColor="@android:color/black"
+            app:velocityFilterWeight="20" />
     </RelativeLayout>
 
     <LinearLayout

@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public final class SDCardManager {
 
@@ -28,6 +29,26 @@ public final class SDCardManager {
     }
 
     /**
+     * 取到 SDCard/Android/data/你的应用包名/cache/目录，一般存放临时缓存数据
+     */
+    public static String getSDCardExternalCacheDir(Context context) {
+        if (isSDCardEnableByEnvironment()) {
+            return Objects.requireNonNull(context.getExternalCacheDir()).getAbsolutePath();
+        }
+        return "";
+    }
+
+    /**
+     * 取到 SDCard/Android/data/你的应用的包名/files/ 目录，一般放一些长时间保存的数据
+     */
+    public static String getSDCardExternalFilesDir(Context context, String subDir) {
+        if (isSDCardEnableByEnvironment()) {
+            return Objects.requireNonNull(context.getExternalFilesDir(subDir == null ? "" : subDir)).getAbsolutePath();
+        }
+        return "";
+    }
+
+    /**
      * Return the path of sdcard by environment.
      *
      * @return the path of sdcard by environment
@@ -38,6 +59,7 @@ public final class SDCardManager {
         }
         return "";
     }
+
 
     /**
      * Return the information of sdcard.

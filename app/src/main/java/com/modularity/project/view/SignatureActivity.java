@@ -45,7 +45,7 @@ public class SignatureActivity extends BaseActivity {
         mSignaturePad.setOnSignedListener(new SignatureView.OnSignedListener() {
             @Override
             public void onStartSigning() {
-                Toast.makeText(SignatureActivity.this, "OnStartSigning", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SignatureActivity.this, "OnStartSigning", Toast.LENGTH_SHORT).show();
             }
 
             @Override

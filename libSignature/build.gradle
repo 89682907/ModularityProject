@@ -14,14 +14,16 @@ android {
 }
 
 apply plugin: 'maven'
-uploadArchives {
-    repositories.mavenDeployer {
-        repository(url: rootProject.ext.repoUrl)
-        pom.groupId = rootProject.ext.PROJ_LIB_GROUP
-        pom.artifactId = rootProject.ext.modules.signatureInfo.artifactId
-        pom.version = rootProject.ext.modules.signatureInfo.version
-    }
-}
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        repository(url: rootProject.ext.repoUrl)
+//        pom.groupId = rootProject.ext.PROJ_LIB_GROUP
+//        pom.artifactId = rootProject.ext.modules.signatureInfo.artifactId
+//        pom.version = rootProject.ext.modules.signatureInfo.version
+//    }
+//}
+
+apply from: "${rootDir}/gradle/uploadArchives.gradle"
 
 dependencies {
 }

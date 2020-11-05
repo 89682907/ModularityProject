@@ -41,21 +41,31 @@ android {
         debug {
             debuggable true
             jniDebuggable true
-            minifyEnabled false
-            shrinkResources false
+//            minifyEnabled false
+//            shrinkResources false
             signingConfig signingConfigs.debug
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), "${rootDir}/proguard-rules.pro"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-        beta.initWith(buildTypes.debug)
+//        beta.initWith(buildTypes.debug)
         beta {
-
+            debuggable true
+            jniDebuggable true
+//            minifyEnabled false
+//            shrinkResources false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-        release.initWith(buildTypes.debug)
+//        release.initWith(buildTypes.debug)
         release {
-
+            debuggable true
+            jniDebuggable true
+//            minifyEnabled false
+//            shrinkResources false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
     }

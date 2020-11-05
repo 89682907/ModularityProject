@@ -204,7 +204,7 @@ public final class Perfection {
     }
 
     public static final class Builder {
-        public static String               LOG_TAG = "Perfection";
+        public static String               LOG_TAG = "perfection";
         private       Boolean              isLog   = false;
         private       Boolean              isCache = false;
         private       Context              mContext;
@@ -364,17 +364,17 @@ public final class Perfection {
                     mOkHttpBuilder.addNetworkInterceptor(new HttpLoggingInterceptor(message -> Log.i(LOG_TAG, message)).setLevel(Level.BODY));
                 }
 
-//                if (mSslSocketFactory != null) {
-//                    mOkHttpBuilder.sslSocketFactory(mSslSocketFactory);
-//                } else {
-//                    mOkHttpBuilder.sslSocketFactory(PerfectionHttpsFactory.getDefaultSSLSocketFactory());
-//                }
+                if (mSslSocketFactory != null) {
+                    mOkHttpBuilder.sslSocketFactory(mSslSocketFactory);
+                } else {
+                    mOkHttpBuilder.sslSocketFactory(PerfectionHttpsFactory.getDefaultSSLSocketFactory());
+                }
 
-//                if (mHostnameVerifier != null) {
-//                    mOkHttpBuilder.hostnameVerifier(mHostnameVerifier);
-//                } else {
-//                    mOkHttpBuilder.hostnameVerifier(PerfectionHttpsFactory.getDefaultHostnameVerifier());
-//                }
+                if (mHostnameVerifier != null) {
+                    mOkHttpBuilder.hostnameVerifier(mHostnameVerifier);
+                } else {
+                    mOkHttpBuilder.hostnameVerifier(PerfectionHttpsFactory.getDefaultHostnameVerifier());
+                }
 
                 if (mSslSocketFactory != null) {
                     mOkHttpBuilder.sslSocketFactory(mSslSocketFactory);

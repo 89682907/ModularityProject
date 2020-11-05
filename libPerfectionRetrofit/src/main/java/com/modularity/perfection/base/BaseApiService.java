@@ -60,6 +60,7 @@ public interface BaseApiService {
     @POST
     Observable<ResponseBody> postForm(@Url String var1, @FieldMap Map<String, String> var2);
 
+
     @Multipart
     @PUT
     Observable<ResponseBody> requestPut(@Url String var1, @PartMap Map<String, RequestBody> var2);

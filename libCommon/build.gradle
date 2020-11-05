@@ -43,6 +43,7 @@ dependencies {
     api (deps.arouter.arouter_api)
     api deps.glide.glide_api
     api deps.eventbus
+    api deps.pdfbox_android
 
 //    kapt deps.glide.glide_compiler
 

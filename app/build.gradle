@@ -19,24 +19,28 @@ android {
             applicationIdSuffix rootProject.ext.PKG_FIX_NAME_DEBUG
             minifyEnabled !rootProject.ext.develop
             shrinkResources !rootProject.ext.develop
-            signingConfig signingConfigs.debug
+//            signingConfig signingConfigs.debug
             buildConfigField "String", "APP_NAME", "\"${rootProject.ext.APP_NAME_DEBUG}\""
             buildConfigField "String", "PACKAGE_FIX_NAME", "\"${rootProject.ext.PKG_FIX_NAME_DEBUG}\""
 
         }
 
-        beta.initWith(buildTypes.debug)
+//        beta.initWith(buildTypes.debug)
         beta {
             applicationIdSuffix rootProject.ext.PKG_FIX_NAME_BETA
-            signingConfig signingConfigs.release
+            minifyEnabled !rootProject.ext.develop
+            shrinkResources !rootProject.ext.develop
+//            signingConfig signingConfigs.release
             buildConfigField "String", "APP_NAME", "\"${rootProject.ext.APP_NAME_BETA}\""
             buildConfigField "String", "PACKAGE_FIX_NAME", "\"${rootProject.ext.PKG_FIX_NAME_BETA}\""
         }
 
-        release.initWith(buildTypes.debug)
+//        release.initWith(buildTypes.debug)
         release {
             applicationIdSuffix rootProject.ext.PKG_FIX_NAME_RELEASE
-            signingConfig signingConfigs.release
+            minifyEnabled !rootProject.ext.develop
+            shrinkResources !rootProject.ext.develop
+//            signingConfig signingConfigs.release
             buildConfigField "String", "APP_NAME", "\"${rootProject.ext.APP_NAME_RELEASE}\""
             buildConfigField "String", "PACKAGE_FIX_NAME", "\"${rootProject.ext.PKG_FIX_NAME_RELEASE}\""
         }
@@ -50,6 +54,16 @@ android {
         baidu { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_baidu"] }
         yingyongbao { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_yingyongbao"] }
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
     // 集成DataBinding
     buildFeatures {
         dataBinding = true
@@ -59,6 +73,7 @@ android {
 
 
 dependencies {
+    api fileTree(dir: "libs", include: ["*.jar"])
     api project(':libCommon')
     if (rootProject.ext.isModule) {
         implementation project(':modModuleA')
