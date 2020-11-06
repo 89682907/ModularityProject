@@ -17,12 +17,14 @@ import com.modularity.perfection.util.PerfectionUtils;
 import java.io.File;
 import java.net.Proxy;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.X509TrustManager;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -211,6 +213,7 @@ public final class Perfection {
         private       String               mBaseUrl;
         private       HostnameVerifier     mHostnameVerifier;
         private       SSLSocketFactory     mSslSocketFactory;
+        private       X509TrustManager     mX509TrustManager;
         private       ConnectionPool       mConnectionPool;
         private       Converter.Factory    mConverterFactory;
         private       CallAdapter.Factory  mCallAdapterFactory;
@@ -322,8 +325,18 @@ public final class Perfection {
             } else if (certificates == null) {
                 throw new NullPointerException("ids == null");
             } else {
-                mSslSocketFactory = PerfectionHttpsFactory.getSSLSocketFactory(context, certificates);
-                mHostnameVerifier = PerfectionHttpsFactory.getHostnameVerifier(hosts);
+                List values = PerfectionHttpsFactory.getCertificatesConfig(context, certificates);
+                if (values != null) {
+                    try {
+                        mSslSocketFactory = (SSLSocketFactory) values.get(0);
+                        mX509TrustManager = (X509TrustManager) values.get(1);
+                        mHostnameVerifier = PerfectionHttpsFactory.getHostnameVerifier(hosts);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        mSslSocketFactory = PerfectionHttpsFactory.getSSLSocketFactory(context, certificates);
+                        mHostnameVerifier = PerfectionHttpsFactory.getHostnameVerifier(hosts);
+                    }
+                }
                 return this;
             }
         }
@@ -364,24 +377,26 @@ public final class Perfection {
                     mOkHttpBuilder.addNetworkInterceptor(new HttpLoggingInterceptor(message -> Log.i(LOG_TAG, message)).setLevel(Level.BODY));
                 }
 
-                if (mSslSocketFactory != null) {
-                    mOkHttpBuilder.sslSocketFactory(mSslSocketFactory);
+                if (mSslSocketFactory != null && mX509TrustManager != null) {
+                    mOkHttpBuilder.sslSocketFactory(mSslSocketFactory, mX509TrustManager);
                 } else {
-                    mOkHttpBuilder.sslSocketFactory(PerfectionHttpsFactory.getDefaultSSLSocketFactory());
+                    List values = PerfectionHttpsFactory.httpsCertificateDefault();
+                    if (values != null) {
+                        try {
+                            mOkHttpBuilder.sslSocketFactory((SSLSocketFactory) values.get(0), (X509TrustManager) values.get(1));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            mOkHttpBuilder.sslSocketFactory(PerfectionHttpsFactory.getDefaultSSLSocketFactory());
+                        }
+                    } else {
+                        mOkHttpBuilder.sslSocketFactory(PerfectionHttpsFactory.getDefaultSSLSocketFactory());
+                    }
                 }
 
                 if (mHostnameVerifier != null) {
                     mOkHttpBuilder.hostnameVerifier(mHostnameVerifier);
                 } else {
                     mOkHttpBuilder.hostnameVerifier(PerfectionHttpsFactory.getDefaultHostnameVerifier());
-                }
-
-                if (mSslSocketFactory != null) {
-                    mOkHttpBuilder.sslSocketFactory(mSslSocketFactory);
-                }
-
-                if (mHostnameVerifier != null) {
-                    mOkHttpBuilder.hostnameVerifier(mHostnameVerifier);
                 }
 
                 if (isCache) {
@@ -414,7 +429,7 @@ public final class Perfection {
         private HttpResponseFunc() {
         }
 
-        public Observable<T> apply(Throwable throwable) throws Exception {
+        public Observable<T> apply(Throwable throwable) {
             return Observable.error(PerfectionException.handleException((Exception) throwable));
         }
     }

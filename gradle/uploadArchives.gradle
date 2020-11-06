@@ -7,7 +7,7 @@ common.mavenVersion = "1.2.2"
 
 def pr = [:]
 pr.mavenArtifactId = "pr"
-pr.mavenVersion = "1.2.5"
+pr.mavenVersion = "1.2.6"
 
 def wb = [:]
 wb.mavenArtifactId = "wb"

@@ -129,6 +129,29 @@ public final class BarManager {
         }
     }
 
+    public static void setStateBarStyle(@NonNull final Window window, boolean dark) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View decor = window.getDecorView();
+            if (dark) {
+                decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            } else {
+                decor.setSystemUiVisibility(0);
+            }
+        }
+    }
+
+    public static void setStateBarStyle(@NonNull final Activity activity, boolean dark) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View decor = activity.getWindow().getDecorView();
+            if (dark) {
+                decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            } else {
+                decor.setSystemUiVisibility(0);
+            }
+        }
+    }
+
+
     /**
      * Is the status bar light mode.
      *

@@ -15,6 +15,9 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -67,6 +70,69 @@ public class PerfectionHttpsFactory {
         }
 
         return null;
+    }
+
+    /**
+     * set SSLSocketFactory
+     * {@link HostnameVerifier}
+     */
+    public static List getCertificatesConfig(Context context, int[] certificates) {
+
+        if (context == null) {
+            throw new NullPointerException("context == null");
+        }
+        List values = new ArrayList();
+        CertificateFactory certificateFactory;
+        try {
+            certificateFactory = CertificateFactory.getInstance("X.509");
+            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            keyStore.load(null, null);
+
+            for (int i = 0; i < certificates.length; i++) {
+                InputStream certificate = context.getResources().openRawResource(certificates[i]);
+                keyStore.setCertificateEntry(String.valueOf(i), certificateFactory.generateCertificate(certificate));
+                certificate.close();
+            }
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            trustManagerFactory.init(keyStore);
+            sslContext.init(null, trustManagerFactory.getTrustManagers(), new SecureRandom());
+            values.add(sslContext.getSocketFactory());
+            values.add(trustManagerFactory.getTrustManagers()[0]);
+            return values;
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List httpsCertificateDefault() {
+        try {
+            List values = new ArrayList();
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            trustManagerFactory.init((KeyStore) null);
+            TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
+            if (trustManagers.length != 1 || !(trustManagers[0] instanceof X509TrustManager)) {
+                throw new IllegalStateException("Unexpected default trust managers:" + Arrays.toString(trustManagers));
+            }
+            X509TrustManager trustManager = (X509TrustManager) trustManagers[0];
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, new TrustManager[]{trustManager}, null);
+            values.add(sslContext.getSocketFactory());
+            values.add(trustManager);
+            return values;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**

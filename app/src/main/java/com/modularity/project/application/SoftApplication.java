@@ -12,6 +12,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.modularity.common.statics.Config;
 import com.modularity.common.statics.IStatics;
 import com.modularity.common.utils.managers.manager.FileIOManager;
+import com.modularity.common.utils.managers.manager.LogManager;
 import com.modularity.common.utils.managers.manager.Managers;
 import com.modularity.project.BuildConfig;
 
@@ -57,14 +58,15 @@ public class SoftApplication extends Application {
     }
 
     private void initDebugConfig() {
-
+        LogManager.getConfig().setLogSwitch(true);
     }
 
     private void initBetaConfig() {
-
+        LogManager.getConfig().setLogSwitch(true);
     }
 
     private void initReleaseConfig() {
+        LogManager.getConfig().setLogSwitch(false || BuildConfig.DEVELOP);
 
     }
 
@@ -120,13 +122,13 @@ public class SoftApplication extends Application {
             Log.e(tag, "Thread.getName()=" + thread.getName() + " id=" + threadId + " state=" + thread.getState());
             Log.e(tag, "Error[" + info + "]");
             Log.e(tag, "sdcard =>" + Environment.getExternalStorageState());
-			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) { // sd卡是否挂载
-                FileIOManager.writeFileFromString(IStatics.IPathStatics.LOG_DIR +"log.txt",info,true);
-				// softApp.startService(new Intent(softApp,
-				// UploadService.class));
-				// 上传log
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) { // sd卡是否挂载
+                FileIOManager.writeFileFromString(IStatics.IPathStatics.LOG_DIR + "log.txt", info, true);
+                // softApp.startService(new Intent(softApp,
+                // UploadService.class));
+                // 上传log
 //				PublicUtils.uploadLog(SoftApplication.this, "log");
-			}
+            }
             // kill App Progress
             android.os.Process.killProcess(android.os.Process.myPid());
         }
