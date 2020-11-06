@@ -62,13 +62,13 @@ public class FocusMarkerLayout extends FrameLayout implements View.OnTouchListen
         ivFill = new AppCompatImageView(context);
         ivFill.setLayoutParams(new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ivFill.setBackgroundResource(R.drawable.ic_focus_marker_fill);
+        ivFill.setBackgroundResource(R.drawable.camera_ic_focus_marker_fill);
         focusMarkerContainer.addView(ivFill);
 
         AppCompatImageView ivOutline = new AppCompatImageView(context);
         ivOutline.setLayoutParams(new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ivOutline.setBackgroundResource(R.drawable.ic_focus_marker_outline);
+        ivOutline.setBackgroundResource(R.drawable.camera_ic_focus_marker_outline);
         focusMarkerContainer.addView(ivOutline);
 
         setOnTouchListener(this);

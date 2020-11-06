@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.widget.*
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.modularity.R
 import com.modularity.common.base.BaseActivity
@@ -117,10 +116,10 @@ class XCameraActivity : BaseActivity() {
         }
         ivFlash?.setImageResource(
             when (ConfigurationProvider.get().defaultFlashMode) {
-                FlashMode.FLASH_AUTO -> R.drawable.ic_flash_auto_white_24dp
-                FlashMode.FLASH_OFF -> R.drawable.ic_flash_off_white_24dp
-                FlashMode.FLASH_ON -> R.drawable.ic_flash_on_white_24dp
-                else -> R.drawable.ic_flash_auto_white_24dp
+                FlashMode.FLASH_AUTO -> R.drawable.camera_ic_flash_auto_white_24dp
+                FlashMode.FLASH_OFF -> R.drawable.camera_ic_flash_off_white_24dp
+                FlashMode.FLASH_ON -> R.drawable.camera_ic_flash_on_white_24dp
+                else -> R.drawable.camera_ic_flash_auto_white_24dp
             }
         )
         ivFlash?.setOnClickListener {
@@ -133,39 +132,38 @@ class XCameraActivity : BaseActivity() {
             cameraView?.flashMode = mode
             ivFlash?.setImageResource(
                 when (mode) {
-                    FlashMode.FLASH_AUTO -> R.drawable.ic_flash_auto_white_24dp
-                    FlashMode.FLASH_OFF -> R.drawable.ic_flash_off_white_24dp
-                    FlashMode.FLASH_ON -> R.drawable.ic_flash_on_white_24dp
-                    else -> R.drawable.ic_flash_auto_white_24dp
+                    FlashMode.FLASH_AUTO -> R.drawable.camera_ic_flash_auto_white_24dp
+                    FlashMode.FLASH_OFF -> R.drawable.camera_ic_flash_off_white_24dp
+                    FlashMode.FLASH_ON -> R.drawable.camera_ic_flash_on_white_24dp
+                    else -> R.drawable.camera_ic_flash_auto_white_24dp
                 }
             )
         }
 
         seekBar?.animate()?.translationX(SizeManager.dp2px(320f).toFloat())
             ?.setListener(object : Animator.AnimatorListener {
-                override fun onAnimationRepeat(animation: Animator?) { /*noop*/
+                override fun onAnimationRepeat(animation: Animator?) {
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
                     seekBar?.visibility = View.VISIBLE
                 }
 
-                override fun onAnimationCancel(animation: Animator?) { /*noop*/
+                override fun onAnimationCancel(animation: Animator?) {
                 }
 
-                override fun onAnimationStart(animation: Animator?) { /*noop*/
+                override fun onAnimationStart(animation: Animator?) {
                     seekBar?.visibility = View.GONE
                 }
             })
         seekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onStartTrackingTouch(seekBar: SeekBar?) { /*noop*/
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
             }
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) { /*noop*/
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
             }
 
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                // set camera zoom
                 val room = 1 + (cameraView?.maxZoom!! - 1) * (1.0f * progress / seekBar!!.max)
                 cameraView?.zoom = room
                 displayCameraInfo()
@@ -180,10 +178,10 @@ class XCameraActivity : BaseActivity() {
         }
         ivTypeSwitch?.setOnClickListener {
             if (cameraView?.mediaType == MediaType.TYPE_PICTURE) {
-                ivTypeSwitch?.setImageResource(R.drawable.ic_videocam_white_24dp)
+                ivTypeSwitch?.setImageResource(R.drawable.camera_ic_videocam_white_24dp)
                 cameraView?.mediaType = MediaType.TYPE_VIDEO
             } else {
-                ivTypeSwitch?.setImageResource(R.drawable.ic_photo_camera_white_24dp)
+                ivTypeSwitch?.setImageResource(R.drawable.camera_ic_photo_camera_white_24dp)
                 cameraView?.mediaType = MediaType.TYPE_PICTURE
             }
             displayCameraInfo()
@@ -218,10 +216,6 @@ class XCameraActivity : BaseActivity() {
         }
 
         cameraView?.addOrientationChangedListener { degree ->
-//            ViewCompat.setRotation(ivFlash, degree.toFloat())
-//            ViewCompat.setRotation(ivSwitch, degree.toFloat())
-//            ViewCompat.setRotation(ivTypeSwitch, degree.toFloat())
-//            ViewCompat.setRotation(ivSetting, degree.toFloat())
             ivFlash?.rotation = degree.toFloat()
             ivSwitch?.rotation = degree.toFloat()
             ivTypeSwitch?.rotation = degree.toFloat()
@@ -238,7 +232,6 @@ class XCameraActivity : BaseActivity() {
                         val light =
                             ImageHelper.convertYUV420_NV21toARGB8888(data, size.width, size.height)
                         if (light <= 30) {
-//                            ToastManager.showLong(R.string.camera_main_light_tip)
                             LogManager.iTag("jishen", "太暗")
                         }
                         ivPreview?.setImageBitmap(
@@ -278,14 +271,18 @@ class XCameraActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        openCamera()
+    }
+
+    private fun openCamera() {
         if (!cameraView?.isCameraOpened!!) {
             cameraView?.openCamera(object : CameraOpenListener {
                 override fun onCameraOpened(cameraFace: Int) {
-                    LogManager.iTag("jishen", "onCameraOpened")
+                    LogManager.iTag("jishen", "openCamera:$cameraFace")
                 }
 
                 override fun onCameraOpenError(throwable: Throwable?) {
-                    ToastManager.showLong("Camera open error : $throwable")
+                    ToastManager.showLong("camera open error : $throwable")
                 }
             })
         }
@@ -305,7 +302,7 @@ class XCameraActivity : BaseActivity() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        LogManager.iTag("CameraActivity", "onConfigurationChanged")
+        LogManager.iTag("jishen", "onConfigurationChanged")
     }
 
     private fun takePicture() {
@@ -316,7 +313,7 @@ class XCameraActivity : BaseActivity() {
             }
 
             override fun onPictureTaken(data: ByteArray?, picture: File) {
-                ToastManager.showLong("Saved to $fileToSave")
+                ToastManager.showLong("saved to $fileToSave")
                 cameraView?.resumePreview()
             }
         })
@@ -333,14 +330,14 @@ class XCameraActivity : BaseActivity() {
             val fileToSave = getSavedFile("mp4")
             cameraView?.startVideoRecord(fileToSave, object : CameraVideoListener {
                 override fun onVideoRecordStart() {
-                    ToastManager.showLong("Video record START!")
+                    ToastManager.showLong("video record start")
                     isCameraRecording = true
                 }
 
                 override fun onVideoRecordStop(file: File?) {
                     isCameraRecording = false
 //          saveVideoToGallery(context, fileToSave, fileToSave.name)
-                    ToastManager.showLong("Saved to $file")
+                    ToastManager.showLong("saved to: $file")
                 }
 
                 override fun onVideoRecordError(throwable: Throwable?) {
