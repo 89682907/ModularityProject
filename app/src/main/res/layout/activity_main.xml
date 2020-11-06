@@ -17,6 +17,39 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <View
+                    android:id="@+id/load1"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/circle_shape" />
+
+                <View
+                    android:id="@+id/load2"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_margin="10dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/circle_shape" />
+
+                <View
+                    android:id="@+id/load3"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_margin="10dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/circle_shape" />
+            </LinearLayout>
+
             <Button
                 android:id="@+id/btn_a"
                 android:layout_width="match_parent"
@@ -80,38 +113,6 @@
                 android:layout_margin="10dp"
                 android:text="@string/app_str_tts"
                 android:textAllCaps="false" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <View
-                    android:id="@+id/load1"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/circle_shape" />
-
-                <View
-                    android:id="@+id/load2"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginLeft="3dp"
-                    android:background="@drawable/circle_shape" />
-
-                <View
-                    android:id="@+id/load3"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginLeft="3dp"
-                    android:background="@drawable/circle_shape" />
-            </LinearLayout>
 
 
         </LinearLayout>

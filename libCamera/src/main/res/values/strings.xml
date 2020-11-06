@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="camera_request_permissions">请允许应用访问本地存储和相机权限</string>
-<!--    <string name="face_recognition_mutil">检测到多张人脸</string>-->
-<!--    <string name="face_not_in_rect">请将人脸放入方框区域内</string>-->
-<!--    <string name="face_well_lighted_tip">请在光线明亮处扫脸识别</string>-->
+    <!--    <string name="face_recognition_mutil">检测到多张人脸</string>-->
+    <!--    <string name="face_not_in_rect">请将人脸放入方框区域内</string>-->
+    <!--    <string name="face_well_lighted_tip">请在光线明亮处扫脸识别</string>-->
+
+    <string name="main_menu_camera" tools:ignore="ResourceName">Launch iCamera</string>
+    <string name="main_camera_option" tools:ignore="ResourceName">PICK YOUR CAMERA OPTION:</string>
+    <string name="main_camera_option_camera1_only" tools:ignore="ResourceName">Camera1 Only</string>
+    <string name="main_camera_option_camera2_only" tools:ignore="ResourceName">Camera2 Only</string>
+    <string name="main_camera_option_camera" tools:ignore="ResourceName">According to Platform</string>
+    <string name="main_preview_option" tools:ignore="ResourceName">PICK YOUR CAMERA PREVIEW OPTION:</string>
+    <string name="main_preview_option_texture_only" tools:ignore="ResourceName">TextureView Only</string>
+    <string name="main_preview_option_surface_only" tools:ignore="ResourceName">SurfaceView Only</string>
+    <string name="main_preview_option_platform" tools:ignore="ResourceName">According to Platform</string>
+    <string name="main_about_app" tools:ignore="ResourceName">About iCamera</string>
+    <string name="main_common_crash_happened" tools:ignore="ResourceName">Sorry, Crash happened!</string>
+
+    <string name="camera_video_duration">Max Video Duration (s):</string>
+    <string name="camera_drawer_title">Camera Configuration</string>
+    <string name="camera_drawer_shutter">Shutter</string>
+    <string name="camera_drawer_focus">Auto Focus</string>
+    <string name="camera_drawer_flash">Flash</string>
+    <string name="camera_drawer_touch_zoom">Touch Zoom</string>
+    <string name="camera_drawer_touch_focus">Touch Focus</string>
+    <string name="camera_drawer_preview_sizes">Preview Sizes</string>
+    <string name="camera_drawer_picture_sizes">Picture Sizes</string>
+    <string name="camera_drawer_video_sizes">Video Sizes</string>
+    <string name="camera_drawer_switch_camera">Switch Front/End</string>
+
+    <string name="camera_main_video">Video</string>
+    <string name="camera_main_picture">Picture</string>
+
+    <string name="camera_main_light_tip">Too dark, open the flash?</string>
+
 </resources>

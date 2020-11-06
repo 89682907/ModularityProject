@@ -1,102 +1,127 @@
-package com.modularity.project.view;
+package com.modularity.project.view
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.view.animation.AnimationUtils;
+import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import android.view.View
+import android.view.animation.AnimationUtils
+import com.community.jetpack.view.JetpackMainActivity
+import com.modularity.common.base.BaseActivity
+import com.modularity.common.utils.managers.manager.LogManager
+import com.modularity.common.utils.managers.manager.SDCardManager
+import com.modularity.common.utils.managers.manager.SPManager
+import com.modularity.mod_a.view.ModuleAActivity
+import com.modularity.mod_b.ModuleBActivity
+import com.modularity.mvvm.view.MVVMMainActivity
+import com.modularity.project.R
+import com.modularity.project.jsbridage.JsBridgeMainActivity
+import com.modularity.x.camera.XCameraActivity
+import com.modularity.x.camera.config.ConfigurationProvider
+import com.modularity.x.camera.config.creator.impl.*
 
-import com.community.jetpack.view.JetpackMainActivity;
-import com.modularity.common.base.BaseActivity;
-import com.modularity.common.utils.managers.manager.LogManager;
-import com.modularity.common.utils.managers.manager.SDCardManager;
-import com.modularity.mod_a.view.ModuleAActivity;
-import com.modularity.mod_b.ModuleBActivity;
-import com.modularity.mvvm.view.MVVMMainActivity;
-import com.modularity.project.R;
-import com.modularity.project.jsbridage.JsBridgeMainActivity;
-import com.modularity.view.CameraActivity;
-
-
-public class MainActivity extends BaseActivity implements View.OnClickListener {
-
-    private static final String tag = "jishen";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        findViewById(R.id.btn_a).setOnClickListener(this);
-        findViewById(R.id.btn_b).setOnClickListener(this);
-        findViewById(R.id.btn_c).setOnClickListener(this);
-        findViewById(R.id.btn_signature).setOnClickListener(this);
-        findViewById(R.id.btn_jetpack).setOnClickListener(this);
-        findViewById(R.id.btn_jsbridge).setOnClickListener(this);
-        findViewById(R.id.btn_camera).setOnClickListener(this);
-        findViewById(R.id.btn_tts).setOnClickListener(this);
-        test();
+class MainActivity : BaseActivity(), View.OnClickListener {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        findViewById<View>(R.id.btn_a).setOnClickListener(this)
+        findViewById<View>(R.id.btn_b).setOnClickListener(this)
+        findViewById<View>(R.id.btn_c).setOnClickListener(this)
+        findViewById<View>(R.id.btn_signature).setOnClickListener(this)
+        findViewById<View>(R.id.btn_jetpack).setOnClickListener(this)
+        findViewById<View>(R.id.btn_jsbridge).setOnClickListener(this)
+        findViewById<View>(R.id.btn_camera).setOnClickListener(this)
+        findViewById<View>(R.id.btn_tts).setOnClickListener(this)
+        test()
     }
 
-    private void test() {
-        LogManager.iTag(tag, SDCardManager.getSDCardExternalCacheDir(this));
-        LogManager.iTag(tag, SDCardManager.getSDCardExternalFilesDir(this, ""));
-        LogManager.iTag(tag, SDCardManager.getSDCardExternalFilesDir(this, "audio"));
-
-        View loadView = findViewById(R.id.load1);
-        loadView.setAnimation(AnimationUtils.loadAnimation(this, R.anim.zoom_in));
-        View loadView2 = findViewById(R.id.load2);
-        loadView2.setAnimation(AnimationUtils.loadAnimation(this, R.anim.zoom_in_2));
-        View loadView3 = findViewById(R.id.load3);
-        loadView3.setAnimation(AnimationUtils.loadAnimation(this, R.anim.zoom_in_3));
+    private fun test() {
+        LogManager.iTag(tag, SDCardManager.getSDCardExternalCacheDir(this))
+        LogManager.iTag(tag, SDCardManager.getSDCardExternalFilesDir(this, ""))
+        LogManager.iTag(tag, SDCardManager.getSDCardExternalFilesDir(this, "audio"))
+        val loadView = findViewById<View>(R.id.load1)
+        loadView.animation = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
+        val loadView2 = findViewById<View>(R.id.load2)
+        loadView2.animation =
+            AnimationUtils.loadAnimation(this, R.anim.zoom_in_2)
+        val loadView3 = findViewById<View>(R.id.load3)
+        loadView3.animation = AnimationUtils.loadAnimation(this, R.anim.zoom_in_3)
     }
 
-    @Override
-    public void onClick(View view) {
-        int i = view.getId();
+    override fun onClick(view: View) {
+        val i = view.id
         if (i == R.id.btn_a) {
-            moduleA();
+            moduleA()
         } else if (i == R.id.btn_b) {
-            moduleB();
+            moduleB()
         } else if (i == R.id.btn_c) {
-            moduleC();
+            moduleC()
         } else if (i == R.id.btn_signature) {
-            libSignature();
+            libSignature()
         } else if (i == R.id.btn_jetpack) {
-            modJetpack();
+            modJetpack()
         } else if (i == R.id.btn_jsbridge) {
-            modJsBridge();
+            modJsBridge()
         } else if (i == R.id.btn_camera) {
-            libCamera();
+            libCamera()
         } else if (i == R.id.btn_tts) {
-            TTSManager tts = new TTSManager(this);
-            tts.startTTS("我乃常山赵子龙");
+            val tts = TTSManager(this)
+            tts.startTTS("我乃常山赵子龙")
         }
     }
 
-    private void moduleA() {
-        startActivity(new Intent(this, ModuleAActivity.class));
+    private fun moduleA() {
+        startActivity(Intent(this, ModuleAActivity::class.java))
     }
 
-    private void moduleB() {
-        startActivity(new Intent(this, ModuleBActivity.class));
+    private fun moduleB() {
+        startActivity(Intent(this, ModuleBActivity::class.java))
     }
 
-    private void moduleC() {
-        startActivity(new Intent(this, MVVMMainActivity.class));
+    private fun moduleC() {
+        startActivity(Intent(this, MVVMMainActivity::class.java))
     }
 
-    private void libSignature() {
-        startActivity(new Intent(this, SignatureActivity.class));
+    private fun libSignature() {
+        startActivity(Intent(this, SignatureActivity::class.java))
     }
 
-    private void modJetpack() {
-        startActivity(new Intent(this, JetpackMainActivity.class));
+    private fun modJetpack() {
+        startActivity(Intent(this, JetpackMainActivity::class.java))
     }
 
-    private void modJsBridge() {
-        startActivity(new Intent(this, JsBridgeMainActivity.class));
+    private fun modJsBridge() {
+        startActivity(Intent(this, JsBridgeMainActivity::class.java))
     }
 
-    private void libCamera() {
-        startActivity(new Intent(this, CameraActivity.class));
+    private fun libCamera() {
+        switchToCameraOption(0)
+        switchToPreviewOption(2)
+        startActivity(Intent(this, XCameraActivity::class.java))
+    }
+
+    private fun switchToCameraOption(option: Int) {
+        ConfigurationProvider.get().cameraManagerCreator = when (option) {
+            0 -> Camera1OnlyCreator()
+            1 -> if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                Camera2OnlyCreator()
+            } else {
+                Camera1OnlyCreator()
+            }
+            else -> CameraManagerCreatorImpl()
+        }
+        SPManager.getInstance().put("__camera_option", option)
+    }
+
+    private fun switchToPreviewOption(option: Int) {
+        ConfigurationProvider.get().cameraPreviewCreator = when (option) {
+            0 -> SurfaceViewOnlyCreator()
+            1 -> TextureViewOnlyCreator()
+            else -> CameraPreviewCreatorImpl()
+        }
+        SPManager.getInstance().put("__preview_option", option)
+    }
+
+    companion object {
+        private const val tag = "jishen"
     }
 }

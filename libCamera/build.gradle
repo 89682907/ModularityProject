@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply from: "${rootDir}/gradle/baseModule.gradle"
 
 android {
-    resourcePrefix "camera"
+//    resourcePrefix "camera"
     defaultConfig {
         versionCode Integer.parseInt("${rootProject.ext.versionCode}")
         versionName "${rootProject.ext.versionName}"
@@ -11,6 +11,7 @@ android {
 }
 
 apply plugin: 'maven'
+apply plugin: 'kotlin-android'
 uploadArchives {
     repositories.mavenDeployer {
         repository(url: rootProject.ext.repoUrl)
@@ -22,5 +23,7 @@ uploadArchives {
 
 dependencies {
     compileOnly project(':libCommon')
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 }
 //apply from: "${rootDir}/gradle/uploadArchives.gradle"
