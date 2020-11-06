@@ -1,0 +1,292 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="right">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.modularity.x.camera.CameraView
+                    android:id="@+id/cameraView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    app:aspectRatio="4:3"
+                    app:cameraAdjustType="heightFirst"
+                    app:cameraFace="rear"
+                    app:clipScreen="false"
+                    app:mediaType="picture"
+                    app:scaleRate="10" />
+
+                <LinearLayout
+                    android:id="@+id/ll_shot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="60dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_switch"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_party_mode_white_24dp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_shot"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/ic_circle_white" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_type_switch"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_photo_camera_white_24dp" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?actionBarSize"
+                android:padding="8dp"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                tools:ignore="RelativeOverlap" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_preview"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="?actionBarSize"
+                android:scaleType="fitCenter" />
+
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="300dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="180dp"
+                android:max="100"
+                android:progress="0"
+                android:rotation="-90"
+                tools:progress="0"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_flash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_flash_auto_white_24dp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginEnd="16dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_settings_white_24dp" />
+
+                </FrameLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+        </FrameLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@color/colorPrimary"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="visible"
+            tools:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:gravity="center_vertical"
+                    android:paddingStart="20dp"
+                    android:paddingTop="60dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="12dp"
+                    android:text="@string/camera_drawer_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    style="@style/CameraDrawerMenuItem"
+                    android:gravity="center_vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/camera_drawer_shutter" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sc_voice"
+                        style="@style/CameraDrawerSwitch"
+                        app:switchPadding="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/CameraDrawerMenuItem"
+                    android:gravity="center_vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/camera_drawer_focus" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sc_focus"
+                        style="@style/CameraDrawerSwitch"
+                        app:switchPadding="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/CameraDrawerMenuItem"
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/camera_drawer_flash" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sc_flash"
+                        style="@style/CameraDrawerSwitch"
+                        app:switchPadding="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/CameraDrawerMenuItem"
+                    android:gravity="center_vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/camera_drawer_touch_zoom" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sc_touch_zoom"
+                        style="@style/CameraDrawerSwitch"
+                        app:switchPadding="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/CameraDrawerMenuItem"
+                    android:gravity="center_vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/camera_drawer_touch_focus" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sc_touch_focus"
+                        style="@style/CameraDrawerSwitch"
+                        app:switchPadding="20dp" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_preview_sizes"
+                    style="@style/CameraDrawerText"
+                    android:text="@string/camera_drawer_preview_sizes" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_picture_sizes"
+                    style="@style/CameraDrawerText"
+                    android:text="@string/camera_drawer_picture_sizes" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_video_sizes"
+                    style="@style/CameraDrawerText"
+                    android:text="@string/camera_drawer_video_sizes" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_switch_camera"
+                    style="@style/CameraDrawerText"
+                    android:text="@string/camera_drawer_switch_camera"
+                    android:visibility="gone" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_video_duration"
+                        style="@style/CameraDrawerText"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/camera_video_duration" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+</FrameLayout>
