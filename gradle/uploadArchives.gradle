@@ -3,7 +3,7 @@ apply plugin: 'maven'
 def current = [:]
 def common = [:]
 common.mavenArtifactId = "common"
-common.mavenVersion = "1.2.2"
+common.mavenVersion = "1.2.3"
 
 def pr = [:]
 pr.mavenArtifactId = "pr"
@@ -17,11 +17,15 @@ def camera = [:]
 camera.mavenArtifactId = "camera"
 camera.mavenVersion = "1.0.3"
 
+def camerax = [:]
+camerax.mavenArtifactId = "camerax"
+camerax.mavenVersion = "1.0.0"
+
 def signature = [:]
 signature.mavenArtifactId = "signature"
 signature.mavenVersion = "1.0.0"
 
-current.module = pr
+current.module = common
 uploadArchives {
     def mavenArtifactId = current.module.mavenArtifactId
     def mavenVersion = current.module.mavenVersion

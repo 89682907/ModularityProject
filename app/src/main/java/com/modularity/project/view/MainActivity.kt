@@ -94,7 +94,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun libCamera() {
-        switchToCameraOption(0)
+        switchToCameraOption(1)
         switchToPreviewOption(2)
         startActivity(Intent(this, XCameraActivity::class.java))
     }
@@ -102,7 +102,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private fun switchToCameraOption(option: Int) {
         ConfigurationProvider.get().cameraManagerCreator = when (option) {
             0 -> Camera1OnlyCreator()
-            1 -> if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            1 -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Camera2OnlyCreator()
             } else {
                 Camera1OnlyCreator()

@@ -18,17 +18,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+<!--                <com.modularity.x.camera.CameraView-->
+<!--                    android:id="@+id/cameraView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:adjustViewBounds="true"-->
+<!--                    app:aspectRatio="4:3"-->
+<!--                    app:cameraAdjustType="widthFirst"-->
+<!--                    app:cameraFace="front"-->
+<!--                    app:clipScreen="false"-->
+<!--                    app:mediaType="picture"-->
+<!--                    app:scaleRate="10" />-->
+
                 <com.modularity.x.camera.CameraView
                     android:id="@+id/cameraView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
-                    app:aspectRatio="4:3"
-                    app:cameraAdjustType="heightFirst"
                     app:cameraFace="rear"
-                    app:clipScreen="false"
-                    app:mediaType="picture"
-                    app:scaleRate="10" />
+                    app:clipScreen="true"
+                    app:mediaType="picture" />
 
                 <LinearLayout
                     android:id="@+id/ll_shot"

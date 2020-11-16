@@ -17,10 +17,7 @@ import com.modularity.common.utils.managers.manager.*
 import com.modularity.x.camera.config.ConfigurationProvider
 import com.modularity.x.camera.config.size.Size
 import com.modularity.x.camera.config.size.SizeMap
-import com.modularity.x.camera.enums.CameraFace
-import com.modularity.x.camera.enums.CameraSizeFor
-import com.modularity.x.camera.enums.FlashMode
-import com.modularity.x.camera.enums.MediaType
+import com.modularity.x.camera.enums.*
 import com.modularity.x.camera.listener.*
 import com.modularity.x.camera.util.ImageHelper
 import java.io.File
@@ -187,6 +184,7 @@ class XCameraActivity : BaseActivity() {
             displayCameraInfo()
         }
 
+        cameraView?.setMediaQuality(MediaQuality.QUALITY_HIGHEST)
         cameraView?.setOnMoveListener {
             ToastManager.showLong(if (it) "LEFT" else "RIGHT")
         }
@@ -282,6 +280,7 @@ class XCameraActivity : BaseActivity() {
                 }
 
                 override fun onCameraOpenError(throwable: Throwable?) {
+                    LogManager.iTag("jishen", "onCameraOpenError:${throwable?.message}")
                     ToastManager.showLong("camera open error : $throwable")
                 }
             })
