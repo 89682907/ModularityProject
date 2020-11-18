@@ -3,7 +3,7 @@ apply plugin: 'maven'
 def current = [:]
 def common = [:]
 common.mavenArtifactId = "common"
-common.mavenVersion = "1.2.3"
+common.mavenVersion = "1.2.4"
 
 def pr = [:]
 pr.mavenArtifactId = "pr"

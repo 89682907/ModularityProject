@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
@@ -156,6 +157,27 @@ public class NotificationManager {
             e.printStackTrace();
         }
     }
+
+    public static void openNoticeSetting() {
+        Intent intent = new Intent();
+        if (Build.VERSION.SDK_INT >= 26) {
+            // android 8.0引导
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+            intent.putExtra("android.provider.extra.APP_PACKAGE", Managers.getApp().getPackageName());
+        } else if (Build.VERSION.SDK_INT >= 21) {
+            // android 5.0-7.0
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+            intent.putExtra("app_package", Managers.getApp().getPackageName());
+            intent.putExtra("app_uid", Managers.getApp().getApplicationInfo().uid);
+        } else {
+            // 其他
+            intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            intent.setData(Uri.fromParts("package", Managers.getApp().getPackageName(), null));
+        }
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Managers.getApp().startActivity(intent);
+    }
+
 
     public static class ChannelConfig {
 
