@@ -6,6 +6,8 @@ import com.tom_roush.pdfbox.pdmodel.PDDocument;
 import com.tom_roush.pdfbox.rendering.PDFRenderer;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PdfManager {
 
@@ -44,10 +46,10 @@ public class PdfManager {
                         pages = flag;
                     }
                 }
-
+                ArrayList<String> pathList = new ArrayList<>();
                 StringBuffer imgFilePath;
                 for (int i = 0; i < pages; i++) {
-                    String imgFilePathPrefix = imgFolderPath + File.separator + imagePDFName;
+                    String imgFilePathPrefix = imgFolderPath + imagePDFName;
                     imgFilePath = new StringBuffer();
                     imgFilePath.append(imgFilePathPrefix);
                     imgFilePath.append("_");
@@ -55,20 +57,21 @@ public class PdfManager {
                     imgFilePath.append(".jpg");
                     Bitmap image = renderer.renderImageWithDPI(i, dpi);
                     ImageManager.save(image, imgFilePath.toString(), Bitmap.CompressFormat.JPEG);
+                    pathList.add(imgFilePath.toString());
                 }
                 if (listener != null) {
-                    listener.onPdfConvertComplete(true);
+                    listener.onPdfConvertComplete(true, pathList);
                 }
             } else {
                 if (listener != null) {
-                    listener.onPdfConvertComplete(false);
+                    listener.onPdfConvertComplete(false, null);
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             if (listener != null) {
-                listener.onPdfConvertComplete(false);
+                listener.onPdfConvertComplete(false, null);
             }
         }
     }
@@ -83,7 +86,7 @@ public class PdfManager {
     }
 
     public interface PdfManagerConvertListener {
-        void onPdfConvertComplete(boolean success);
+        void onPdfConvertComplete(boolean success, ArrayList<String> imgPathList);
     }
 
 }

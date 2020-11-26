@@ -5,12 +5,12 @@ import android.util.Log;
 import com.modularity.perfection.exception.PerfectionException;
 import com.modularity.perfection.exception.PerfectionThrowable;
 import com.modularity.perfection.base.BaseSubscriber;
-import com.modularity.perfectionRetrofit.BuildConfig;
+import com.modularity.perfection.util.ReflectionUtil;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory;
-import com.tamic.novate.util.ReflectionUtil;
 
+import org.conscrypt.BuildConfig;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

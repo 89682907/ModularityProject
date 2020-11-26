@@ -1,6 +1,4 @@
-package com.tamic.novate.util;
-
-import android.util.Log;
+package com.modularity.perfection.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -10,15 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * copy http://qussay.com/2013/09/28/handling-java-generic-types-with-reflection
  * <p>Utility class that uses {@code java.lang.reflect} standard library.
  * It provides easy access to the standard reflect methods that are
  * needed usually when dealing with generic object types.</p>
- *
- * @author Qussay Najjar
- * @version 1.1
- * @link http://qussay.com/2013/09/28/handling-java-generic-types-with-reflection
- * @since 2014-04-13
  */
 public class ReflectionUtil {
 
@@ -39,7 +31,7 @@ public class ReflectionUtil {
 
     /**
      * {@link Type#toString()} value is the fully qualified class name prefixed
-     * with {@link ReflectionUtil#TYPE_NAME_PREFIX}. This method will substring it, for it to be eligible
+     * with {@link ReflectionUtil# TYPE_NAME_PREFIX}. This method will substring it, for it to be eligible
      * for {@link Class#forName(String)}.
      *
      * @param type the {@code Type} value whose class name is needed.

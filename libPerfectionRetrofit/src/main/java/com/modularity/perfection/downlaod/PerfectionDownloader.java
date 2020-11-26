@@ -69,7 +69,7 @@ public class PerfectionDownloader {
         ProgressDownSubscriber subscriber = new ProgressDownSubscriber(info);
         /*记录回调sub*/
         mSubMap.put(info.getUrl(), subscriber);
-        /*获取service，多次请求公用一个sercie*/
+        /*获取service，多次请求公用一个service*/
         BaseApiService httpService;
         if (mInfoSet.contains(info)) {
             httpService = info.getService();
@@ -190,7 +190,7 @@ public class PerfectionDownloader {
     /**
      * 返回全部正在下载的数据
      */
-    public Set<DownInfo> getmInfoSet() {
+    public Set<DownInfo> getInfoSet() {
         return mInfoSet;
     }
 

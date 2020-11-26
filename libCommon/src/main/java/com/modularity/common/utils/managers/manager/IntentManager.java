@@ -65,7 +65,7 @@ public final class IntentManager {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             uri = Uri.fromFile(file);
         } else {
-            String authority = Managers.getApp().getPackageName() + ".utilcode.provider";
+            String authority = Managers.getApp().getPackageName() + ".file.provider";
             uri = FileProvider.getUriForFile(Managers.getApp(), authority, file);
         }
         return getInstallAppIntent(uri);
@@ -82,11 +82,11 @@ public final class IntentManager {
     public static Intent getInstallAppIntent(final Uri uri) {
         if (uri == null) return null;
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        String type = "application/vnd.android.package-archive";
-        intent.setDataAndType(uri, type);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
+        String type = "application/vnd.android.package-archive";
+        intent.setDataAndType(uri, type);
         return intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
