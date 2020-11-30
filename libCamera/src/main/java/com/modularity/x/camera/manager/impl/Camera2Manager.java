@@ -66,23 +66,23 @@ public class Camera2Manager extends BaseCameraManager<String> implements ImageRe
     private static final String TAG = "Camera2Manager";
 
     private CameraManager cameraManager;
-    private CameraDevice cameraDevice;
+    private CameraDevice  cameraDevice;
 
-    private CameraCharacteristics frontCameraCharacteristics;
-    private CameraCharacteristics rearCameraCharacteristics;
+    private CameraCharacteristics  frontCameraCharacteristics;
+    private CameraCharacteristics  rearCameraCharacteristics;
     private StreamConfigurationMap frontStreamConfigurationMap;
     private StreamConfigurationMap rearStreamConfigurationMap;
 
     private ImageReader imageReader;
     private ImageReader previewReader;
 
-    private SurfaceHolder surfaceHolder;
+    private SurfaceHolder  surfaceHolder;
     private SurfaceTexture surfaceTexture;
-    private Surface workingSurface;
+    private Surface        workingSurface;
 
-    private CameraCaptureSession captureSession;
+    private CameraCaptureSession   captureSession;
     private CaptureRequest.Builder previewRequestBuilder;
-    private CaptureRequest previewRequest;
+    private CaptureRequest         previewRequest;
 
     private CaptureSessionCallback captureSessionCallback = new CaptureSessionCallback() {
 
@@ -1021,7 +1021,8 @@ public class Camera2Manager extends BaseCameraManager<String> implements ImageRe
 
     abstract static class CaptureSessionCallback extends CameraCaptureSession.CaptureCallback {
 
-        @CameraState private int cameraPreviewState;
+        @CameraState
+        private int cameraPreviewState;
 
         void setCameraPreviewState(@CameraState int cameraPreviewState) {
             this.cameraPreviewState = cameraPreviewState;
@@ -1047,19 +1048,29 @@ public class Camera2Manager extends BaseCameraManager<String> implements ImageRe
                 CameraState.STATE_WAITING_NON_PRE_CAPTURE, CameraState.STATE_PICTURE_TAKEN})
         @Retention(RetentionPolicy.SOURCE)
         @interface CameraState {
-            /** Camera state: Showing camera preview. */
+            /**
+             * Camera state: Showing camera preview.
+             */
             int STATE_PREVIEW = 0;
 
-            /** Camera state: Waiting for the focus to be locked. */
+            /**
+             * Camera state: Waiting for the focus to be locked.
+             */
             int STATE_WAITING_LOCK = 1;
 
-            /** Camera state: Waiting for the exposure to be precapture state. */
+            /**
+             * Camera state: Waiting for the exposure to be precapture state.
+             */
             int STATE_WAITING_PRE_CAPTURE = 2;
 
-            /** Camera state: Waiting for the exposure state to be something other than precapture. */
+            /**
+             * Camera state: Waiting for the exposure state to be something other than precapture.
+             */
             int STATE_WAITING_NON_PRE_CAPTURE = 3;
 
-            /** Camera state: Picture was taken. */
+            /**
+             * Camera state: Picture was taken.
+             */
             int STATE_PICTURE_TAKEN = 4;
         }
     }

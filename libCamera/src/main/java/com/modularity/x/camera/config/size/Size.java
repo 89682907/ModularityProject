@@ -12,13 +12,19 @@ import java.util.List;
 
 public class Size {
 
-    /**  The width of size. */
+    /**
+     * The width of size.
+     */
     public final int width;
 
-    /** The height of size. */
+    /**
+     * The height of size.
+     */
     public final int height;
 
-    /** The area of size, call {@link #area()} to get size. */
+    /**
+     * The area of size, call {@link #area()} to get size.
+     */
     private int area = -1;
 
     /**
@@ -32,7 +38,7 @@ public class Size {
      *
      * @param width  the width
      * @param height the height
-     * @return       the size
+     * @return the size
      */
     public static Size of(@IntRange(from = 1) int width, @IntRange(from = 0) int height) {
         return new Size(width, height);
@@ -42,7 +48,7 @@ public class Size {
      * Get sizes from {@link Camera.Size} for camera1.
      *
      * @param cameraSizes the camera sizes support of camera1
-     * @return            the standard size
+     * @return the standard size
      */
     public static List<Size> fromList(@NonNull List<Camera.Size> cameraSizes) {
         List<Size> sizes = new ArrayList<>(cameraSizes.size());
@@ -56,7 +62,7 @@ public class Size {
      * Get sizes from {@link android.util.Size} for camera2.
      *
      * @param cameraSizes the camera sizes supported by camera2
-     * @return            the standard size
+     * @return the standard size
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static List<Size> fromList(@NonNull android.util.Size[] cameraSizes) {
@@ -117,6 +123,6 @@ public class Size {
     @NonNull
     @Override
     public String toString() {
-        return "(" + width +  ", " + height + ")";
+        return "(" + width + ", " + height + ")";
     }
 }

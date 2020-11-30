@@ -19,7 +19,7 @@ public class CameraPreviewCreatorImpl implements CameraPreviewCreator {
      *
      * @param context the context to create the preview view.
      * @param parent  the parent view of the preview.
-     * @return        CameraPreview object.
+     * @return CameraPreview object.
      */
     @Override
     public CameraPreview create(Context context, ViewGroup parent) {

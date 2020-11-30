@@ -14,12 +14,18 @@ import static com.modularity.x.camera.enums.CameraSizeFor.SIZE_FOR_VIDEO;
 @Retention(value = RetentionPolicy.SOURCE)
 public @interface CameraSizeFor {
 
-    /** Camera size for preview */
-    int SIZE_FOR_PREVIEW    = 0x0010;
+    /**
+     * Camera size for preview
+     */
+    int SIZE_FOR_PREVIEW = 0x0010;
 
-    /** Camera size for picture */
-    int SIZE_FOR_PICTURE    = 0x0020;
+    /**
+     * Camera size for picture
+     */
+    int SIZE_FOR_PICTURE = 0x0020;
 
-    /** Camera size for video */
-    int SIZE_FOR_VIDEO      = 0x0040;
+    /**
+     * Camera size for video
+     */
+    int SIZE_FOR_VIDEO = 0x0040;
 }

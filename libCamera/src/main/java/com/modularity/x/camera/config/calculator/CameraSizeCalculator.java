@@ -33,12 +33,12 @@ public interface CameraSizeCalculator {
      * Change expect aspect ratio. You can implement this method to get the new desired
      * aspect ratio and clear the calculated values cache. Anyway this is the method
      * we used to notify you the camera state changed.
-     *
+     * <p>
      * See also,
-     * @see #changeExpectSize(Size)
-     * @see #changeMediaQuality(int)
      *
      * @param expectAspectRatio the new expect aspect ratio
+     * @see #changeExpectSize(Size)
+     * @see #changeMediaQuality(int)
      */
     void changeExpectAspectRatio(@NonNull AspectRatio expectAspectRatio);
 
@@ -60,7 +60,7 @@ public interface CameraSizeCalculator {
      * Get calculated picture size
      *
      * @param cameraType camera type, aka, camera1 or camera2
-     * @return           the picture size
+     * @return the picture size
      */
     Size getPictureSize(@CameraType int cameraType);
 
@@ -68,7 +68,7 @@ public interface CameraSizeCalculator {
      * Get calculated picture preview size
      *
      * @param cameraType camera type, aka, camera1 or camera2
-     * @return           the picture preview size
+     * @return the picture preview size
      */
     Size getPicturePreviewSize(@CameraType int cameraType);
 
@@ -76,7 +76,7 @@ public interface CameraSizeCalculator {
      * Get calculated video size
      *
      * @param cameraType camera type, aka, camera1 or camera2
-     * @return           the video size
+     * @return the video size
      */
     Size getVideoSize(@CameraType int cameraType);
 
@@ -84,7 +84,7 @@ public interface CameraSizeCalculator {
      * Get calculated video preview size
      *
      * @param cameraType camera type, aka, camera1 or camera2
-     * @return           the video preview size
+     * @return the video preview size
      */
     Size getVideoPreviewSize(@CameraType int cameraType);
 

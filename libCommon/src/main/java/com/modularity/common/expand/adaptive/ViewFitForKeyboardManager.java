@@ -62,7 +62,10 @@ public class ViewFitForKeyboardManager {
         Rect r = new Rect();
         mChildOfContent.getWindowVisibleDisplayFrame(r);
 //        return (r.bottom - r.top);// 全屏模式下： return r.bottom
-        return r.bottom;
+//        if (NotchManager.hasNotchInScreen(activity)) {
+//            return r.bottom - BarManager.getStatusBarHeight();
+//        }
+        return r.bottom - r.top;
     }
 
 }

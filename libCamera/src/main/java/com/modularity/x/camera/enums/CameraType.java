@@ -12,9 +12,13 @@ import static com.modularity.x.camera.enums.CameraType.TYPE_CAMERA2;
 @Retention(value = RetentionPolicy.SOURCE)
 public @interface CameraType {
 
-    /** Camera1 */
-    int TYPE_CAMERA1        = 0x0100;
+    /**
+     * Camera1
+     */
+    int TYPE_CAMERA1 = 0x0100;
 
-    /** Camera2 */
-    int TYPE_CAMERA2        = 0x0200;
+    /**
+     * Camera2
+     */
+    int TYPE_CAMERA2 = 0x0200;
 }

@@ -10,7 +10,7 @@ public interface CameraManagerCreator {
     /**
      * Method used to create {@link CameraManager}.
      *
-     * @param context the context
+     * @param context       the context
      * @param cameraPreview the {@link CameraPreview}
      * @return CameraManager object.
      */

@@ -17,7 +17,7 @@ public class CameraManagerCreatorImpl implements CameraManagerCreator {
      * If the app version >= 21, the {@link android.hardware.camera2.CameraDevice} will be used,
      * else the {@link android.hardware.Camera} will be used.
      *
-     * @param context context
+     * @param context       context
      * @param cameraPreview the {@link CameraPreview}
      * @return CameraManager object.
      */

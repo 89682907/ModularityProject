@@ -39,56 +39,68 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class ConfigurationProvider {
     private static final String TAG = "ConfigurationProvider";
 
-    /** The singleton */
+    /**
+     * The singleton
+     */
     private static volatile ConfigurationProvider configurationProvider;
 
     private CameraManagerCreator cameraManagerCreator;
 
     private CameraPreviewCreator cameraPreviewCreator;
 
-    /** The calculator for camera size. */
+    /**
+     * The calculator for camera size.
+     */
     private CameraSizeCalculator cameraSizeCalculator;
 
-    /** Whether use memory cache in library. default is true. */
+    /**
+     * Whether use memory cache in library. default is true.
+     */
     private boolean useCacheValues;
 
     /**
      * The sizes map from a int value, which was calculated from:
-     * hash = {@link CameraFace} | {@link CameraSizeFor} | {@link CameraType} */
+     * hash = {@link CameraFace} | {@link CameraSizeFor} | {@link CameraType}
+     */
     private SparseArray<List<Size>> sizeMap;
 
     /**
      * The room ratios map from a int value, which was calculated from:
-     * hash = {@link CameraFace} | {@link CameraType} */
+     * hash = {@link CameraFace} | {@link CameraType}
+     */
     private SparseArray<List<Float>> ratioMap;
 
     @CameraFace
-    private               int defaultCameraFace;
+    private int         defaultCameraFace;
     @MediaType
     private int         defaultMediaType;
     @MediaQuality
     private int         defaultMediaQuality;
     private AspectRatio defaultAspectRatio;
     private boolean     isVoiceEnable;
-    private boolean isAutoFocus;
+    private boolean     isAutoFocus;
     @FlashMode
-    private int     defaultFlashMode;
-    private long    defaultVideoFileSize = -1;
-    private int defaultVideoDuration = -1;
+    private int         defaultFlashMode;
+    private long        defaultVideoFileSize = -1;
+    private int         defaultVideoDuration = -1;
 
-    /** Device default orientation */
+    /**
+     * Device default orientation
+     */
     @DeviceDefaultOrientation
     private int deviceDefaultOrientation;
-    /** The sensor position */
+    /**
+     * The sensor position
+     */
     @SensorPosition
     private int sensorPosition;
     private int degrees = -1;
 
-    private int numberOfCameras;
-    private AtomicBoolean camera2Prepared = new AtomicBoolean();
-    private SparseArray<String> cameraIdCamera2 = new SparseArray<>();
-    private SparseArray<CameraCharacteristics> cameraCharacteristics = new SparseArray<>();
-    private SparseIntArray cameraOrientations = new SparseIntArray();
+    private int                                 numberOfCameras;
+    private AtomicBoolean                       camera2Prepared         = new AtomicBoolean();
+    private SparseArray<String>                 cameraIdCamera2         = new SparseArray<>();
+    private SparseArray<CameraCharacteristics>  cameraCharacteristics   = new SparseArray<>();
+    private SparseIntArray                      cameraOrientations      = new SparseIntArray();
     private SparseArray<StreamConfigurationMap> streamConfigurationMaps = new SparseArray<>();
 
     private boolean isDebug;
@@ -144,7 +156,7 @@ public final class ConfigurationProvider {
                         cameraOrientations.put(CameraFace.FACE_FRONT, iFrontCameraOrientation == null ? 0 : iFrontCameraOrientation);
                         cameraCharacteristics.put(CameraFace.FACE_FRONT, characteristics);
                         streamConfigurationMaps.put(CameraFace.FACE_FRONT, characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP));
-                    } else if (facing != null && facing == CameraCharacteristics.LENS_FACING_BACK){
+                    } else if (facing != null && facing == CameraCharacteristics.LENS_FACING_BACK) {
                         cameraIdCamera2.put(CameraFace.FACE_REAR, id);
                         Integer iRearCameraOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
                         cameraOrientations.put(CameraFace.FACE_REAR, iRearCameraOrientation == null ? 0 : iRearCameraOrientation);
@@ -191,7 +203,7 @@ public final class ConfigurationProvider {
      * @param camera     camera
      * @param cameraFace camera face
      * @param sizeFor    camera size for
-     * @return           the size
+     * @return the size
      */
     public List<Size> getSizes(android.hardware.Camera camera,
                                @CameraFace int cameraFace,
@@ -234,7 +246,7 @@ public final class ConfigurationProvider {
      *
      * @param camera     camera
      * @param cameraFace camera face
-     * @return           supported zoom ratios
+     * @return supported zoom ratios
      */
     public List<Float> getZoomRatios(android.hardware.Camera camera,
                                      @CameraFace int cameraFace) {
@@ -267,7 +279,7 @@ public final class ConfigurationProvider {
      * @param configurationMap the configuration map
      * @param cameraFace       the camera face
      * @param sizeFor          the camera size for
-     * @return                 the supported sizes
+     * @return the supported sizes
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public List<Size> getSizes(StreamConfigurationMap configurationMap,

@@ -12,9 +12,13 @@ import static com.modularity.x.camera.enums.CameraFace.FACE_REAR;
 @Retention(value = RetentionPolicy.SOURCE)
 public @interface CameraFace {
 
-    /** Rear camera */
-    int FACE_REAR           = 0x0000;
+    /**
+     * Rear camera
+     */
+    int FACE_REAR = 0x0000;
 
-    /** Front camera */
-    int FACE_FRONT          = 0x0001;
+    /**
+     * Front camera
+     */
+    int FACE_FRONT = 0x0001;
 }
