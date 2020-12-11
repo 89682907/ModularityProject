@@ -45,7 +45,7 @@ class PerfectionSubscriber<T> extends BaseSubscriber<ResponseBody> {
         try {
             byte[] bytes = responseBody.bytes();
             String jsStr = new String(bytes);
-            if (BuildConfig.DEBUG) {
+            if (BuildConfig.DEBUG || Perfection.Builder.isLog) {
                 Log.i(Perfection.Builder.LOG_TAG, "ResponseValue:" + jsStr);
             }
             parseByMosh(jsStr);

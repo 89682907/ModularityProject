@@ -16,6 +16,7 @@ import com.modularity.perfection.util.PerfectionUtils;
 
 import java.io.File;
 import java.net.Proxy;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,13 +35,16 @@ import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.Call;
+import okhttp3.CipherSuite;
 import okhttp3.ConnectionPool;
+import okhttp3.ConnectionSpec;
 import okhttp3.Interceptor;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import okhttp3.MultipartBody.Part;
+import okhttp3.TlsVersion;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 import retrofit2.CallAdapter;
@@ -206,9 +210,10 @@ public final class Perfection {
     }
 
     public static final class Builder {
-        public static String               LOG_TAG = "perfection";
-        private       Boolean              isLog   = false;
-        private       Boolean              isCache = false;
+        public static String               LOG_TAG           = "perfection";
+        public static Boolean              isLog             = false;
+        private       Boolean              isCache           = false;
+        private       boolean              isConnectionSpecs = false;
         private       Context              mContext;
         private       String               mBaseUrl;
         private       HostnameVerifier     mHostnameVerifier;
@@ -262,6 +267,11 @@ public final class Perfection {
             } else {
                 mOkHttpBuilder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
             }
+            return this;
+        }
+
+        public Perfection.Builder connectionSpecs(boolean connectionSpecs) {
+            isConnectionSpecs = connectionSpecs;
             return this;
         }
 
@@ -413,9 +423,14 @@ public final class Perfection {
                     mRetrofitBuilder.callFactory(mCallFactory);
                 }
 
+                if (isConnectionSpecs) {
+                    mOkHttpBuilder.connectionSpecs(Collections.singletonList(getConnectionSpec()));
+                }
+
                 if (mOkHttpClient == null) {
                     mOkHttpClient = mOkHttpBuilder.build();
                 }
+
 
                 this.mRetrofitBuilder.client(mOkHttpClient);
                 Retrofit retrofit = mRetrofitBuilder.build();
@@ -423,6 +438,11 @@ public final class Perfection {
                 return new Perfection(retrofit, apiManager);
             }
         }
+    }
+
+    private static ConnectionSpec getConnectionSpec() {
+        ConnectionSpec spec = new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS).tlsVersions(TlsVersion.TLS_1_0).cipherSuites(CipherSuite.TLS_RSA_WITH_AES_128_CBC_SHA256, CipherSuite.TLS_RSA_WITH_AES_128_CBC_SHA, CipherSuite.TLS_RSA_WITH_AES_256_CBC_SHA256, CipherSuite.TLS_RSA_WITH_AES_256_CBC_SHA, CipherSuite.TLS_RSA_WITH_3DES_EDE_CBC_SHA).build();
+        return spec;
     }
 
     private static class HttpResponseFunc<T> implements Function<Throwable, Observable<T>> {

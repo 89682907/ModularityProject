@@ -1,8 +1,11 @@
 package com.modularity.x.camera;
 
+import android.os.Build;
+
 import com.modularity.common.utils.managers.manager.SPManager;
 import com.modularity.x.camera.config.ConfigurationProvider;
 import com.modularity.x.camera.config.creator.impl.Camera1OnlyCreator;
+import com.modularity.x.camera.config.creator.impl.Camera2OnlyCreator;
 import com.modularity.x.camera.config.creator.impl.CameraManagerCreatorImpl;
 import com.modularity.x.camera.config.creator.impl.CameraPreviewCreatorImpl;
 import com.modularity.x.camera.config.creator.impl.SurfaceViewOnlyCreator;
@@ -30,23 +33,16 @@ public class XCamera {
 
         if (option == CAMERA_1) {
             ConfigurationProvider.get().setCameraManagerCreator(new Camera1OnlyCreator());
+        } else if (option == CAMERA_2) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ConfigurationProvider.get().setCameraManagerCreator(new Camera2OnlyCreator());
+            } else {
+                ConfigurationProvider.get().setCameraManagerCreator(new Camera1OnlyCreator());
+            }
         } else {
             ConfigurationProvider.get().setCameraManagerCreator(new CameraManagerCreatorImpl());
         }
         SPManager.getInstance().put("__camera_option", option);
-
-//        if (option == CAMERA_1) {
-//            ConfigurationProvider.get().setCameraManagerCreator(new Camera1OnlyCreator());
-//        } else if (option == CAMERA_2) {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                ConfigurationProvider.get().setCameraManagerCreator(new Camera2OnlyCreator());
-//            } else {
-////                throw new UnsupportedOperationException("please use camera_1");
-//            }
-//        } else {
-//            ConfigurationProvider.get().setCameraManagerCreator(new CameraManagerCreatorImpl());
-//        }
-//        SPManager.getInstance().put("__camera_option", option);
     }
 
     public static void switchToPreviewOption(int option) {

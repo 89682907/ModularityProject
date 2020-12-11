@@ -7,7 +7,7 @@ common.mavenVersion = "1.3.6"
 
 def pr = [:]
 pr.mavenArtifactId = "pr"
-pr.mavenVersion = "1.2.8"
+pr.mavenVersion = "1.3.0"
 
 def wb = [:]
 wb.mavenArtifactId = "wb"
@@ -19,13 +19,13 @@ camera.mavenVersion = "1.0.3"
 
 def camerax = [:]
 camerax.mavenArtifactId = "camerax"
-camerax.mavenVersion = "1.0.1"
+camerax.mavenVersion = "1.0.3"
 
 def signature = [:]
 signature.mavenArtifactId = "signature"
 signature.mavenVersion = "1.0.0"
 
-current.module = common
+current.module = pr
 uploadArchives {
     def mavenArtifactId = current.module.mavenArtifactId
     def mavenVersion = current.module.mavenVersion

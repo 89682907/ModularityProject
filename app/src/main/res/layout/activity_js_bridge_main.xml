@@ -10,12 +10,14 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:visibility="gone"
         android:text="Java调用Web(functionInJs)" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:visibility="gone"
         android:text="Java调用Web(default)" />
 
 

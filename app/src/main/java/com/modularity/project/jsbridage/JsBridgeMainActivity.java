@@ -10,6 +10,7 @@ import com.lk.community.jsbridge.CallBackFunction;
 import com.lk.community.jsbridge.DefaultHandler;
 import com.lk.community.view.WebView;
 import com.modularity.common.base.BaseActivity;
+import com.modularity.common.utils.managers.manager.BarManager;
 import com.modularity.common.utils.managers.manager.ToastManager;
 import com.modularity.project.R;
 
@@ -21,8 +22,10 @@ public class JsBridgeMainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_js_bridge_main);
+        BarManager.setStatusBarVisibility(this, false);
         mWebView = findViewById(R.id.webView);
-        mWebView.loadUrl("file:///android_asset/jsbridage_demo.html");
+//        mWebView.loadUrl("file:///android_asset/jsbridage_demo.html");
+        mWebView.loadUrl("https://m.laikang.com/qa/shangMirrorQa/#/list");
         jsToJavaMethod();
         jsToJavaMethodDefault();
         findViewById(R.id.button).setOnClickListener(view -> javaToJsMethod());
