@@ -15,6 +15,7 @@ import android.util.SparseIntArray;
 import androidx.annotation.RequiresApi;
 
 import com.modularity.common.utils.managers.manager.LogManager;
+import com.modularity.x.camera.annotation.KeepNotProguard;
 import com.modularity.x.camera.config.calculator.CameraSizeCalculator;
 import com.modularity.x.camera.config.calculator.impl.CameraSizeCalculatorImpl;
 import com.modularity.x.camera.config.creator.CameraManagerCreator;
@@ -128,6 +129,7 @@ public final class ConfigurationProvider {
         defaultFlashMode = FlashMode.FLASH_AUTO;
     }
 
+    @KeepNotProguard
     public static ConfigurationProvider get() {
         if (configurationProvider == null) {
             synchronized (ConfigurationProvider.class) {
@@ -140,6 +142,7 @@ public final class ConfigurationProvider {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @KeepNotProguard
     public ConfigurationProvider prepareCamera2(Context context) {
         if (!camera2Prepared.get()) {
             CameraManager cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
@@ -173,26 +176,31 @@ public final class ConfigurationProvider {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @KeepNotProguard
     public int getNumberOfCameras(Context context) {
         return prepareCamera2(context).numberOfCameras;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @KeepNotProguard
     public String getCameraId(Context context, @CameraFace int cameraFace) {
         return prepareCamera2(context).cameraIdCamera2.get(cameraFace);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @KeepNotProguard
     public CameraCharacteristics getCameraCharacteristics(Context context, @CameraFace int cameraFace) {
         return prepareCamera2(context).cameraCharacteristics.get(cameraFace);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @KeepNotProguard
     public int getCameraOrientation(Context context, @CameraFace int cameraFace) {
         return prepareCamera2(context).cameraOrientations.get(cameraFace);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @KeepNotProguard
     public StreamConfigurationMap getStreamConfigurationMap(Context context, @CameraFace int cameraFace) {
         return prepareCamera2(context).streamConfigurationMaps.get(cameraFace);
     }
@@ -205,6 +213,7 @@ public final class ConfigurationProvider {
      * @param sizeFor    camera size for
      * @return the size
      */
+    @KeepNotProguard
     public List<Size> getSizes(android.hardware.Camera camera,
                                @CameraFace int cameraFace,
                                @CameraSizeFor int sizeFor) {
@@ -248,6 +257,7 @@ public final class ConfigurationProvider {
      * @param cameraFace camera face
      * @return supported zoom ratios
      */
+    @KeepNotProguard
     public List<Float> getZoomRatios(android.hardware.Camera camera,
                                      @CameraFace int cameraFace) {
         // calculate hash of map
@@ -282,6 +292,7 @@ public final class ConfigurationProvider {
      * @return the supported sizes
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @KeepNotProguard
     public List<Size> getSizes(StreamConfigurationMap configurationMap,
                                @CameraFace int cameraFace,
                                @CameraSizeFor int sizeFor) {
@@ -319,65 +330,80 @@ public final class ConfigurationProvider {
 
     /*--------------------------------------- Setters and Getters Region ---------------------------------------*/
 
+    @KeepNotProguard
     public CameraManagerCreator getCameraManagerCreator() {
         return cameraManagerCreator;
     }
 
+    @KeepNotProguard
     public void setCameraManagerCreator(CameraManagerCreator cameraManagerCreator) {
         this.cameraManagerCreator = cameraManagerCreator;
     }
 
+    @KeepNotProguard
     public CameraPreviewCreator getCameraPreviewCreator() {
         return cameraPreviewCreator;
     }
 
+    @KeepNotProguard
     public void setCameraPreviewCreator(CameraPreviewCreator cameraPreviewCreator) {
         this.cameraPreviewCreator = cameraPreviewCreator;
     }
 
+    @KeepNotProguard
     public CameraSizeCalculator getCameraSizeCalculator() {
         return cameraSizeCalculator;
     }
 
+    @KeepNotProguard
     public void setCameraSizeCalculator(CameraSizeCalculator cameraSizeCalculator) {
         this.cameraSizeCalculator = cameraSizeCalculator;
     }
 
+    @KeepNotProguard
     public boolean isUseCacheValues() {
         return useCacheValues;
     }
 
+    @KeepNotProguard
     public void setUseCacheValues(boolean useCacheValues) {
         this.useCacheValues = useCacheValues;
     }
 
     @CameraFace
+    @KeepNotProguard
     public int getDefaultCameraFace() {
         return defaultCameraFace;
     }
 
+    @KeepNotProguard
     public void setDefaultCameraFace(@CameraFace int defaultCameraFace) {
         this.defaultCameraFace = defaultCameraFace;
     }
 
     @MediaType
+    @KeepNotProguard
     public int getDefaultMediaType() {
         return defaultMediaType;
     }
 
+    @KeepNotProguard
     public void setDefaultMediaType(@MediaType int defaultMediaType) {
         this.defaultMediaType = defaultMediaType;
     }
 
     @MediaQuality
+    @KeepNotProguard
     public int getDefaultMediaQuality() {
         return defaultMediaQuality;
     }
 
+    @KeepNotProguard
     public void setDefaultMediaQuality(@MediaQuality int defaultMediaQuality) {
         this.defaultMediaQuality = defaultMediaQuality;
     }
 
+    @KeepNotProguard
     public AspectRatio getDefaultAspectRatio() {
         return defaultAspectRatio;
     }
@@ -387,81 +413,100 @@ public final class ConfigurationProvider {
      *
      * @param defaultAspectRatio the camera aspect ratio
      */
+    @KeepNotProguard
     public void setDefaultAspectRatio(AspectRatio defaultAspectRatio) {
         this.defaultAspectRatio = defaultAspectRatio;
     }
 
+    @KeepNotProguard
     public boolean isVoiceEnable() {
         return isVoiceEnable;
     }
 
+    @KeepNotProguard
     public void setVoiceEnable(boolean voiceEnable) {
         this.isVoiceEnable = voiceEnable;
     }
 
+    @KeepNotProguard
     public boolean isAutoFocus() {
         return isAutoFocus;
     }
 
+    @KeepNotProguard
     public void setAutoFocus(boolean autoFocus) {
         isAutoFocus = autoFocus;
     }
 
     @FlashMode
+    @KeepNotProguard
     public int getDefaultFlashMode() {
         return defaultFlashMode;
     }
 
+    @KeepNotProguard
     public void setDefaultFlashMode(@FlashMode int defaultFlashMode) {
         this.defaultFlashMode = defaultFlashMode;
     }
 
+    @KeepNotProguard
     public long getDefaultVideoFileSize() {
         return defaultVideoFileSize;
     }
 
+    @KeepNotProguard
     public void setDefaultVideoFileSize(long defaultVideoFileSize) {
         this.defaultVideoFileSize = defaultVideoFileSize;
     }
 
+    @KeepNotProguard
     public int getDefaultVideoDuration() {
         return defaultVideoDuration;
     }
 
+    @KeepNotProguard
     public void setDefaultVideoDuration(int defaultVideoDuration) {
         this.defaultVideoDuration = defaultVideoDuration;
     }
 
+    @KeepNotProguard
     public boolean isDebug() {
         return isDebug;
     }
 
+    @KeepNotProguard
     public void setDebug(boolean debug) {
         isDebug = debug;
     }
 
     @DeviceDefaultOrientation
+    @KeepNotProguard
     public int getDeviceDefaultOrientation() {
         return deviceDefaultOrientation;
     }
 
+    @KeepNotProguard
     public void setDeviceDefaultOrientation(@DeviceDefaultOrientation int deviceDefaultOrientation) {
         this.deviceDefaultOrientation = deviceDefaultOrientation;
     }
 
     @SensorPosition
+    @KeepNotProguard
     public int getSensorPosition() {
         return sensorPosition;
     }
 
+    @KeepNotProguard
     public void setSensorPosition(@SensorPosition int sensorPosition) {
         this.sensorPosition = sensorPosition;
     }
 
+    @KeepNotProguard
     public int getDegrees() {
         return degrees;
     }
 
+    @KeepNotProguard
     public void setDegrees(int degrees) {
         this.degrees = degrees;
     }

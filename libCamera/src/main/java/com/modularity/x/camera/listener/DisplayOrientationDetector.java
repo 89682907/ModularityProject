@@ -6,6 +6,9 @@ import android.view.Display;
 import android.view.OrientationEventListener;
 import android.view.Surface;
 
+import com.modularity.x.camera.annotation.KeepNotProguard;
+
+@KeepNotProguard
 public abstract class DisplayOrientationDetector {
 
     private final OrientationEventListener orientationEventListener;

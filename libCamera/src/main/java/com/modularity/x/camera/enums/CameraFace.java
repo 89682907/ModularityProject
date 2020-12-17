@@ -2,6 +2,8 @@ package com.modularity.x.camera.enums;
 
 import androidx.annotation.IntDef;
 
+import com.modularity.x.camera.annotation.KeepNotProguard;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -10,6 +12,7 @@ import static com.modularity.x.camera.enums.CameraFace.FACE_REAR;
 
 @IntDef(value = {FACE_REAR, FACE_FRONT})
 @Retention(value = RetentionPolicy.SOURCE)
+@KeepNotProguard
 public @interface CameraFace {
 
     /**

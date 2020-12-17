@@ -2,11 +2,14 @@ package com.modularity.x.camera.enums;
 
 import androidx.annotation.IntDef;
 
+import com.modularity.x.camera.annotation.KeepNotProguard;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @IntDef({PreviewAdjustType.NONE, PreviewAdjustType.WIDTH_FIRST, PreviewAdjustType.HEIGHT_FIRST, PreviewAdjustType.SMALLER_FIRST, PreviewAdjustType.LARGER_FIRST})
 @Retention(RetentionPolicy.SOURCE)
+@KeepNotProguard
 public @interface PreviewAdjustType {
 
     /**

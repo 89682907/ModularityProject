@@ -14,6 +14,7 @@ import com.modularity.R
 import com.modularity.common.base.BaseActivity
 import com.modularity.common.statics.IStatics
 import com.modularity.common.utils.managers.manager.*
+import com.modularity.x.camera.annotation.KeepNotProguard
 import com.modularity.x.camera.config.ConfigurationProvider
 import com.modularity.x.camera.config.size.Size
 import com.modularity.x.camera.config.size.SizeMap
@@ -22,6 +23,7 @@ import com.modularity.x.camera.listener.*
 import com.modularity.x.camera.util.ImageHelper
 import java.io.File
 
+@KeepNotProguard
 class XCameraActivity : BaseActivity() {
     private var cameraView: CameraView? = null
     private var ivSwitch: AppCompatImageView? = null

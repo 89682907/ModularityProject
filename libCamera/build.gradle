@@ -8,6 +8,12 @@ android {
         versionName "${rootProject.ext.versionName}"
     }
 
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 apply plugin: 'maven'

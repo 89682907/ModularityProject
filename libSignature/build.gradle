@@ -11,6 +11,13 @@ android {
         dataBinding = true
 //        viewBinding = true
     }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 apply plugin: 'maven'

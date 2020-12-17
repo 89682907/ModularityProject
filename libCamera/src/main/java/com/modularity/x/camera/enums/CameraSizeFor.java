@@ -3,6 +3,8 @@ package com.modularity.x.camera.enums;
 
 import androidx.annotation.IntDef;
 
+import com.modularity.x.camera.annotation.KeepNotProguard;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -12,6 +14,7 @@ import static com.modularity.x.camera.enums.CameraSizeFor.SIZE_FOR_VIDEO;
 
 @IntDef(value = {SIZE_FOR_PREVIEW, SIZE_FOR_PICTURE, SIZE_FOR_VIDEO})
 @Retention(value = RetentionPolicy.SOURCE)
+@KeepNotProguard
 public @interface CameraSizeFor {
 
     /**

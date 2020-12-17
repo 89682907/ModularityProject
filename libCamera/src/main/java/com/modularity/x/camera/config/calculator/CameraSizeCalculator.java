@@ -3,6 +3,7 @@ package com.modularity.x.camera.config.calculator;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.modularity.x.camera.annotation.KeepNotProguard;
 import com.modularity.x.camera.config.size.AspectRatio;
 import com.modularity.x.camera.config.size.Size;
 import com.modularity.x.camera.enums.CameraType;
@@ -10,6 +11,7 @@ import com.modularity.x.camera.enums.MediaQuality;
 
 import java.util.List;
 
+@KeepNotProguard
 public interface CameraSizeCalculator {
 
     /**

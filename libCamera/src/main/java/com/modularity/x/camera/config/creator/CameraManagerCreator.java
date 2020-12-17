@@ -2,9 +2,11 @@ package com.modularity.x.camera.config.creator;
 
 import android.content.Context;
 
+import com.modularity.x.camera.annotation.KeepNotProguard;
 import com.modularity.x.camera.manager.CameraManager;
 import com.modularity.x.camera.preview.CameraPreview;
 
+@KeepNotProguard
 public interface CameraManagerCreator {
 
     /**

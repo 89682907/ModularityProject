@@ -23,6 +23,7 @@ import androidx.core.view.ViewCompat;
 
 import com.modularity.R;
 import com.modularity.common.utils.managers.manager.LogManager;
+import com.modularity.x.camera.annotation.KeepNotProguard;
 import com.modularity.x.camera.config.ConfigurationProvider;
 import com.modularity.x.camera.config.size.AspectRatio;
 import com.modularity.x.camera.config.size.Size;
@@ -316,15 +317,18 @@ public class CameraView extends FrameLayout {
         }
     }
 
+    @KeepNotProguard
     public void openCamera(CameraOpenListener cameraOpenListener) {
         cameraManager.openCamera(cameraOpenListener);
     }
 
+    @KeepNotProguard
     public boolean isCameraOpened() {
         return cameraManager.isCameraOpened();
     }
 
     @CameraFace
+    @KeepNotProguard
     public int getCameraFace() {
         return cameraManager.getCameraFace();
     }
@@ -334,6 +338,7 @@ public class CameraView extends FrameLayout {
      *
      * @param cameraFace camera face
      */
+    @KeepNotProguard
     public void switchCamera(@CameraFace int cameraFace) {
         cameraManager.switchCamera(cameraFace);
     }
@@ -343,11 +348,13 @@ public class CameraView extends FrameLayout {
      *
      * @param mediaType media type
      */
+    @KeepNotProguard
     public void setMediaType(@MediaType int mediaType) {
         cameraManager.setMediaType(mediaType);
     }
 
     @MediaType
+    @KeepNotProguard
     public int getMediaType() {
         return cameraManager.getMediaType();
     }
@@ -359,27 +366,33 @@ public class CameraView extends FrameLayout {
      *
      * @param voiceEnable true to use the voice
      */
+    @KeepNotProguard
     public void setVoiceEnable(boolean voiceEnable) {
         cameraManager.setVoiceEnable(voiceEnable);
     }
 
+    @KeepNotProguard
     public boolean isVoiceEnable() {
         return cameraManager.isVoiceEnable();
     }
 
+    @KeepNotProguard
     public void setAutoFocus(boolean autoFocus) {
         cameraManager.setAutoFocus(autoFocus);
     }
 
+    @KeepNotProguard
     public boolean isAutoFocus() {
         return cameraManager.isAutoFocus();
     }
 
+    @KeepNotProguard
     public void setFlashMode(@FlashMode int flashMode) {
         cameraManager.setFlashMode(flashMode);
     }
 
     @FlashMode
+    @KeepNotProguard
     public int getFlashMode() {
         return cameraManager.getFlashMode();
     }
@@ -389,14 +402,17 @@ public class CameraView extends FrameLayout {
      *
      * @param zoom zoom ratio
      */
+    @KeepNotProguard
     public void setZoom(@FloatRange(from = 1.0f) float zoom) {
         cameraManager.setZoom(zoom);
     }
 
+    @KeepNotProguard
     public float getZoom() {
         return cameraManager.getZoom();
     }
 
+    @KeepNotProguard
     public float getMaxZoom() {
         return cameraManager.getMaxZoom();
     }
@@ -407,6 +423,7 @@ public class CameraView extends FrameLayout {
      *
      * @param expectSize expect output size
      */
+    @KeepNotProguard
     public void setExpectSize(Size expectSize) {
         cameraManager.setExpectSize(expectSize);
     }
@@ -416,6 +433,7 @@ public class CameraView extends FrameLayout {
      *
      * @param aspectRatio expect aspect ratio of output
      */
+    @KeepNotProguard
     public void setExpectAspectRatio(AspectRatio aspectRatio) {
         cameraManager.setExpectAspectRatio(aspectRatio);
     }
@@ -425,6 +443,7 @@ public class CameraView extends FrameLayout {
      *
      * @param mediaQuality media quality
      */
+    @KeepNotProguard
     public void setMediaQuality(@MediaQuality int mediaQuality) {
         cameraManager.setMediaQuality(mediaQuality);
     }
@@ -435,6 +454,7 @@ public class CameraView extends FrameLayout {
      * @param sizeFor the size for
      * @return the size
      */
+    @KeepNotProguard
     public Size getSize(@CameraSizeFor int sizeFor) {
         return cameraManager.getSize(sizeFor);
     }
@@ -445,6 +465,7 @@ public class CameraView extends FrameLayout {
      * @param sizeFor the size for
      * @return the sizes
      */
+    @KeepNotProguard
     public SizeMap getSizes(@CameraSizeFor int sizeFor) {
         return cameraManager.getSizes(sizeFor);
     }
@@ -461,6 +482,7 @@ public class CameraView extends FrameLayout {
         return cameraManager.getAspectRatio(sizeFor);
     }
 
+    @KeepNotProguard
     public void addCameraSizeListener(CameraSizeListener cameraSizeListener) {
         cameraManager.addCameraSizeListener(cameraSizeListener);
     }
@@ -470,6 +492,7 @@ public class CameraView extends FrameLayout {
      *
      * @param cameraPreviewListener the listener
      */
+    @KeepNotProguard
     public void setCameraPreviewListener(CameraPreviewListener cameraPreviewListener) {
         cameraManager.setCameraPreviewListener(cameraPreviewListener);
     }
@@ -480,12 +503,14 @@ public class CameraView extends FrameLayout {
      *
      * @param orientationChangedListener the orientation change listener
      */
+    @KeepNotProguard
     public void addOrientationChangedListener(OnOrientationChangedListener orientationChangedListener) {
         if (!orientationChangedListeners.contains(orientationChangedListener)) {
             orientationChangedListeners.add(orientationChangedListener);
         }
     }
 
+    @KeepNotProguard
     public void removeOrientationChangedListener(OnOrientationChangedListener orientationChangedListener) {
         orientationChangedListeners.remove(orientationChangedListener);
     }
@@ -496,6 +521,7 @@ public class CameraView extends FrameLayout {
      * @param fileToSave          the file to save picture
      * @param cameraPhotoListener the result callback
      */
+    @KeepNotProguard
     public void takePicture(File fileToSave, CameraPhotoListener cameraPhotoListener) {
         cameraManager.takePicture(fileToSave, cameraPhotoListener);
     }
@@ -505,6 +531,7 @@ public class CameraView extends FrameLayout {
      *
      * @param videoFileSize the maximum file size in bytes (if zero or negative, the limit will be disabled)
      */
+    @KeepNotProguard
     public void setVideoFileSize(long videoFileSize) {
         cameraManager.setVideoFileSize(videoFileSize);
     }
@@ -514,6 +541,7 @@ public class CameraView extends FrameLayout {
      *
      * @param videoDuration the maximum duration in ms (if zero or negative, the duration limit will be disabled)
      */
+    @KeepNotProguard
     public void setVideoDuration(int videoDuration) {
         cameraManager.setVideoDuration(videoDuration);
     }
@@ -524,6 +552,7 @@ public class CameraView extends FrameLayout {
      * @param file                the file to save video data
      * @param cameraVideoListener the result callback
      */
+    @KeepNotProguard
     public void startVideoRecord(File file, CameraVideoListener cameraVideoListener) {
         cameraManager.startVideoRecord(file, cameraVideoListener);
     }
@@ -531,18 +560,22 @@ public class CameraView extends FrameLayout {
     /**
      * Stop video record
      */
+    @KeepNotProguard
     public void stopVideoRecord() {
         cameraManager.stopVideoRecord();
     }
 
+    @KeepNotProguard
     public void resumePreview() {
         cameraManager.resumePreview();
     }
 
+    @KeepNotProguard
     public void closeCamera(CameraCloseListener cameraCloseListener) {
         cameraManager.closeCamera(cameraCloseListener);
     }
 
+    @KeepNotProguard
     public void releaseCamera() {
         cameraManager.releaseCamera();
         if (sensorManager != null) {
@@ -556,10 +589,12 @@ public class CameraView extends FrameLayout {
      *
      * @param onMoveListener the callback
      */
+    @KeepNotProguard
     public void setOnMoveListener(OnMoveListener onMoveListener) {
         focusMarkerLayout.setOnMoveListener(onMoveListener);
     }
 
+    @KeepNotProguard
     public void setTouchAngle(int touchAngle) {
         if (focusMarkerLayout != null) {
             focusMarkerLayout.setTouchAngle(touchAngle);
@@ -571,14 +606,17 @@ public class CameraView extends FrameLayout {
      *
      * @param scaleRate the scale rate
      */
+    @KeepNotProguard
     public void setScaleRate(@IntRange(from = 0) int scaleRate) {
         focusMarkerLayout.setScaleRate(scaleRate);
     }
 
+    @KeepNotProguard
     public void setTouchZoomEnable(boolean touchZoomEnable) {
         focusMarkerLayout.setTouchZoomEnable(touchZoomEnable);
     }
 
+    @KeepNotProguard
     public void setUseTouchFocus(boolean useTouchFocus) {
         focusMarkerLayout.setUseTouchFocus(useTouchFocus);
     }

@@ -2,6 +2,8 @@ package com.modularity.x.camera.enums;
 
 import androidx.annotation.IntDef;
 
+import com.modularity.x.camera.annotation.KeepNotProguard;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -15,6 +17,7 @@ import static com.modularity.x.camera.enums.MediaQuality.QUALITY_MEDIUM;
 
 @IntDef(value = {QUALITY_AUTO, QUALITY_LOWEST, QUALITY_LOW, QUALITY_MEDIUM, QUALITY_HIGH, QUALITY_HIGHEST})
 @Retention(value = RetentionPolicy.SOURCE)
+@KeepNotProguard
 public @interface MediaQuality {
 
     /**

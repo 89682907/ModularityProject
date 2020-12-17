@@ -3,6 +3,7 @@ package com.modularity.x.camera;
 import android.os.Build;
 
 import com.modularity.common.utils.managers.manager.SPManager;
+import com.modularity.x.camera.annotation.KeepNotProguard;
 import com.modularity.x.camera.config.ConfigurationProvider;
 import com.modularity.x.camera.config.creator.impl.Camera1OnlyCreator;
 import com.modularity.x.camera.config.creator.impl.Camera2OnlyCreator;
@@ -11,6 +12,7 @@ import com.modularity.x.camera.config.creator.impl.CameraPreviewCreatorImpl;
 import com.modularity.x.camera.config.creator.impl.SurfaceViewOnlyCreator;
 import com.modularity.x.camera.config.creator.impl.TextureViewOnlyCreator;
 
+@KeepNotProguard
 public class XCamera {
     public static int CAMERA_1       = 0;
     public static int CAMERA_2       = 1;

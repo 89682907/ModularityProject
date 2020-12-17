@@ -1,6 +1,9 @@
 package com.modularity.x.camera.preview;
 
 
+import com.modularity.x.camera.annotation.KeepNotProguard;
+
+@KeepNotProguard
 public interface CameraPreviewCallback {
 
     /**

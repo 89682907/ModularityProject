@@ -2,6 +2,8 @@ package com.modularity.x.camera.enums;
 
 import androidx.annotation.IntDef;
 
+import com.modularity.x.camera.annotation.KeepNotProguard;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -11,6 +13,7 @@ import static com.modularity.x.camera.enums.FlashMode.FLASH_ON;
 
 @IntDef({FLASH_ON, FLASH_OFF, FLASH_AUTO})
 @Retention(RetentionPolicy.SOURCE)
+@KeepNotProguard
 public @interface FlashMode {
 
     /**

@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.modularity.signature.R;
+import com.modularity.signature.annotation.KeepNotProguard;
 import com.modularity.signature.utils.Bezier;
 import com.modularity.signature.utils.ControlTimedPoints;
 import com.modularity.signature.utils.SvgBuilder;
@@ -105,6 +106,7 @@ public class SignatureView extends View {
     }
 
     @Override
+    @KeepNotProguard
     protected Parcelable onSaveInstanceState() {
         Bundle bundle = new Bundle();
         bundle.putParcelable("superState", super.onSaveInstanceState());
@@ -116,6 +118,7 @@ public class SignatureView extends View {
     }
 
     @Override
+    @KeepNotProguard
     protected void onRestoreInstanceState(Parcelable state) {
         if (state instanceof Bundle) {
             Bundle bundle = (Bundle) state;
@@ -133,6 +136,7 @@ public class SignatureView extends View {
      *
      * @param colorRes the color resource.
      */
+    @KeepNotProguard
     public void setPenColorRes(int colorRes) {
         try {
             setPenColor(getResources().getColor(colorRes));
@@ -146,6 +150,7 @@ public class SignatureView extends View {
      *
      * @param color the color.
      */
+    @KeepNotProguard
     public void setPenColor(int color) {
         mPaint.setColor(color);
     }
@@ -155,6 +160,7 @@ public class SignatureView extends View {
      *
      * @param minWidth the width in dp.
      */
+    @KeepNotProguard
     public void setMinWidth(float minWidth) {
         mMinWidth = convertDpToPx(minWidth);
     }
@@ -164,6 +170,7 @@ public class SignatureView extends View {
      *
      * @param maxWidth the width in dp.
      */
+    @KeepNotProguard
     public void setMaxWidth(float maxWidth) {
         mMaxWidth = convertDpToPx(maxWidth);
     }
@@ -173,10 +180,12 @@ public class SignatureView extends View {
      *
      * @param velocityFilterWeight the weight.
      */
+    @KeepNotProguard
     public void setVelocityFilterWeight(float velocityFilterWeight) {
         mVelocityFilterWeight = velocityFilterWeight;
     }
 
+    @KeepNotProguard
     public void clearView() {
         mSvgBuilder.clear();
         mPoints = new ArrayList<>();
@@ -193,6 +202,7 @@ public class SignatureView extends View {
         invalidate();
     }
 
+    @KeepNotProguard
     public void clear() {
         this.clearView();
         this.mHasEditState = true;
@@ -249,20 +259,24 @@ public class SignatureView extends View {
         }
     }
 
+    @KeepNotProguard
     public void setOnSignedListener(OnSignedListener listener) {
         mOnSignedListener = listener;
     }
 
+    @KeepNotProguard
     public boolean isEmpty() {
         return mIsEmpty;
     }
 
+    @KeepNotProguard
     public String getSignatureSvg() {
         int width = getTransparentSignatureBitmap().getWidth();
         int height = getTransparentSignatureBitmap().getHeight();
         return mSvgBuilder.build(width, height);
     }
 
+    @KeepNotProguard
     public Bitmap getSignatureBitmap() {
         Bitmap originalBitmap = getTransparentSignatureBitmap();
         Bitmap whiteBgBitmap = Bitmap.createBitmap(originalBitmap.getWidth(), originalBitmap.getHeight(), Bitmap.Config.ARGB_8888);
@@ -272,6 +286,7 @@ public class SignatureView extends View {
         return whiteBgBitmap;
     }
 
+    @KeepNotProguard
     public void setSignatureBitmap(final Bitmap signature) {
         // View was laid out...
         if (ViewCompat.isLaidOut(this)) {
@@ -313,11 +328,13 @@ public class SignatureView extends View {
         }
     }
 
+    @KeepNotProguard
     public Bitmap getTransparentSignatureBitmap() {
         ensureSignatureBitmap();
         return mSignatureBitmap;
     }
 
+    @KeepNotProguard
     public Bitmap getTransparentSignatureBitmap(boolean trimBlankSpace) {
 
         if (!trimBlankSpace) {
@@ -606,6 +623,7 @@ public class SignatureView extends View {
         return Math.round(getContext().getResources().getDisplayMetrics().density * dp);
     }
 
+    @KeepNotProguard
     public interface OnSignedListener {
         void onStartSigning();
 
@@ -614,6 +632,7 @@ public class SignatureView extends View {
         void onClear();
     }
 
+    @KeepNotProguard
     public List<TimedPoint> getPoints() {
         return mPoints;
     }

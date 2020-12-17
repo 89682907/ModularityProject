@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.Nullable;
 
+import com.modularity.x.camera.annotation.KeepNotProguard;
 import com.modularity.x.camera.config.size.AspectRatio;
 import com.modularity.x.camera.config.size.Size;
 import com.modularity.x.camera.config.size.SizeMap;
@@ -21,6 +22,7 @@ import com.modularity.x.camera.listener.CameraVideoListener;
 
 import java.io.File;
 
+@KeepNotProguard
 public interface CameraManager {
 
     /**

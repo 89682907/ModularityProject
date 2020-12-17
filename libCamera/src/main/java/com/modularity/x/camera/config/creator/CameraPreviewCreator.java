@@ -3,8 +3,10 @@ package com.modularity.x.camera.config.creator;
 import android.content.Context;
 import android.view.ViewGroup;
 
+import com.modularity.x.camera.annotation.KeepNotProguard;
 import com.modularity.x.camera.preview.CameraPreview;
 
+@KeepNotProguard
 public interface CameraPreviewCreator {
 
     /**
