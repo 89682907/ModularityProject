@@ -23,7 +23,7 @@ public class WebViewManager {
     /**
      * 清除缓存
      */
-    public static void clearWebViewCache(Context context) {
+    public static void clearWebViewCache(Context context, WebView webView) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { // 清除cookie
                 CookieManager.getInstance().removeAllCookies(null);
@@ -32,7 +32,11 @@ public class WebViewManager {
                 CookieManager.getInstance().removeAllCookie();
                 CookieSyncManager.getInstance().sync();
             }
-            new WebView(context).clearCache(true);
+            if (webView == null) {
+                new WebView(context).clearCache(true);
+            } else {
+                webView.clearCache(true);
+            }
             File cacheFile = new File(context.getCacheDir().getParent() + "/app_webview");
             clearCacheFolder(cacheFile, System.currentTimeMillis());
         } catch (Exception e) {

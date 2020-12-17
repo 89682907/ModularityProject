@@ -37,7 +37,7 @@ public class WebView extends BridgeWebView {
         mWebSettings.setSavePassword(false);
         if (NetworkManager.isConnected()) {
             //根据cache-control获取数据。
-            mWebSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+            mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         } else {
             //没网，则从本地获取，即离线加载
             mWebSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
@@ -68,10 +68,11 @@ public class WebView extends BridgeWebView {
         mWebSettings.setAllowFileAccessFromFileURLs(false); //通过 file url 加载的 Javascript 读取其他的本地文件 .建议关闭
         mWebSettings.setAllowUniversalAccessFromFileURLs(false);//允许通过 file url 加载的 Javascript 可以访问其他的源，包括其他的文件和 http，https 等其他的源
         mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        if (Build.VERSION.SDK_INT >= 19)
+        if (Build.VERSION.SDK_INT >= 19) {
             mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        else
+        } else {
             mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+        }
         mWebSettings.setLoadWithOverviewMode(true);
         mWebSettings.setUseWideViewPort(true);
         mWebSettings.setDomStorageEnabled(true);
