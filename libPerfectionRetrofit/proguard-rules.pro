@@ -36,7 +36,7 @@
 
 # 这句话能够使我们的项目混淆后产生映射文件
 # 包含有类名->混淆后类名的映射关系
--verbose
+#-verbose
 
 # 指定不去忽略非公共库的类成员
 -dontskipnonpubliclibraryclassmembers
@@ -56,6 +56,10 @@
 # 指定混淆是采用的算法，后面的参数是一个过滤器
 # 这个过滤器是谷歌推荐的算法，一般不做更改
 -optimizations !code/simplification/cast,!field/*,!class/merging/*
+#-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*
+-obfuscationdictionary dic.txt
+-classobfuscationdictionary dic.txt
+-packageobfuscationdictionary dic.txt
 
 
 #############################################
@@ -92,6 +96,8 @@
 -keepclasseswithmembernames class * {
     native <methods>;
 }
+# JS 调用Java 方法
+-keepattributes *JavascriptInterface*
 
 # 保留在Activity中的方法参数是view的方法，
 # 这样以来我们在layout中写的onClick就不会被影响
@@ -168,6 +174,7 @@
     public <init>(android.content.Context, android.util.AttributeSet);
     public <init>(android.content.Context, android.util.AttributeSet, int);
     public void set*(...);
+    *** get*();
 }
 
 -keepclassmembers,includedescriptorclasses public class * extends android.view.View {
@@ -290,23 +297,15 @@
 # 这儿的“com.android.beandao”是自己的bean包
 -keep class com.android.beandao.**{ *; }
 
--keep @com.modularity.common.annotation.KeepNotProguard class * {*;}
+-keepclassmembers class * {
+    @com.modularity.perfection.annotation.KeepNotProguard <methods>;
+}
+
+-keep @com.modularity.perfection.annotation.KeepNotProguard class * {*;}
 -keep class * {
-    @com.modularity.common.annotation.KeepNotProguard <fields>;
+    @com.modularity.perfection.annotation.KeepNotProguard <fields>;
 }
 -keepclassmembers class * {
-    @com.modularity.common.annotation.KeepNotProguard <methods>;
+    @com.modularity.perfection.annotation.KeepNotProguard <methods>;
 }
-
--dontwarn dalvik.**
--dontwarn com.tencent.smtt.**
-
--keep class com.tencent.smtt.** {
-    *;
-}
-
--keep class com.tencent.tbs.** {
-    *;
-}
-
 

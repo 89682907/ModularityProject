@@ -1,5 +1,7 @@
 package com.modularity.perfection.base;
 
+import com.modularity.perfection.annotation.KeepNotProguard;
+
 import java.util.Map;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -21,6 +23,7 @@ import retrofit2.http.QueryName;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
+@KeepNotProguard
 public interface BaseApiService {
     @POST
     Observable<ResponseBody> requestPost(@Url String var1, @Body Object var2);

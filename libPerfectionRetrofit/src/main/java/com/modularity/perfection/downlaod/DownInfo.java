@@ -1,13 +1,14 @@
 package com.modularity.perfection.downlaod;
 
 
+import com.modularity.perfection.annotation.KeepNotProguard;
 import com.modularity.perfection.downlaod.progress.PerfectionDownProgressListener;
 import com.modularity.perfection.base.BaseApiService;
 
 /**
  * apk下载请求数据基础类
  */
-
+@KeepNotProguard
 public class DownInfo {
 
     /*超时设置*/

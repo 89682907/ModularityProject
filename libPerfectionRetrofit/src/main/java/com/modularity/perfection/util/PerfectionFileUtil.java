@@ -17,6 +17,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
+import com.modularity.perfection.annotation.KeepNotProguard;
+
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
@@ -32,6 +34,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@KeepNotProguard
 public class PerfectionFileUtil {
     private static final boolean DEBUG            = false; // Set to true to enable logging
     private static final String  DEFAULT_FILENAME = "perfectionDownFile";

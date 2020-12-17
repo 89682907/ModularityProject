@@ -7,6 +7,18 @@ android {
         versionName "${rootProject.ext.versionName}"
     }
 
+    lintOptions { // 消除lint警告
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
 }
 
 apply plugin: 'maven'

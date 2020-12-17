@@ -1,6 +1,7 @@
 package com.modularity.perfection.downlaod;
 
 
+import com.modularity.perfection.annotation.KeepNotProguard;
 import com.modularity.perfection.downlaod.exception.HttpTimeException;
 import com.modularity.perfection.downlaod.exception.RetryWhenNetworkException;
 import com.modularity.perfection.downlaod.progress.DownloadInterceptor;
@@ -29,6 +30,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 /**
  * 下载处理类
  */
+@KeepNotProguard
 public class PerfectionDownloader {
     private volatile static PerfectionDownloader                    mDownManager;
     /*记录下载数据*/

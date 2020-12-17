@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.modularity.perfection.annotation.KeepNotProguard;
 import com.modularity.perfection.exception.PerfectionException;
 import com.modularity.perfection.base.BaseApiService;
 import com.modularity.perfection.base.BaseInterceptor;
@@ -98,6 +99,7 @@ public final class Perfection {
         return this.mExceptTransformer;
     }
 
+    @KeepNotProguard
     public <T> void requestGet(String url, Map<String, String> maps, PerfectionCallBack<T> callBack) {
         this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.requestGet(url, maps == null ? new HashMap<>() : maps).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
@@ -107,16 +109,19 @@ public final class Perfection {
      * @deprecated
      */
     @Deprecated
+    @KeepNotProguard
     public void get(String url, Map<String, String> maps, BaseSubscriber<ResponseBody> subscriber) {
         this.mSubscriber = subscriber;
         this.mBaseApiService.requestGet(url, maps == null ? new HashMap<>() : maps).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(subscriber);
     }
 
+    @KeepNotProguard
     public <T> void requestPost(String url, Object requestBean, PerfectionCallBack<T> callBack) {
         this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.requestPost(url, requestBean).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
+    @KeepNotProguard
     public <T> void requestForm(String url, @FieldMap(encoded = true) Map<String, String> fields, PerfectionCallBack<T> callBack) {
         this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.postForm(url, fields == null ? new HashMap<>() : fields).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
@@ -126,6 +131,7 @@ public final class Perfection {
      * @deprecated
      */
     @Deprecated
+    @KeepNotProguard
     public void post(String url, Object requestBean, BaseSubscriber<ResponseBody> subscriber) {
         this.mSubscriber = subscriber;
         this.mBaseApiService.requestPost(url, requestBean).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(subscriber);
@@ -135,6 +141,7 @@ public final class Perfection {
      * @deprecated
      */
     @Deprecated
+    @KeepNotProguard
     public void post(String url, @FieldMap(encoded = true) Map<String, String> parameters, BaseSubscriber<ResponseBody> subscriber) {
         this.mSubscriber = subscriber;
         this.mBaseApiService.requestPost(url, parameters == null ? new HashMap<>() : parameters).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(subscriber);
@@ -144,22 +151,26 @@ public final class Perfection {
      * @deprecated
      */
     @Deprecated
+    @KeepNotProguard
     public void form(String url, @FieldMap(encoded = true) Map<String, String> fields, BaseSubscriber<ResponseBody> subscriber) {
         this.mSubscriber = subscriber;
         this.mBaseApiService.postForm(url, fields == null ? new HashMap<>() : fields).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(subscriber);
     }
 
+    @KeepNotProguard
     public <T> void requestPut(String url, @FieldMap(encoded = true) Map<String, RequestBody> fields, PerfectionCallBack<T> callBack) {
         this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.requestPut(url, fields == null ? new HashMap<>() : fields).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
     @Deprecated
+    @KeepNotProguard
     public <T> void uploadImage(String url, File file, PerfectionCallBack<T> callBack) {
         this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.upLoadImage(url, PerfectionUtils.createImage(file)).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
+    @KeepNotProguard
     public <T> void uploadImage(String url, String key, File file, PerfectionCallBack<T> callBack) {
         this.mSubscriber = new PerfectionSubscriber(callBack);
         RequestBody requestFile = PerfectionUtils.createImage(file);
@@ -167,6 +178,7 @@ public final class Perfection {
         this.mBaseApiService.upLoadImage(url, body).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
+    @KeepNotProguard
     public <T> void uploadFile(String url, File file, PerfectionCallBack<T> callBack) {
         this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.uploadFile(url, PerfectionUtils.createFile(file)).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
@@ -177,16 +189,19 @@ public final class Perfection {
         this.mBaseApiService.requestParamsAndFiles(url, paramMap == null ? new HashMap<>() : paramMap).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
+    @KeepNotProguard
     public <T> void requestParamsAndFile(String url, Map<String, RequestBody> paramMap, Part file, PerfectionCallBack<T> callBack) {
         this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.requestParamsAndFile(url, paramMap == null ? new HashMap<>() : paramMap, file).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
+    @KeepNotProguard
     public <T> void uploadFileWithDescription(String url, String description, String fileKey, File file, PerfectionCallBack<T> callBack) {
         this.mSubscriber = new PerfectionSubscriber(callBack);
         this.mBaseApiService.uploadFile(url, PerfectionUtils.createPartFromString(description), PerfectionUtils.createPart(fileKey, file)).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
+    @KeepNotProguard
     public <T> void uploadFlies(String url, Map<String, File> files, PerfectionCallBack<T> callBack) {
         this.mSubscriber = new PerfectionSubscriber(callBack);
         Map<String, RequestBody> filesBody = new HashMap();
@@ -202,6 +217,7 @@ public final class Perfection {
         this.mBaseApiService.uploadFiles(url, filesBody).compose(schedulersTransformer).compose(handleErrTransformer()).subscribe(mSubscriber);
     }
 
+    @KeepNotProguard
     public void cancelRequest() {
         if (this.mSubscriber != null) {
             this.mSubscriber.disposable();
@@ -227,22 +243,25 @@ public final class Perfection {
         private       OkHttpClient         mOkHttpClient;
         private       Retrofit.Builder     mRetrofitBuilder;
 
-
+        @KeepNotProguard
         public Builder() {
             mOkHttpBuilder = new OkHttpClient.Builder();
             mRetrofitBuilder = new Retrofit.Builder();
         }
 
+        @KeepNotProguard
         public Perfection.Builder client(OkHttpClient client) {
             mOkHttpClient = PerfectionUtils.checkNotNull(client, "client == null");
             return this;
         }
 
+        @KeepNotProguard
         public Perfection.Builder callFactory(okhttp3.Call.Factory factory) {
             mCallFactory = PerfectionUtils.checkNotNull(factory, "factory == null");
             return this;
         }
 
+        @KeepNotProguard
         public Perfection.Builder connectTimeout(int timeout) {
             if (timeout > 0) {
                 mOkHttpBuilder.connectTimeout(timeout, TimeUnit.SECONDS);
@@ -252,6 +271,7 @@ public final class Perfection {
             return this;
         }
 
+        @KeepNotProguard
         public Perfection.Builder writeTimeout(int timeout) {
             if (timeout > 0) {
                 mOkHttpBuilder.writeTimeout(timeout, TimeUnit.SECONDS);
@@ -261,6 +281,7 @@ public final class Perfection {
             return this;
         }
 
+        @KeepNotProguard
         public Perfection.Builder readTimeout(int timeout) {
             if (timeout > 0) {
                 mOkHttpBuilder.readTimeout(timeout, TimeUnit.SECONDS);
@@ -270,11 +291,13 @@ public final class Perfection {
             return this;
         }
 
+        @KeepNotProguard
         public Perfection.Builder connectionSpecs(boolean connectionSpecs) {
             isConnectionSpecs = connectionSpecs;
             return this;
         }
 
+        @KeepNotProguard
         public Perfection.Builder addLog(boolean showLog, String tag) {
             isLog = showLog;
             if (!TextUtils.isEmpty(tag)) {
@@ -283,37 +306,44 @@ public final class Perfection {
             return this;
         }
 
+        @KeepNotProguard
         public Perfection.Builder addCache(Context context, boolean cache) {
             isCache = cache;
             mContext = context;
             return this;
         }
 
+        @KeepNotProguard
         public Perfection.Builder proxy(Proxy proxy) {
             mOkHttpBuilder.proxy(PerfectionUtils.checkNotNull(proxy, "proxy == null"));
             return this;
         }
 
+        @KeepNotProguard
         public Perfection.Builder connectionPool(ConnectionPool connectionPool) {
             mConnectionPool = PerfectionUtils.checkNotNull(connectionPool, "mConnectionPool == null");
             return this;
         }
 
+        @KeepNotProguard
         public Perfection.Builder baseUrl(String baseUrl) {
             mBaseUrl = PerfectionUtils.checkNotNull(baseUrl, "mBaseUrl == null");
             return this;
         }
 
+        @KeepNotProguard
         public Perfection.Builder addConverterFactory(Factory factory) {
             mConverterFactory = factory;
             return this;
         }
 
+        @KeepNotProguard
         public Perfection.Builder addCallAdapterFactory(CallAdapter.Factory factory) {
             mCallAdapterFactory = factory;
             return this;
         }
 
+        @KeepNotProguard
         public Perfection.Builder addHeader(Map<String, String> headers) {
             if (headers != null && headers.size() > 0) {
                 mOkHttpBuilder.addInterceptor(new BaseInterceptor(headers));
@@ -328,6 +358,7 @@ public final class Perfection {
          *
          * @param certificates 是你的ssl证书文件在raw文件下的的id数组，项目中请放到raw资源文件下
          */
+        @KeepNotProguard
         public Perfection.Builder addSSL(Context context, String[] hosts, int[] certificates) {
             mContext = context;
             if (hosts == null) {
@@ -364,6 +395,7 @@ public final class Perfection {
             return new Cache(new File(context.getCacheDir(), "perfection_http_cache"), DEFAULT_CACHE_MAX_SIZE);
         }
 
+        @KeepNotProguard
         public Perfection build() {
             if (TextUtils.isEmpty(mBaseUrl)) {
                 throw new IllegalStateException("Base URL required.");

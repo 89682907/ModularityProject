@@ -2,6 +2,7 @@
 package com.modularity.perfection.base;
 
 
+import com.modularity.perfection.annotation.KeepNotProguard;
 import com.modularity.perfection.exception.PerfectionException;
 import com.modularity.perfection.exception.PerfectionThrowable;
 
@@ -12,6 +13,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 /**
  * BaseSubscriber
  */
+@KeepNotProguard
 public abstract class BaseSubscriber<T> implements Observer<T> {
 
     private Disposable mDisposable;

@@ -3,6 +3,8 @@ package com.modularity.perfection.util;
 import android.net.Uri;
 import android.os.Looper;
 
+import com.modularity.perfection.annotation.KeepNotProguard;
+
 import java.io.File;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -10,6 +12,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
+@KeepNotProguard
 public class PerfectionUtils {
 
     private static final String MULTIPART_FORM_DATA = "multipart/form-data";

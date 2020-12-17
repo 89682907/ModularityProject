@@ -15,6 +15,7 @@ import com.modularity.mod_b.ModuleBActivity
 import com.modularity.mvvm.view.MVVMMainActivity
 import com.modularity.project.R
 import com.modularity.project.jsbridage.JsBridgeMainActivity
+import com.modularity.project.tbs.TBSMainActivity
 import com.modularity.x.camera.XCameraActivity
 import com.modularity.x.camera.config.ConfigurationProvider
 import com.modularity.x.camera.config.creator.impl.*
@@ -31,6 +32,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         findViewById<View>(R.id.btn_jsbridge).setOnClickListener(this)
         findViewById<View>(R.id.btn_camera).setOnClickListener(this)
         findViewById<View>(R.id.btn_tts).setOnClickListener(this)
+        findViewById<View>(R.id.btn_tbs).setOnClickListener(this)
         test()
     }
 
@@ -48,24 +50,35 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View) {
-        val i = view.id
-        if (i == R.id.btn_a) {
-            moduleA()
-        } else if (i == R.id.btn_b) {
-            moduleB()
-        } else if (i == R.id.btn_c) {
-            moduleC()
-        } else if (i == R.id.btn_signature) {
-            libSignature()
-        } else if (i == R.id.btn_jetpack) {
-            modJetpack()
-        } else if (i == R.id.btn_jsbridge) {
-            modJsBridge()
-        } else if (i == R.id.btn_camera) {
-            libCamera()
-        } else if (i == R.id.btn_tts) {
-            val tts = TTSManager(this)
-            tts.startTTS("我乃常山赵子龙")
+        when (view.id) {
+            R.id.btn_a -> {
+                moduleA()
+            }
+            R.id.btn_b -> {
+                moduleB()
+            }
+            R.id.btn_c -> {
+                moduleC()
+            }
+            R.id.btn_signature -> {
+                libSignature()
+            }
+            R.id.btn_jetpack -> {
+                modJetpack()
+            }
+            R.id.btn_tbs -> {
+                tbs()
+            }
+            R.id.btn_jsbridge -> {
+                modJsBridge()
+            }
+            R.id.btn_camera -> {
+                libCamera()
+            }
+            R.id.btn_tts -> {
+                val tts = TTSManager(this)
+                tts.startTTS("我乃常山赵子龙")
+            }
         }
     }
 
@@ -87,6 +100,11 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     private fun modJetpack() {
         startActivity(Intent(this, JetpackMainActivity::class.java))
+    }
+
+
+    private fun tbs() {
+        startActivity(Intent(this, TBSMainActivity::class.java))
     }
 
     private fun modJsBridge() {

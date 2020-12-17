@@ -15,9 +15,12 @@ import com.modularity.common.utils.managers.manager.FileIOManager;
 import com.modularity.common.utils.managers.manager.LogManager;
 import com.modularity.common.utils.managers.manager.Managers;
 import com.modularity.project.BuildConfig;
+import com.tencent.smtt.export.external.TbsCoreSettings;
+import com.tencent.smtt.sdk.QbSdk;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.HashMap;
 
 
 /**
@@ -30,6 +33,7 @@ public class SoftApplication extends Application {
         initUE();
         initRouter();
         initConfig();
+        tbs();
     }
 
     @Override
@@ -68,6 +72,25 @@ public class SoftApplication extends Application {
     private void initReleaseConfig() {
         LogManager.getConfig().setLogSwitch(false || BuildConfig.DEVELOP);
 
+    }
+
+    private void tbs() {
+// 在调用TBS初始化、创建WebView之前进行如下配置
+        HashMap map = new HashMap();
+        map.put(TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER, true);
+        map.put(TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE, true);
+        QbSdk.initTbsSettings(map);
+        QbSdk.initX5Environment(this, new QbSdk.PreInitCallback() {
+            @Override
+            public void onCoreInitFinished() {
+                LogManager.i("============CoreInitFinished===========");
+            }
+
+            @Override
+            public void onViewInitFinished(boolean b) {
+                LogManager.i("============ViewInitFinished : " + b + "==============");
+            }
+        });
     }
 
 

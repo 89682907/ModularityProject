@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.webkit.WebView;
 
+import com.modularity.common.annotation.KeepNotProguard;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +53,7 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
         init();
     }
 
+    @KeepNotProguard
     public void setDefaultHandler(BridgeHandler handler) {
         this.defaultHandler = handler;
     }
@@ -79,12 +82,15 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
         }
     }
 
+
     @Override
+    @KeepNotProguard
     public void send(String data) {
         send(data, null);
     }
 
     @Override
+    @KeepNotProguard
     public void send(String data, CallBackFunction responseCallback) {
         doSend(null, data, responseCallback);
     }
@@ -186,6 +192,7 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
         }
     }
 
+    @KeepNotProguard
     public void loadUrl(String jsUrl, CallBackFunction returnCallback) {
         this.loadUrl(jsUrl);
         responseCallbacks.put(BridgeUtil.parseFunctionName(jsUrl), returnCallback);
@@ -196,6 +203,7 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
      * @param handlerName 注册名称
      * @param handler     传递
      */
+    @KeepNotProguard
     public void registerHandler(String handlerName, BridgeHandler handler) {
         if (handler != null) {
             messageHandlers.put(handlerName, handler);
@@ -208,6 +216,7 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
      * @param data        传递数据
      * @param callBack    回调
      */
+    @KeepNotProguard
     public void callHandler(String handlerName, String data, CallBackFunction callBack) {
         doSend(handlerName, data, callBack);
     }

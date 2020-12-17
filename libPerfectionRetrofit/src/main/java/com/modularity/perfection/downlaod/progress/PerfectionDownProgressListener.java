@@ -1,8 +1,11 @@
 package com.modularity.perfection.downlaod.progress;
 
+import com.modularity.perfection.annotation.KeepNotProguard;
+
 /**
  * 下载过程中的回调处理
  */
+@KeepNotProguard
 public abstract class PerfectionDownProgressListener<T> {
     /**
      * 成功后回调方法

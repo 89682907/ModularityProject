@@ -16,11 +16,10 @@ versions.lifecycle = "2.2.0"
 versions.okhttp_logging_interceptor = "3.9.1"
 versions.okhttp3 = "4.2.2"
 versions.paging = "3.0.0-alpha05"
-versions.room = "2.3.0-alpha01"
+versions.room = "2.3.0-alpha02"
 versions.recyclerview = "1.0.0"
 versions.retrofit = "2.9.0"
 versions.moshi = "1.9.3"
-versions.room = "2.3.0-alpha02"
 versions.rx_android = "3.0.0"
 versions.rxjava3 = "3.0.4"
 versions.multidex = "2.0.1"
@@ -152,14 +151,16 @@ deps.glide = glide
 ext.deps = deps
 
 def addRepos(RepositoryHandler handler, Project project) {
-    handler.google()
-    handler.jcenter()
-    handler.maven { url "https://jitpack.io" }
-    handler.maven { url "https://maven.google.com" }
+//    handler.maven { url "https://maven.google.com" }
+//    handler.maven { url "https://dl.google.com/dl/android/maven2/" }
     handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     handler.maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+    handler.maven { url 'https://maven.aliyun.com/repository/google' }
     handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     handler.maven { url project.ext.repoUrl }
+    handler.maven { url "https://jitpack.io" }
+    handler.google()
+    handler.jcenter()
 }
 
 ext.addRepos = this.&addRepos

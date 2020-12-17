@@ -8,6 +8,8 @@ import android.view.View;
 import android.webkit.WebSettings;
 
 import com.lk.community.jsbridge.BridgeWebView;
+import com.lk.community.manager.WebViewManager;
+import com.modularity.common.utils.managers.manager.NetworkManager;
 
 public class WebView extends BridgeWebView {
 
@@ -33,14 +35,13 @@ public class WebView extends BridgeWebView {
         mWebSettings.setSupportZoom(true);
         mWebSettings.setBuiltInZoomControls(false);
         mWebSettings.setSavePassword(false);
-//        if (NetworkUtils.isAvailable()) {
-//            //根据cache-control获取数据。
-//            mWebSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-//        } else {
-//            //没网，则从本地获取，即离线加载
-//            mWebSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-//        }
-
+        if (NetworkManager.isConnected()) {
+            //根据cache-control获取数据。
+            mWebSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        } else {
+            //没网，则从本地获取，即离线加载
+            mWebSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        }
         if (Build.VERSION.SDK_INT >= 21) {
             //适配5.0不允许http和https混合使用情况
             mWebSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
@@ -50,6 +51,13 @@ public class WebView extends BridgeWebView {
         } else {
             setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
+
+        //禁用放缩
+        mWebSettings.setDisplayZoomControls(false);
+        mWebSettings.setBuiltInZoomControls(false);
+
+        //禁用文字缩放
+        mWebSettings.setTextZoom(100);
 
         mWebSettings.setDatabaseEnabled(true);
         mWebSettings.setAppCacheEnabled(true);
@@ -72,13 +80,13 @@ public class WebView extends BridgeWebView {
 //        mWebSettings.setDefaultFontSize(16);
 //        mWebSettings.setMinimumFontSize(12);//设置 WebView 支持的最小字体大小，默认为 8
         mWebSettings.setGeolocationEnabled(true);
-
         String dir = getContext().getApplicationContext().getCacheDir().getAbsolutePath();
         //设置数据库路径  api19 已经废弃,这里只针对 webkit 起作用
         mWebSettings.setGeolocationDatabasePath(dir);
         mWebSettings.setDatabasePath(dir);
         mWebSettings.setAppCachePath(dir);
-        //缓存文件最大值
-        mWebSettings.setAppCacheMaxSize(Long.MAX_VALUE);
+        //10M缓存，api 18后，系统自动管理。
+        mWebSettings.setAppCacheMaxSize(10 * 1024 * 1024);
+        WebViewManager.removeJavascriptInterfaces(this);
     }
 }
