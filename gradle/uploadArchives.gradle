@@ -19,7 +19,7 @@ camera.mavenVersion = "1.0.3"
 
 def camerax = [:]
 camerax.mavenArtifactId = "camerax"
-camerax.mavenVersion = "1.0.6"
+camerax.mavenVersion = "1.0.9"
 
 def signature = [:]
 signature.mavenArtifactId = "signature"
