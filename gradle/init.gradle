@@ -81,7 +81,7 @@ if (propFile.canRead()) {
     //修改名称
     String fixName = ""
     if (rootProject.ext.develop) {
-        fixName = "Dv"
+        fixName = "DEV"
     }
     rootProject.ext.set("APP_NAME_DEBUG", fixName + params.APP_NAME_DEBUG)
     rootProject.ext.set("APP_NAME_BETA", fixName + params.APP_NAME_BETA)

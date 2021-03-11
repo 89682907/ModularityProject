@@ -25,7 +25,7 @@ public class JsBridgeMainActivity extends BaseActivity {
         BarManager.setStatusBarVisibility(this, false);
         mWebView = findViewById(R.id.webView);
 //        mWebView.loadUrl("file:///android_asset/jsbridage_demo.html");
-        mWebView.loadUrl("https://m.laikang.com/qa/test/#/list");
+        mWebView.loadUrl("https://m.op.laikang.com/qa/nutritionCalculation/#/report");
 //        mWebView.loadUrl("http://m.laikang.com/qa/test/#/report?seqNo=2020120210212100001&userId=6918");
         jsToJavaMethod();
         jsToJavaMethodDefault();

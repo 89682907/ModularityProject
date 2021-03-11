@@ -6,9 +6,9 @@ android {
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
 
-//        ndk {
-//            abiFilters "armeabi"
-//        }
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
 //        if (rootProject.ext.abiX86) {
 //            getNdkConfig().abiFilters.add("x86")
 //        }

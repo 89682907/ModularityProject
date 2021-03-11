@@ -94,7 +94,7 @@ dependencies {
         implementation "${rootProject.ext.libJsBridge}"
         implementation "${rootProject.ext.libCamera}"
     }
-    api 'com.tencent.tbs.tbssdk:sdk:43939'
+    implementation deps.tbs
     kapt deps.glide.glide_compiler //编译器必须在主Application模块中
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->

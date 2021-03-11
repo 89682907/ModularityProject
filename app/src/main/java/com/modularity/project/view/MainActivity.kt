@@ -5,11 +5,11 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import com.community.jetpack.view.JetpackMainActivity
+import com.jni.sample.JniNative
 import com.modularity.common.base.BaseActivity
-import com.modularity.common.utils.managers.manager.LogManager
-import com.modularity.common.utils.managers.manager.SDCardManager
-import com.modularity.common.utils.managers.manager.SPManager
+import com.modularity.common.utils.managers.manager.*
 import com.modularity.mod_a.view.ModuleAActivity
 import com.modularity.mod_b.ModuleBActivity
 import com.modularity.mvvm.view.MVVMMainActivity
@@ -32,11 +32,12 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         findViewById<View>(R.id.btn_jsbridge).setOnClickListener(this)
         findViewById<View>(R.id.btn_camera).setOnClickListener(this)
         findViewById<View>(R.id.btn_tts).setOnClickListener(this)
-        findViewById<View>(R.id.btn_tbs).setOnClickListener(this)
-        test()
+        findViewById<Button>(R.id.btn_ip).text = NetworkManager.getIpAddressByWifi()
+//        animationTest()
+        jniTest()
     }
 
-    private fun test() {
+    private fun animationTest() {
         LogManager.iTag(tag, SDCardManager.getSDCardExternalCacheDir(this))
         LogManager.iTag(tag, SDCardManager.getSDCardExternalFilesDir(this, ""))
         LogManager.iTag(tag, SDCardManager.getSDCardExternalFilesDir(this, "audio"))
@@ -47,6 +48,11 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             AnimationUtils.loadAnimation(this, R.anim.zoom_in_2)
         val loadView3 = findViewById<View>(R.id.load3)
         loadView3.animation = AnimationUtils.loadAnimation(this, R.anim.zoom_in_3)
+    }
+
+    private fun jniTest() {
+        LogManager.iTag("jishen","add:" + JniNative.JniCAdd(100,300))
+        LogManager.iTag("jishen","sub:" + JniNative.JniCSub(170,300))
     }
 
     override fun onClick(view: View) {

@@ -35,6 +35,7 @@ versions.eventbus = "3.2.0"
 versions.conscrypt = "2.2.1"
 versions.pdfbox_android = "1.8.10.1"
 versions.work = "2.4.0"
+versions.tbs = "43939"
 versions.java_version = JavaVersion.VERSION_1_8
 ext.versions = versions
 
@@ -64,6 +65,7 @@ deps.eventbus = "org.greenrobot:eventbus:$versions.eventbus"
 deps.conscrypt = "org.conscrypt:conscrypt-android:$versions.conscrypt"
 deps.pdfbox_android = "com.tom_roush:pdfbox-android:$versions.pdfbox_android"
 deps.work = "androidx.work:work-runtime-ktx:$versions.work"
+deps.tbs = "com.tencent.tbs.tbssdk:sdk:$versions.tbs"
 
 
 def kotlin = [:]
