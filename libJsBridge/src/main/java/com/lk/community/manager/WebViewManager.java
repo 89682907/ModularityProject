@@ -36,7 +36,10 @@ public class WebViewManager {
                 new WebView(context).clearCache(true);
             } else {
                 webView.clearCache(true);
+                webView.clearHistory();
             }
+            context.deleteDatabase("webview.db");
+            context.deleteDatabase("webviewCache.db");
             File cacheFile = new File(context.getCacheDir().getParent() + "/app_webview");
             clearCacheFolder(cacheFile, System.currentTimeMillis());
         } catch (Exception e) {
