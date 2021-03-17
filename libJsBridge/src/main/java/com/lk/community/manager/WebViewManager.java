@@ -33,11 +33,11 @@ public class WebViewManager {
                 CookieSyncManager.getInstance().sync();
             }
             if (webView == null) {
-                new WebView(context).clearCache(true);
-            } else {
-                webView.clearCache(true);
-                webView.clearHistory();
+                webView = new WebView(context);
             }
+            webView.clearCache(true);
+            webView.clearHistory();
+            webView.clearFormData();
             context.deleteDatabase("webview.db");
             context.deleteDatabase("webviewCache.db");
             File cacheFile = new File(context.getCacheDir().getParent() + "/app_webview");
