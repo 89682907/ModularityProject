@@ -5,6 +5,7 @@ import android.util.Log;
 import com.modularity.perfection.exception.PerfectionException;
 import com.modularity.perfection.exception.PerfectionThrowable;
 import com.modularity.perfection.base.BaseSubscriber;
+import com.modularity.perfection.moshi.NullStringAdapter;
 import com.modularity.perfection.util.ReflectionUtil;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -72,6 +73,7 @@ class PerfectionSubscriber<T> extends BaseSubscriber<ResponseBody> {
                 this.mCallBack.onSuccess((T) jsStr);
             } else {
                 Moshi moshi = new Moshi.Builder()
+                        .add(new NullStringAdapter())
                         .add(new KotlinJsonAdapterFactory())
                         .build();
                 JsonAdapter<T> jsonAdapter = moshi.adapter(classType);
