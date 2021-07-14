@@ -3,9 +3,11 @@
  **/
 ext.deps = [:]
 def versions = [:]
-versions.kotlin = "1.3.72"
+versions.kotlin = "1.4.10"
+//versions.kotlin = "1.5.10"
 versions.ktx = "1.3.1"
-versions.android_gradle_plugin = '4.0.2'
+versions.android_gradle_plugin = '4.1.3'
+//versions.android_gradle_plugin = '4.2.2'
 versions.activity = '1.1.0'
 versions.fragment = "1.2.1"
 versions.constraintlayout = "2.0.1"
@@ -45,6 +47,9 @@ build_versions.min_sdk = 17
 build_versions.compile_sdk = 29
 build_versions.target_sdk = 29
 build_versions.build_tools = "29.0.3"
+//build_versions.compile_sdk = 30
+//build_versions.target_sdk = 30
+//build_versions.build_tools = "30.0.2"
 ext.build_versions = build_versions
 
 def deps = [:]
@@ -159,10 +164,12 @@ def addRepos(RepositoryHandler handler, Project project) {
     handler.maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
     handler.maven { url 'https://maven.aliyun.com/repository/google' }
     handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    handler.maven { url "https://gitee.com/a_maker/maven/raw/master/" }
+//    handler.maven { url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2' }
     handler.maven { url project.ext.repoUrl }
     handler.maven { url "https://jitpack.io" }
     handler.google()
-    handler.jcenter()
+//    handler.jcenter()
 }
 
 ext.addRepos = this.&addRepos

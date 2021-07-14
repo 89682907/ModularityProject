@@ -14,6 +14,7 @@ import com.modularity.mod_a.view.ModuleAActivity
 import com.modularity.mod_b.ModuleBActivity
 import com.modularity.mvvm.view.MVVMMainActivity
 import com.modularity.project.R
+import com.modularity.project.cw.CWMainActivity
 import com.modularity.project.jsbridage.JsBridgeMainActivity
 import com.modularity.project.tbs.TBSMainActivity
 import com.modularity.x.camera.XCameraActivity
@@ -30,11 +31,20 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         findViewById<View>(R.id.btn_signature).setOnClickListener(this)
         findViewById<View>(R.id.btn_jetpack).setOnClickListener(this)
         findViewById<View>(R.id.btn_jsbridge).setOnClickListener(this)
+        findViewById<View>(R.id.btn_crosswalk).setOnClickListener(this)
         findViewById<View>(R.id.btn_camera).setOnClickListener(this)
         findViewById<View>(R.id.btn_tts).setOnClickListener(this)
+        findViewById<View>(R.id.btn_tbs).setOnClickListener(this)
         findViewById<Button>(R.id.btn_ip).text = NetworkManager.getIpAddressByWifi()
 //        animationTest()
         jniTest()
+        sentSpeechNotify()
+    }
+
+    private fun sentSpeechNotify() {
+        val intent = Intent()
+        intent.action = "BROADCAST_ACTION_ENTROPY_CHAT"
+        sendBroadcast(intent)
     }
 
     private fun animationTest() {
@@ -51,8 +61,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun jniTest() {
-        LogManager.iTag("jishen","add:" + JniNative.JniCAdd(100,300))
-        LogManager.iTag("jishen","sub:" + JniNative.JniCSub(170,300))
+        LogManager.iTag("jishen", "add:" + JniNative.JniCAdd(100, 300))
+        LogManager.iTag("jishen", "sub:" + JniNative.JniCSub(170, 300))
     }
 
     override fun onClick(view: View) {
@@ -78,12 +88,16 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             R.id.btn_jsbridge -> {
                 modJsBridge()
             }
+            R.id.btn_crosswalk -> {
+                libCrossWalk()
+            }
             R.id.btn_camera -> {
                 libCamera()
             }
             R.id.btn_tts -> {
                 val tts = TTSManager(this)
                 tts.startTTS("我乃常山赵子龙")
+                sentSpeechNotify()
             }
         }
     }
@@ -115,6 +129,17 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     private fun modJsBridge() {
         startActivity(Intent(this, JsBridgeMainActivity::class.java))
+    }
+
+
+    private fun libCrossWalk() {
+        val intent = Intent(this, CWMainActivity::class.java)
+//        intent.putExtra("url", "https://www.tesla.cn")
+//        intent.putExtra("url", "https://m.laikang.com/pro/smartMedication/#/selfSmartDrugs/searchMedicine?userId=761")
+//        intent.putExtra("url", "http://10.4.108.5:9529/qa/aioMirror/#/slowDiseaseVisits/question?type=1&userId=6948")
+//        intent.putExtra("url", "http://m.laikang.com/qa/shangMirrorOldQa/#/list?mobile=13269653300&districtId=1")
+        intent.putExtra("url", "http://10.4.108.5:9529/qa/aioMirror/#/slowDiseaseVisits/question?type=1&userId=6948")
+        startActivity(intent)
     }
 
     private fun libCamera() {

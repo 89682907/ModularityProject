@@ -1,0 +1,44 @@
+apply plugin:'maven-publish'
+def current = [:]
+
+def xwalk = [:]
+xwalk.groupId = "xwalk.core"
+xwalk.mavenArtifactId = "arm"
+xwalk.mavenVersion = "1.0.2-arm"
+xwalk.path = 'file:///Users/jishen/work/aar/core_arm_1.0.0.aar'
+
+def entropy = [:]
+entropy.groupId = "com.lk.smart.entropy"
+entropy.mavenArtifactId = "entropy_chart"
+entropy.mavenVersion = "1.6.0"
+entropy.path = 'file:///Users/jishen/work/aar/entropy_1.6.0.aar'
+current.module = entropy
+
+current.module = entropy
+
+publishing {
+
+    publications {
+        common(MavenPublication){
+            artifact(current.module.path){
+                groupId current.module.groupId
+                artifactId current.module.mavenArtifactId
+                version current.module.mavenVersion
+            }
+        }
+    }
+    repositories {
+        maven {
+            //提交到远程服务器：
+//            credentials {
+//                //maven用户名
+//                username rootProject.ext.localUAUserName
+//                //maven密码
+//                password rootProject.ext.localUAPassword
+//            }
+            //maven地址
+            url rootProject.ext.localUAUrl
+//            url 'https://gitee.com/a_maker/maven/blob/master/'
+        }
+    }
+}

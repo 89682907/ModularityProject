@@ -99,6 +99,14 @@
                 android:textAllCaps="false" />
 
             <Button
+                android:id="@+id/btn_crosswalk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/app_str_crosswalk"
+                android:textAllCaps="false" />
+
+            <Button
                 android:id="@+id/btn_tbs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

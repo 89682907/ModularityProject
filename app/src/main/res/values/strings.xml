@@ -6,6 +6,7 @@
     <string name="app_str_signature">Signature</string>
     <string name="app_str_jetpack">Jetpack</string>
     <string name="app_str_jsbridge">WebBridge</string>
+    <string name="app_str_crosswalk">CrossWalk</string>
     <string name="app_str_tbs">TBS</string>
     <string name="app_str_camera">Camera</string>
     <string name="agreement">I agree the terms and conditions.</string>

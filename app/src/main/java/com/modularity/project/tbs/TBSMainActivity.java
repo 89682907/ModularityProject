@@ -21,7 +21,9 @@ public class TBSMainActivity extends BaseActivity {
         webView = findViewById(R.id.webView);
 //        webView.loadUrl("https://m.laikang.com/qa/test/#/list");
 //        loadUrl("https://www.hao123.com");
-        loadUrl("file:///android_asset/es6.html");
+//        loadUrl("file:///android_asset/es6.html");
+//        loadUrl("https://m.laikang.com/pro/smartMedication/#/selfSmartDrugs/searchMedicine?userId=761");
+        loadUrl("http://10.4.108.5:9529/qa/aioMirror/#/slowDiseaseVisits/question?type=1&userId=6948");
     }
 
 

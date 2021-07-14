@@ -25,7 +25,11 @@ def signature = [:]
 signature.mavenArtifactId = "signature"
 signature.mavenVersion = "1.0.3"
 
-current.module = pr
+def xwalk = [:]
+xwalk.mavenArtifactId = "xwalk"
+xwalk.mavenVersion = "1.1.1"
+
+current.module = xwalk
 uploadArchives {
     def mavenArtifactId = current.module.mavenArtifactId
     def mavenVersion = current.module.mavenVersion

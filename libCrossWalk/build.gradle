@@ -1,0 +1,39 @@
+apply plugin: 'com.android.library'
+apply from: "${rootDir}/gradle/baseModule.gradle"
+
+android {
+    resourcePrefix "cw"
+    defaultConfig {
+        versionCode Integer.parseInt("${rootProject.ext.versionCode}")
+        versionName "${rootProject.ext.versionName}"
+    }
+    lintOptions { // 消除lint警告
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+apply plugin: 'maven'
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: rootProject.ext.repoUrl)
+        pom.groupId = rootProject.ext.PROJ_LIB_GROUP
+        pom.artifactId = rootProject.ext.modules.libCrossWalkInfo.artifactId
+        pom.version = rootProject.ext.modules.libCrossWalkInfo.version
+    }
+}
+
+dependencies {
+//    api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+//    compileOnly project(':libCommon')
+//    api 'org.xwalk:xwalk_core_library:23.53.589.4'
+    api 'xwalk.core:arm:1.0.2-arm'
+}
+apply from: "${rootDir}/gradle/uploadArchives.gradle"
